@@ -24,7 +24,6 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .container{max-width:480px;margin:0 auto;padding:0 16px}
 @media(min-width:768px){.container{max-width:560px;padding:0 24px}}
 
-/* Bottom Nav */
 .btm-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;padding:0 16px env(safe-area-inset-bottom,8px)}
 .btm-nav-inner{max-width:420px;margin:0 auto 8px;background:rgba(255,255,255,.92);backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);border-radius:28px;box-shadow:0 0 0 1px rgba(0,0,0,.04),0 8px 40px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:space-around;padding:6px 8px}
 .btm-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px;border:none;background:transparent;color:var(--g400);font-size:10px;font-weight:500;cursor:pointer;transition:.25s var(--ease);border-radius:16px;min-width:48px;position:relative}
@@ -33,7 +32,6 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .btm-item .bi-ico{font-size:20px;line-height:1;transition:.2s}
 .btm-item:active .bi-ico{transform:scale(.85)}
 
-/* Hero */
 .hero-card{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);border-radius:24px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;margin-bottom:16px;box-shadow:0 8px 32px rgba(15,52,96,.3)}
 .hero-card::before{content:'';position:absolute;top:-60%;right:-30%;width:250px;height:250px;background:radial-gradient(circle,rgba(108,92,231,.25) 0%,transparent 70%);border-radius:50%;pointer-events:none}
 .hero-card::after{content:'';position:absolute;bottom:-40%;left:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(20,184,166,.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
@@ -42,12 +40,10 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .hero-sub{font-size:13px;opacity:.5;margin-top:4px}
 .hero-label{font-size:12px;opacity:.7;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 
-/* Cards */
 .m-card{background:var(--g0);border-radius:var(--r);padding:18px;margin-bottom:10px;box-shadow:var(--sh);border:1px solid rgba(0,0,0,.04);transition:box-shadow .25s var(--ease),transform .25s var(--ease)}
 .m-card:active{transform:scale(.985)}
 .m-card-hover:hover{box-shadow:var(--sh-lg)}
 
-/* Form */
 .m-input{width:100%;border:1.5px solid var(--g200);border-radius:12px;padding:11px 14px;font-size:14px;font-family:var(--font);background:var(--g50);transition:.25s var(--ease)}
 .m-input:focus{border-color:var(--accent);outline:none;background:var(--g0);box-shadow:0 0 0 4px rgba(108,92,231,.1)}
 .m-textarea{width:100%;border:1.5px solid var(--g200);border-radius:12px;padding:12px 14px;font-size:14px;font-family:var(--font);resize:vertical;min-height:60px;background:var(--g50);transition:.25s var(--ease)}
@@ -55,7 +51,6 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .m-select{width:100%;border:1.5px solid var(--g200);border-radius:12px;padding:11px 14px;font-size:14px;font-family:var(--font);background:var(--g50);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;transition:.25s var(--ease)}
 .m-select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 4px rgba(108,92,231,.1)}
 
-/* Buttons */
 .btn{padding:13px 18px;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px;width:100%;position:relative;overflow:hidden}
 .btn:active{transform:scale(.96)}
 .btn:disabled{opacity:.4;pointer-events:none}
@@ -82,7 +77,6 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .chip-gym{background:var(--purple-l);color:var(--purple)}
 .chip-mixed{background:var(--teal-l);color:#0d9488}
 
-/* Segments */
 .seg-card{background:var(--g0);border-radius:16px;border:1px solid var(--g100);margin-bottom:8px;overflow:hidden;border-left:4px solid var(--accent);transition:.2s}
 .seg-head{padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:.15s}
 .seg-head:active{background:var(--g50)}
@@ -95,29 +89,29 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .stu-tag-challenge{background:#fce7f3;color:#9d174d}
 .stu-tag-simplified{background:#fef3c7;color:#92400e}
 
-/* Teach */
 .teach-seg{background:var(--g0);border-radius:24px;padding:24px;margin-bottom:12px;box-shadow:var(--sh-lg)}
-.teach-stu-card{background:var(--g50);border-radius:16px;padding:14px;margin-top:8px;border-left:3px solid var(--accent)}
+.teach-stu-card{background:var(--g50);border-radius:16px;padding:14px;margin-top:8px;border-left:3px solid var(--accent);transition:.2s}
+.teach-stu-card.att-absent{opacity:.35;border-left-color:var(--g300)}
 .reflect-stu{background:var(--g0);border-radius:16px;padding:16px;margin-bottom:10px;box-shadow:var(--sh);border:1px solid var(--g100)}
 
-/* Report */
 .report-card{background:var(--g0);border-radius:24px;padding:24px;box-shadow:var(--sh-lg);border:2px solid var(--accent);margin-bottom:12px}
 .report-card h3{font-size:16px;font-weight:800;margin-bottom:14px;color:var(--accent)}
 .report-stu{padding:12px 0;border-bottom:1px solid var(--g100)}
 .report-stu:last-child{border:none}
 
-/* Share card */
 .share-card{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:24px;padding:24px;color:#fff;margin-bottom:12px;box-shadow:0 8px 32px rgba(15,52,96,.3)}
 .share-seg{background:rgba(255,255,255,.08);border-radius:14px;padding:14px;margin-bottom:8px;border:1px solid rgba(255,255,255,.06)}
 .share-seg:hover{background:rgba(255,255,255,.12)}
 .share-link-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:10px;background:rgba(108,92,231,.3);color:#c4b5fd;font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(108,92,231,.4);transition:.2s}
 .share-link-btn:hover{background:rgba(108,92,231,.5)}
 
-/* Video field */
 .video-field{background:linear-gradient(135deg,#faf5ff,#ede9fe);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid #e9d5ff}
 .video-field .label{color:#7c3aed}
 
-/* Animations */
+.att-bar{background:var(--green-l);border-radius:14px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:.2s;border:1px solid rgba(16,185,129,.15)}
+.att-bar:active{background:#d1fae5}
+.att-bar.warn{background:var(--amber-l);border-color:rgba(245,158,11,.15)}
+
 .fade-in{animation:fadeIn .35s var(--ease)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .slide-up{animation:slideUp .4s var(--ease)}
@@ -151,13 +145,10 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
 
 .divider{height:1px;background:var(--g100);margin:16px 0}
 
-/* Class card icon */
 .class-ico{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#1a1a2e,#0f3460);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 4px 12px rgba(15,52,96,.2)}
 
-/* Student avatar */
 .stu-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent-l),#ddd6fe);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--accent);flex-shrink:0}
 
-/* Progress bar */
 .prog-bar{height:6px;background:var(--g100);border-radius:6px;overflow:hidden;margin:8px 0}
 .prog-fill{height:100%;border-radius:6px;transition:width .4s var(--ease)}
 </style>
@@ -174,6 +165,11 @@ const CLOUD_FILE='lesson_plan_v1.txt';
 const LEVELS=['未接觸','需要提示','偶爾成功','基本掌握','穩定完成','可示範'];
 const CATS={rope:{name:'跳繩',emoji:'🪢'},gym:{name:'體操',emoji:'🤸'},mixed:{name:'混合',emoji:'🔀'}};
 const DIFF_LABELS={simplified:'🟡 簡化',basic:'🔵 基礎',standard:'🟢 標準',challenge:'🔴 挑戰'};
+const ATT_STATUSES=[
+{id:'present',label:'✅ 出席',c:'var(--green)',bg:'var(--green-l)'},
+{id:'late',label:'⏰ 遲到',c:'var(--amber)',bg:'var(--amber-l)'},
+{id:'absent',label:'❌ 缺席',c:'var(--rose)',bg:'var(--rose-l)'},
+{id:'excused',label:'📝 請假',c:'var(--blue)',bg:'var(--blue-l)'}];
 const SEG_TEMPLATES={
 rope:[{name:'集合及目標介紹',duration:5,desc:'講解今堂目標及示範'},{name:'熱身跳繩',duration:5,desc:'自由跳、開合跳'},{name:'前置技能重溫',duration:8,desc:''},{name:'主學習活動',duration:15,desc:''},{name:'組合練習',duration:10,desc:''},{name:'挑戰／小作品',duration:8,desc:''},{name:'回顧',duration:4,desc:''}],
 gym:[{name:'集合及目標介紹',duration:5,desc:''},{name:'熱身及柔軟度',duration:8,desc:''},{name:'基礎體能',duration:8,desc:''},{name:'主學習活動',duration:15,desc:''},{name:'組合練習',duration:10,desc:''},{name:'挑戰',duration:7,desc:''},{name:'回顧及拉筋',duration:7,desc:''}],
@@ -181,7 +177,7 @@ mixed:[{name:'集合及目標介紹',duration:5,desc:''},{name:'熱身',duration
 };
 
 let CLASSES=[],PLANS=[];
-let S={tab:'classes',page:'home',selClass:null,selPlan:null,teachSeg:0,editPlanId:null,segOpen:{},planTab:'current'};
+let S={tab:'classes',page:'home',selClass:null,selPlan:null,teachSeg:0,editPlanId:null,segOpen:{},planTab:'current',attBack:'home'};
 
 function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2,5)}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
@@ -195,10 +191,19 @@ function copyTxt(t){navigator.clipboard?navigator.clipboard.writeText(t).then(()
 function getClass(id){return CLASSES.find(c=>c.id===id)}
 function getPlan(id){return PLANS.find(p=>p.id===id)}
 function getClassPlans(cid){return PLANS.filter(p=>p.classId===cid)}
-function buildSave(){return{v:'2',savedAt:nowStr(),classes:CLASSES,plans:PLANS}}
+function buildSave(){return{v:'3',savedAt:nowStr(),classes:CLASSES,plans:PLANS}}
 function applyLoad(d){if(d.classes)CLASSES=d.classes;if(d.plans)PLANS=d.plans}
 function cloudSave(){if(!CLOUD_URL)return;var el=document.getElementById('cloudSt');if(el){el.className='cloud-st show loading';el.textContent='☁️ 儲存中…'}fetch(CLOUD_URL,{method:'POST',body:JSON.stringify({token:CLOUD_TOKEN,file:CLOUD_FILE,data:JSON.stringify(buildSave())})}).then(r=>r.json()).then(res=>{if(el){el.className='cloud-st show '+(res.ok?'ok':'err');el.textContent=res.ok?'✅ 已儲存 · '+nowStr():'❌ 錯誤'}if(res.ok)toast('✅ 已儲存')}).catch(()=>{if(el){el.className='cloud-st show err';el.textContent='❌ 連接失敗'}})}
 function cloudLoad(cb){if(!CLOUD_URL){if(cb)cb();return}fetch(CLOUD_URL+'?token='+encodeURIComponent(CLOUD_TOKEN)+'&file='+encodeURIComponent(CLOUD_FILE)).then(r=>r.json()).then(res=>{if(res.ok){try{applyLoad(JSON.parse(res.data))}catch(e){}}if(cb)cb();R()}).catch(()=>{if(cb)cb();R()})}
+
+/* === ATTENDANCE HELPERS === */
+function isPresent(pid,sid){var p=getPlan(pid);if(!p||!p.attendance||!p.attendance[sid]||!p.attendance[sid].status)return true;var st=p.attendance[sid].status;return st==='present'||st==='late'}
+function getAttStats(pid,students){var p=getPlan(pid);var att=(p&&p.attendance)||{};var s={present:0,late:0,absent:0,excused:0,unmarked:0,total:students.length};students.forEach(function(st){var a=att[st.id];if(!a||!a.status)s.unmarked++;else if(s.hasOwnProperty(a.status))s[a.status]++});s.here=s.present+s.late;return s}
+function getStuAttRate(cid,sid){var plans=getClassPlans(cid);var total=0,here=0;plans.forEach(function(p){if(p.attendance&&p.attendance[sid]&&p.attendance[sid].status){total++;if(p.attendance[sid].status==='present'||p.attendance[sid].status==='late')here++}});return{total:total,here:here,rate:total>0?Math.round(here/total*100):null}}
+function setAtt(pid,sid,status){var p=getPlan(pid);if(!p)return;if(!p.attendance)p.attendance={};if(!p.attendance[sid])p.attendance[sid]={status:'',notes:''};p.attendance[sid].status=p.attendance[sid].status===status?'':status;R()}
+function setAttNote(pid,sid,note){var p=getPlan(pid);if(!p)return;if(!p.attendance)p.attendance={};if(!p.attendance[sid])p.attendance[sid]={status:'',notes:''};p.attendance[sid].notes=note}
+function markAllPresent(pid){var p=getPlan(pid);if(!p)return;var c=getClass(p.classId);if(!c||!c.students)return;if(!p.attendance)p.attendance={};c.students.forEach(function(st){if(!p.attendance[st.id])p.attendance[st.id]={status:'',notes:''};p.attendance[st.id].status='present'});R()}
+function goBackFromAtt(){if(S.attBack==='planBuilder'){S.page='planBuilder';R()}else if(S.attBack==='teachMode'){S.page='teachMode';R()}else if(S.attBack==='classDetail'){S.page='classDetail';R()}else{S.page='home';S.tab='classes';R()}}
 
 function R(){var app=document.getElementById('app');var h='<div class="container" style="padding-top:16px">';
 if(S.page==='classDetail')h+=pgClassDetail();
@@ -208,6 +213,7 @@ else if(S.page==='planBuilder')h+=pgPlanBuilder();
 else if(S.page==='teachMode')h+=pgTeachMode();
 else if(S.page==='reflectView')h+=pgReflectView();
 else if(S.page==='shareView')h+=pgShareView();
+else if(S.page==='attendance')h+=pgAttendance();
 else{
 if(S.tab==='classes')h+=tabClasses();
 else if(S.tab==='plans')h+=tabPlans();
@@ -245,14 +251,19 @@ var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" 
 h+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div style="font-size:15px;font-weight:700">👤 學生（'+(c.students||[]).length+'）</div><button class="btn btn-sm btn-outline" onclick="addStudent()">＋ 新增</button></div>';
 if(!c.students||!c.students.length)h+='<div class="m-card" style="text-align:center;color:var(--g400);font-size:13px">未有學生</div>';
 else c.students.forEach((st,i)=>{
-h+='<div class="m-card" style="display:flex;align-items:center;gap:10px"><div class="stu-ava">'+esc(st.name.charAt(0))+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">'+esc(st.name)+'</div><div style="font-size:11px;color:var(--g400)">'+esc(st.level||'未設定')+'</div></div><button class="btn btn-xs btn-ghost" onclick="editStudent(\''+c.id+'\','+i+')">✏️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delStudent(\''+c.id+'\','+i+')">✕</button></div>'});
+var attR=getStuAttRate(c.id,st.id);
+var attColor=attR.rate===null?'var(--g400)':attR.rate>=80?'var(--green)':attR.rate>=60?'var(--amber)':'var(--rose)';
+h+='<div class="m-card" style="display:flex;align-items:center;gap:10px"><div class="stu-ava">'+esc(st.name.charAt(0))+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">'+esc(st.name)+'</div><div style="display:flex;align-items:center;gap:8px;margin-top:2px"><span style="font-size:11px;color:var(--g400)">'+esc(st.level||'未設定')+'</span>'+(attR.rate!==null?'<span style="font-size:10px;font-weight:700;color:'+attColor+'">📊 '+attR.rate+'% ('+attR.here+'/'+attR.total+')</span>':'')+'</div></div><button class="btn btn-xs btn-ghost" onclick="editStudent(\''+c.id+'\','+i+')">✏️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delStudent(\''+c.id+'\','+i+')">✕</button></div>'});
 // Plans
 h+='<div style="display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px"><div style="font-size:15px;font-weight:700">📋 教案</div><button class="btn btn-sm btn-accent" onclick="newPlan(\''+c.id+'\')">＋ 新教案</button></div>';
 if(!plans.length)h+='<div class="m-card" style="text-align:center;color:var(--g400);font-size:13px">未有教案</div>';
 else plans.slice().reverse().forEach(p=>{
 var totalMin=p.segments?p.segments.reduce((a,s)=>a+s.duration,0):0;
 var hasVids=p.segments&&p.segments.some(s=>s.videoUrl);
-h+='<div class="m-card" style="cursor:pointer" onclick="S.editPlanId=\''+p.id+'\';S.page=\'planBuilder\';R()"><div style="display:flex;justify-content:space-between;align-items:start"><div style="flex:1"><div style="font-size:15px;font-weight:700">'+esc(p.date)+'</div><div style="font-size:11px;color:var(--g400);margin-top:3px">'+(p.goals||[]).length+'目標 · '+(p.segments||[]).length+'環節 · '+totalMin+'分鐘'+(hasVids?' · 🎬':'')+'</div></div><div style="display:flex;gap:4px;flex-shrink:0"><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'shareView\';R()" title="分享">📤</button><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'teachMode\';S.teachSeg=0;R()">▶️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="event.stopPropagation();delPlan(\''+p.id+'\')">✕</button></div></div>';
+var students=c.students||[];
+var attS=getAttStats(p.id,students);
+var attLabel=attS.total>0?(attS.unmarked===attS.total?'未點名':attS.here+'/'+attS.total+'出席'):'';
+h+='<div class="m-card" style="cursor:pointer" onclick="S.editPlanId=\''+p.id+'\';S.page=\'planBuilder\';R()"><div style="display:flex;justify-content:space-between;align-items:start"><div style="flex:1"><div style="font-size:15px;font-weight:700">'+esc(p.date)+'</div><div style="font-size:11px;color:var(--g400);margin-top:3px">'+(p.goals||[]).length+'目標 · '+(p.segments||[]).length+'環節 · '+totalMin+'分鐘'+(hasVids?' · 🎬':'')+(attLabel?' · ✅'+attLabel:'')+'</div></div><div style="display:flex;gap:4px;flex-shrink:0"><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.attBack=\'classDetail\';S.page=\'attendance\';R()" title="點名">✅</button><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'shareView\';R()" title="分享">📤</button><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'teachMode\';S.teachSeg=0;R()">▶️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="event.stopPropagation();delPlan(\''+p.id+'\')">✕</button></div></div>';
 if(p.goals&&p.goals.length){h+='<div style="margin-top:8px">';p.goals.forEach(g=>{if(g.text)h+='<div style="font-size:12px;color:var(--g600);padding:2px 0">🎯 '+esc(g.text)+'</div>'});h+='</div>'}
 h+='</div>'});
 return h}
@@ -292,7 +303,7 @@ return h}
 // === PLAN BUILDER ===
 function newPlan(cid){
 var c=getClass(cid);if(!c)return;
-var p={id:uid(),classId:cid,date:dateStr(),duration:c.defaultDuration||60,goals:[{text:'',criteria:''}],segments:[],reflection:null};
+var p={id:uid(),classId:cid,date:dateStr(),duration:c.defaultDuration||60,goals:[{text:'',criteria:''}],segments:[],reflection:null,attendance:{}};
 PLANS.push(p);
 S.editPlanId=p.id;S.page='planBuilder';S.segOpen={};R()}
 
@@ -307,6 +318,12 @@ var over=totalMin-p.duration;
 var pct=Math.min(100,Math.round(totalMin/p.duration*100));
 
 var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="savePlan();S.page=\'classDetail\';S.selClass=\''+p.classId+'\';R()">‹</button><div style="flex:1"><div style="font-size:20px;font-weight:800">編輯教案</div><div style="font-size:12px;color:var(--g400)">'+(c?esc(c.name):'')+'</div></div><button class="btn btn-sm btn-dark" onclick="savePlan();toast(\'✅ 已儲存\')">💾</button></div>';
+
+// Attendance bar in plan builder
+if(students.length){
+var attS=getAttStats(p.id,students);
+var allUnmarked=attS.unmarked===attS.total;
+h+='<div class="att-bar '+(allUnmarked?'warn':'')+'" onclick="savePlan();S.selPlan=\''+p.id+'\';S.attBack=\'planBuilder\';S.page=\'attendance\';R()" style="margin-bottom:14px"><div style="font-size:13px;font-weight:600;color:'+(allUnmarked?'#92400e':'#065f46')+'">'+(allUnmarked?'⚠️ 未點名 — 撳呢度點名':'✅ '+attS.here+'/'+attS.total+' 出席'+(attS.late>0?' · ⏰'+attS.late+'遲到':''))+'</div><span style="font-size:12px;color:'+(allUnmarked?'var(--amber)':'var(--green)')+'">點名 ›</span></div>'}
 
 // Basic info
 h+='<div class="m-card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label class="label">日期</label><input type="date" id="pd" class="m-input" value="'+p.date+'" onchange="getPlan(\''+p.id+'\').date=this.value"></div><div><label class="label">課堂長度（分鐘）</label><input type="number" id="pdu" class="m-input" value="'+p.duration+'" onchange="getPlan(\''+p.id+'\').duration=parseInt(this.value)||60"></div></div></div>';
@@ -331,16 +348,11 @@ h+='<div class="seg-body '+(isOpen?'show':'')+'">';
 h+='<div style="display:grid;grid-template-columns:3fr 1fr;gap:8px;margin-bottom:10px"><div><label class="label">環節名稱</label><input class="m-input" value="'+esc(seg.name)+'" onchange="updSeg(\''+p.id+'\','+i+',\'name\',this.value)" style="font-size:13px"></div><div><label class="label">分鐘</label><input type="number" class="m-input" value="'+seg.duration+'" min="1" onchange="updSeg(\''+p.id+'\','+i+',\'duration\',parseInt(this.value)||1)" style="font-size:13px"></div></div>';
 h+='<label class="label">內容描述</label><textarea class="m-textarea" onchange="updSeg(\''+p.id+'\','+i+',\'desc\',this.value)" style="font-size:12px;margin-bottom:8px;min-height:40px">'+esc(seg.desc||'')+'</textarea>';
 h+='<label class="label">教練提示／口令</label><textarea class="m-textarea" onchange="updSeg(\''+p.id+'\','+i+',\'cues\',this.value)" style="font-size:12px;margin-bottom:10px;min-height:40px">'+esc(seg.cues||'')+'</textarea>';
-
-// === VIDEO FIELD (NEW) ===
 h+='<div class="video-field"><div style="font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:8px">🎬 教學片</div><div style="display:grid;grid-template-columns:3fr 1fr;gap:8px"><div><label class="label">Google Drive 連結</label><input class="m-input" placeholder="https://drive.google.com/..." value="'+esc(seg.videoUrl||'')+'" onchange="updSeg(\''+p.id+'\','+i+',\'videoUrl\',this.value)" style="font-size:12px"></div><div><label class="label">BPM</label><input type="number" class="m-input" placeholder="120" value="'+(seg.bpm||'')+'" onchange="updSeg(\''+p.id+'\','+i+',\'bpm\',parseInt(this.value)||0)" style="font-size:12px"></div></div></div>';
-
-// Difficulty tiers
 h+='<div style="background:var(--g50);border-radius:12px;padding:12px;margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:var(--g500);margin-bottom:8px">📊 難度分層</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">';
 ['simplified','basic','standard','challenge'].forEach(d=>{
 h+='<div><label class="label">'+DIFF_LABELS[d]+'</label><textarea class="m-textarea" style="font-size:11px;min-height:30px;padding:6px 8px" onchange="updSegDiff(\''+p.id+'\','+i+',\''+d+'\',this.value)">'+esc((seg.diff&&seg.diff[d])||'')+'</textarea></div>'});
 h+='</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px"><div><label class="label">⬇️ 退階方案</label><input class="m-input" style="font-size:11px;padding:6px 8px" value="'+esc((seg.diff&&seg.diff.scaleDown)||'')+'" onchange="updSegDiff(\''+p.id+'\','+i+',\'scaleDown\',this.value)"></div><div><label class="label">⬆️ 升階方案</label><input class="m-input" style="font-size:11px;padding:6px 8px" value="'+esc((seg.diff&&seg.diff.scaleUp)||'')+'" onchange="updSegDiff(\''+p.id+'\','+i+',\'scaleUp\',this.value)"></div></div></div>';
-// Per-student tasks
 if(students.length){
 h+='<div style="background:var(--accent-l);border-radius:12px;padding:12px;margin-bottom:10px"><div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px">👤 學生任務分配</div>';
 students.forEach(st=>{
@@ -351,7 +363,6 @@ var isOn=task.level===lv;
 h+='<button style="padding:3px 8px;border-radius:8px;border:1.5px solid '+(isOn?'var(--accent)':'var(--g200)')+';background:'+(isOn?'var(--accent)':'var(--g0)')+';color:'+(isOn?'#fff':'var(--g500)')+';font-size:10px;font-weight:600;cursor:pointer" onclick="setStudentLevel(\''+p.id+'\','+i+',\''+st.id+'\',\''+lv+'\')">'+DIFF_LABELS[lv].split(' ')[1]+'</button>'});
 h+='</div><input class="m-input" placeholder="具體任務" style="font-size:11px;padding:6px 8px" value="'+esc(task.task)+'" onchange="setStudentTask(\''+p.id+'\','+i+',\''+st.id+'\',this.value)"></div>'});
 h+='</div>'}
-// Move/delete
 h+='<div style="display:flex;gap:6px"><button class="btn btn-xs btn-ghost" onclick="moveSeg(\''+p.id+'\','+i+',-1)" '+(i===0?'disabled':'')+'>⬆</button><button class="btn btn-xs btn-ghost" onclick="moveSeg(\''+p.id+'\','+i+',1)" '+(i===(p.segments||[]).length-1?'disabled':'')+'>⬇</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose);margin-left:auto" onclick="delSeg(\''+p.id+'\','+i+')">刪除</button></div>';
 h+='</div></div>'});
 
@@ -371,13 +382,52 @@ function setStudentLevel(pid,si,stid,lv){var p=getPlan(pid);if(!p||!p.segments[s
 function setStudentTask(pid,si,stid,task){var p=getPlan(pid);if(!p||!p.segments[si])return;var seg=p.segments[si];if(!seg.studentTasks)seg.studentTasks={};if(!seg.studentTasks[stid])seg.studentTasks[stid]={task:'',level:'standard'};seg.studentTasks[stid].task=task}
 function savePlan(){var p=getPlan(S.editPlanId);if(!p)return;cloudSave()}
 
+// === ATTENDANCE PAGE ===
+function pgAttendance(){
+var p=getPlan(S.selPlan);if(!p){S.page='home';return ''}
+var c=getClass(p.classId);
+var students=c?c.students||[]:[];
+if(!p.attendance)p.attendance={};
+var stats=getAttStats(p.id,students);
+
+var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="goBackFromAtt()">‹</button><div style="flex:1"><div style="font-size:20px;font-weight:800">✅ 點名</div><div style="font-size:12px;color:var(--g400)">'+(c?esc(c.name):'')+' · '+esc(p.date)+'</div></div><button class="btn btn-sm btn-dark" onclick="cloudSave()">💾</button></div>';
+
+// Stats
+h+='<div class="m-card" style="padding:16px"><div style="display:flex;justify-content:space-around;text-align:center"><div><div style="font-size:28px;font-weight:900;color:var(--green)">'+stats.here+'</div><div style="font-size:10px;color:var(--g400);font-weight:600">出席</div></div><div><div style="font-size:28px;font-weight:900;color:var(--amber)">'+stats.late+'</div><div style="font-size:10px;color:var(--g400);font-weight:600">遲到</div></div><div><div style="font-size:28px;font-weight:900;color:var(--rose)">'+stats.absent+'</div><div style="font-size:10px;color:var(--g400);font-weight:600">缺席</div></div><div><div style="font-size:28px;font-weight:900;color:var(--blue)">'+stats.excused+'</div><div style="font-size:10px;color:var(--g400);font-weight:600">請假</div></div></div></div>';
+
+// Quick actions
+h+='<div style="display:flex;gap:6px;margin-bottom:14px"><button class="btn btn-sm btn-green" style="flex:1" onclick="markAllPresent(\''+p.id+'\')">✅ 全部出席</button><button class="btn btn-sm btn-outline" style="flex:1" onclick="clearAllAtt(\''+p.id+'\')">🔄 重置</button></div>';
+
+if(!students.length)h+='<div class="empty"><div class="em-ico">👤</div>未有學生<br>請先喺班別設定新增學生</div>';
+else students.forEach(function(st){
+var a=p.attendance[st.id]||{};
+var status=a.status||'';
+h+='<div class="m-card" style="margin-bottom:8px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div class="stu-ava">'+esc(st.name.charAt(0))+'</div><div style="flex:1"><div style="font-size:14px;font-weight:600">'+esc(st.name)+'</div><div style="font-size:11px;color:var(--g400)">'+esc(st.level||'')+'</div></div></div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:8px">';
+ATT_STATUSES.forEach(function(s){
+var isOn=status===s.id;
+h+='<button style="padding:8px 2px;border-radius:10px;border:1.5px solid '+(isOn?s.c:'var(--g200)')+';background:'+(isOn?s.bg:'transparent')+';color:'+(isOn?s.c:'var(--g400)')+';font-size:10px;font-weight:600;cursor:pointer;transition:.2s" onclick="setAtt(\''+p.id+'\',\''+st.id+'\',\''+s.id+'\')">'+s.label+'</button>'});
+h+='</div>';
+h+='<input class="m-input" placeholder="備註（選填）" style="font-size:11px;padding:8px 10px" value="'+esc(a.notes||'')+'" onchange="setAttNote(\''+p.id+'\',\''+st.id+'\',this.value)">';
+h+='</div>'});
+
+h+='<button class="btn btn-dark" style="margin-top:12px" onclick="cloudSave()">💾 儲存點名</button>';
+if(S.attBack==='teachMode')h+='<button class="btn btn-accent" style="margin-top:8px" onclick="S.page=\'teachMode\';R()">▶️ 繼續上堂</button>';
+else if(S.attBack==='planBuilder')h+='<button class="btn btn-accent" style="margin-top:8px" onclick="S.page=\'planBuilder\';R()">📋 返回教案</button>';
+return h}
+
+function clearAllAtt(pid){var p=getPlan(pid);if(!p)return;p.attendance={};R()}
+
 // === TAB: TEACH ===
 function tabTeach(){
 var h='<div style="font-size:20px;font-weight:800;margin-bottom:16px">▶️ 選擇教案上堂</div>';
 if(!PLANS.length)return h+'<div class="empty"><div class="em-ico">📋</div>未有教案</div>';
 PLANS.slice().reverse().forEach(p=>{
 var c=getClass(p.classId);
-h+='<div class="m-card" style="cursor:pointer" onclick="S.selPlan=\''+p.id+'\';S.page=\'teachMode\';S.teachSeg=0;R()"><div style="font-size:15px;font-weight:700">'+esc(p.date)+'</div><div style="font-size:12px;color:var(--g400)">'+(c?esc(c.name):'')+'</div></div>'});
+var students=c?c.students||[]:[];
+var attS=getAttStats(p.id,students);
+var attLabel=students.length>0?(attS.unmarked===attS.total?'⚠️ 未點名':'✅ '+attS.here+'/'+attS.total):'';
+h+='<div class="m-card" style="cursor:pointer" onclick="S.selPlan=\''+p.id+'\';S.page=\'teachMode\';S.teachSeg=0;R()"><div style="display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:15px;font-weight:700">'+esc(p.date)+'</div><div style="font-size:12px;color:var(--g400)">'+(c?esc(c.name):'')+''+(attLabel?' · '+attLabel:'')+'</div></div><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.attBack=\'home\';S.page=\'attendance\';R()">✅ 點名</button></div></div>'});
 return h}
 
 // === TEACH MODE ===
@@ -390,6 +440,12 @@ var seg=segs[S.teachSeg];
 var pct=segs.length?Math.round((S.teachSeg+1)/segs.length*100):0;
 
 var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px" class="fade-in"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'teach\';R()">‹</button><div style="flex:1"><div style="font-size:16px;font-weight:800">'+(c?esc(c.name):'')+'</div><div style="font-size:11px;color:var(--g400)">'+esc(p.date)+' · 環節 '+(S.teachSeg+1)+'/'+segs.length+'</div></div></div>';
+
+// Attendance bar in teach mode
+if(students.length){
+var attS=getAttStats(p.id,students);
+var allUnmarked=attS.unmarked===attS.total;
+h+='<div class="att-bar '+(allUnmarked?'warn':'')+'" onclick="S.attBack=\'teachMode\';S.page=\'attendance\';R()"><div style="font-size:13px;font-weight:600;color:'+(allUnmarked?'#92400e':'#065f46')+'">'+(allUnmarked?'⚠️ 未點名 — 撳呢度點名':'✅ '+attS.here+'/'+attS.total+' 出席'+(attS.late>0?' · ⏰'+attS.late:'')+(attS.absent+attS.excused>0?' · ❌'+(attS.absent+attS.excused):''))+'</div><span style="font-size:12px;color:'+(allUnmarked?'var(--amber)':'var(--green)')+'">點名 ›</span></div>'}
 
 // Progress
 h+='<div class="prog-bar" style="margin-bottom:14px"><div class="prog-fill" style="width:'+pct+'%;background:var(--accent)"></div></div>';
@@ -407,13 +463,11 @@ h+='<div class="teach-seg slide-up"><div style="display:flex;align-items:center;
 h+='<div style="font-size:22px;font-weight:800;margin-bottom:10px;line-height:1.3">'+esc(seg.name||'未命名')+'</div>';
 if(seg.desc)h+='<div style="font-size:14px;color:var(--g600);margin-bottom:10px;line-height:1.5">'+esc(seg.desc)+'</div>';
 
-// Video link in teach mode
 if(seg.videoUrl){
 h+='<div style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid #e9d5ff"><div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:11px;font-weight:700;color:#7c3aed">🎬 教學片</div>'+(seg.bpm?'<div style="font-size:12px;color:var(--g500);margin-top:2px">🎵 BPM: '+seg.bpm+'</div>':'')+'</div><a href="'+esc(seg.videoUrl)+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(124,58,237,.3)">▶ 播放</a></div></div>'}
 
 if(seg.cues)h+='<div style="background:var(--amber-l);border-radius:12px;padding:12px;margin-bottom:12px"><div style="font-size:10px;font-weight:700;color:#92400e;margin-bottom:4px">💡 教練提示</div><div style="font-size:13px;color:#78350f;line-height:1.5">'+esc(seg.cues)+'</div></div>';
 
-// Difficulty
 if(seg.diff){
 var hasDiff=seg.diff.simplified||seg.diff.basic||seg.diff.standard||seg.diff.challenge;
 if(hasDiff){h+='<div style="background:var(--g50);border-radius:12px;padding:12px;margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:var(--g500);margin-bottom:6px">📊 難度分層</div>';
@@ -422,14 +476,19 @@ if(seg.diff.scaleDown)h+='<div style="font-size:12px;color:var(--rose)">⬇️ '
 if(seg.diff.scaleUp)h+='<div style="font-size:12px;color:var(--green)">⬆️ '+esc(seg.diff.scaleUp)+'</div>';
 h+='</div>'}}
 
-// Students
+// Students - with attendance integration
 if(students.length){
 h+='<div style="font-size:12px;font-weight:700;color:var(--g500);margin-bottom:8px">👤 學生任務</div>';
 students.forEach(st=>{
 var task=(seg.studentTasks&&seg.studentTasks[st.id])||null;
 var lvLabel=task?DIFF_LABELS[task.level]||'標準':'—';
 var lvClass=task?'stu-tag-'+(task.level||'standard'):'';
-h+='<div class="teach-stu-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><span style="font-size:14px;font-weight:700">'+esc(st.name)+'</span><span class="stu-tag '+lvClass+'">'+lvLabel+'</span></div>';
+var here=isPresent(p.id,st.id);
+var attA=(p.attendance&&p.attendance[st.id])||{};
+var absentLabel='';
+if(attA.status==='absent')absentLabel='❌ 缺席';
+else if(attA.status==='excused')absentLabel='📝 請假';
+h+='<div class="teach-stu-card '+(here?'':'att-absent')+'"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><span style="font-size:14px;font-weight:700">'+esc(st.name)+(absentLabel?' <span style="font-size:10px;font-weight:600">'+absentLabel+'</span>':'')+'</span><span class="stu-tag '+lvClass+'">'+lvLabel+'</span></div>';
 if(task&&task.task)h+='<div style="font-size:13px;color:var(--g600)">'+esc(task.task)+'</div>';
 else h+='<div style="font-size:12px;color:var(--g400)">未指定任務</div>';
 h+='</div>'})}
@@ -448,7 +507,7 @@ h+='<div onclick="S.teachSeg='+i+';R()" style="width:30px;height:30px;border-rad
 h+='</div>';
 return h}
 
-// === SHARE VIEW (NEW) ===
+// === SHARE VIEW ===
 function pgShareView(){
 var p=getPlan(S.selPlan);if(!p){S.page='home';return ''}
 var c=getClass(p.classId);
@@ -457,7 +516,6 @@ var totalMin=segs.reduce((a,s)=>a+s.duration,0);
 
 var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="S.page=\'planBuilder\';S.editPlanId=\''+p.id+'\';R()">‹</button><div style="flex:1;font-size:20px;font-weight:800">📤 分享給學生</div></div>';
 
-// Preview card (dark theme like reference)
 h+='<div class="share-card slide-up"><div style="font-size:12px;opacity:.5;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">課堂流程</div><div style="font-size:22px;font-weight:800;margin-bottom:4px">'+(c?esc(c.name):'')+'</div><div style="font-size:13px;opacity:.6;margin-bottom:16px">📅 '+esc(p.date)+' · ⏱ '+totalMin+'分鐘</div>';
 
 if(p.goals&&p.goals.length){
@@ -473,7 +531,6 @@ h+='<div style="margin-left:32px;margin-top:4px"><a href="'+esc(seg.videoUrl)+'"
 h+='</div>'});
 h+='</div>';
 
-// Action buttons
 h+='<button class="btn btn-dark" style="margin-bottom:8px" onclick="copyShareText(\''+p.id+'\')">📋 複製文字（WhatsApp）</button>';
 h+='<button class="btn btn-outline" style="margin-bottom:8px" onclick="copyShareLinks(\''+p.id+'\')">🔗 只複製教學片連結</button>';
 h+='<div style="text-align:center;font-size:11px;color:var(--g400);margin-top:8px">複製後貼去 WhatsApp / Signal 傳畀學生 📱</div>';
@@ -488,7 +545,7 @@ var t='📋 *'+(c?c.name:'')+' 課堂流程*\n📅 '+p.date+' · ⏱ '+totalMin+
 if(p.goals)p.goals.forEach(g=>{if(g.text)t+='\n🎯 '+g.text});
 t+='\n\n——————————————\n';
 segs.forEach((seg,i)=>{
-t+='\n'+(i+1)+'️⃣ *'+esc(seg.name||'未命名')+'* ('+seg.duration+'分鐘)';
+t+='\n'+(i+1)+'️⃣ *'+(seg.name||'未命名')+'* ('+seg.duration+'分鐘)';
 if(seg.desc)t+='\n   '+seg.desc;
 if(seg.videoUrl){t+='\n   🎬 教學片：'+seg.videoUrl;if(seg.bpm)t+=' (BPM '+seg.bpm+')'}
 t+='\n'});
@@ -500,7 +557,7 @@ var p=getPlan(pid);if(!p)return;
 var segs=(p.segments||[]).filter(s=>s.videoUrl);
 if(!segs.length){toast('未有教學片連結');return}
 var t='🎬 教學片連結：\n\n';
-segs.forEach((seg,i)=>{t+=seg.name+'\n'+seg.videoUrl+(seg.bpm?' (BPM '+seg.bpm+')':'')+'\n\n'});
+segs.forEach(seg=>{t+=seg.name+'\n'+seg.videoUrl+(seg.bpm?' (BPM '+seg.bpm+')':'')+'\n\n'});
 copyTxt(t)}
 
 // === TAB: REFLECT ===
@@ -524,6 +581,12 @@ var ref=p.reflection;
 var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'reflect\';R()">‹</button><div style="flex:1;font-size:20px;font-weight:800">課後反思</div><button class="btn btn-sm btn-dark" onclick="saveReflect()">💾</button></div>';
 h+='<div style="font-size:12px;color:var(--g400);margin-bottom:14px">'+(c?esc(c.name):'')+' · '+esc(p.date)+'</div>';
 
+// Attendance summary in reflect
+if(students.length){
+var attS=getAttStats(p.id,students);
+if(attS.unmarked<attS.total){
+h+='<div style="background:var(--green-l);border-radius:14px;padding:10px 16px;margin-bottom:14px;font-size:12px;color:#065f46;font-weight:600">✅ 出席：'+attS.here+'/'+attS.total+(attS.late>0?' · ⏰遲到 '+attS.late:'')+(attS.absent>0?' · ❌缺席 '+attS.absent:'')+(attS.excused>0?' · 📝請假 '+attS.excused:'')+'</div>'}}
+
 if(p.goals&&p.goals.length){h+='<div style="background:var(--accent-l);border-radius:14px;padding:12px;margin-bottom:14px">';p.goals.forEach(g=>{if(g.text)h+='<div style="font-size:12px;color:var(--accent);font-weight:600">🎯 '+esc(g.text)+'</div>'});h+='</div>'}
 
 h+='<div class="m-card"><div style="font-size:15px;font-weight:700;margin-bottom:12px">📊 3 項數據</div><label class="label">完成到邊個環節？</label><input id="rc" class="m-input" value="'+esc(ref.completed)+'" style="margin-bottom:12px"><label class="label">主目標成功率</label><select id="rr" class="m-select" style="margin-bottom:10px"><option value="">選擇</option><option'+(ref.rate==='未達標'?' selected':'')+'>未達標</option><option'+(ref.rate==='部分達標'?' selected':'')+'>部分達標</option><option'+(ref.rate==='基本達標'?' selected':'')+'>基本達標</option><option'+(ref.rate==='完全達標'?' selected':'')+'>完全達標</option><option'+(ref.rate==='超出預期'?' selected':'')+'>超出預期</option></select></div>';
@@ -532,7 +595,12 @@ h+='<div class="m-card"><div style="font-size:15px;font-weight:700;margin-bottom
 if(!students.length)h+='<div style="font-size:12px;color:var(--g400)">未有學生資料</div>';
 else students.forEach(st=>{
 var sr=(ref.studentResults&&ref.studentResults[st.id])||{result:'',notes:'',next:''};
-h+='<div class="reflect-stu"><div style="font-size:14px;font-weight:700;margin-bottom:8px">'+esc(st.name)+' <span style="font-size:10px;color:var(--g400);font-weight:500">('+esc(st.level)+')</span></div><label class="label">表現</label><select class="m-select stu-result" data-sid="'+st.id+'" style="margin-bottom:8px;font-size:12px"><option value="">—</option><option'+(sr.result==='超出預期'?' selected':'')+'>超出預期</option><option'+(sr.result==='完全做到'?' selected':'')+'>完全做到</option><option'+(sr.result==='部分做到'?' selected':'')+'>部分做到</option><option'+(sr.result==='需要更多練習'?' selected':'')+'>需要更多練習</option><option'+(sr.result==='未能完成'?' selected':'')+'>未能完成</option></select><label class="label">具體觀察</label><textarea class="m-textarea stu-notes" data-sid="'+st.id+'" style="font-size:12px;min-height:36px;margin-bottom:8px">'+esc(sr.notes)+'</textarea><label class="label">下堂任務建議</label><input class="m-input stu-next" data-sid="'+st.id+'" value="'+esc(sr.next||'')+'" style="font-size:12px"></div>'});
+var here=isPresent(p.id,st.id);
+var attA=(p.attendance&&p.attendance[st.id])||{};
+var absentLabel='';
+if(attA.status==='absent')absentLabel=' · ❌ 缺席';
+else if(attA.status==='excused')absentLabel=' · 📝 請假';
+h+='<div class="reflect-stu" style="'+(here?'':'opacity:.5')+'"><div style="font-size:14px;font-weight:700;margin-bottom:8px">'+esc(st.name)+' <span style="font-size:10px;color:var(--g400);font-weight:500">('+esc(st.level)+absentLabel+')</span></div><label class="label">表現</label><select class="m-select stu-result" data-sid="'+st.id+'" style="margin-bottom:8px;font-size:12px"><option value="">—</option><option'+(sr.result==='超出預期'?' selected':'')+'>超出預期</option><option'+(sr.result==='完全做到'?' selected':'')+'>完全做到</option><option'+(sr.result==='部分做到'?' selected':'')+'>部分做到</option><option'+(sr.result==='需要更多練習'?' selected':'')+'>需要更多練習</option><option'+(sr.result==='未能完成'?' selected':'')+'>未能完成</option></select><label class="label">具體觀察</label><textarea class="m-textarea stu-notes" data-sid="'+st.id+'" style="font-size:12px;min-height:36px;margin-bottom:8px">'+esc(sr.notes)+'</textarea><label class="label">下堂任務建議</label><input class="m-input stu-next" data-sid="'+st.id+'" value="'+esc(sr.next||'')+'" style="font-size:12px"></div>'});
 h+='</div>';
 
 h+='<div class="m-card"><div style="font-size:15px;font-weight:700;margin-bottom:12px">👁️ 2 個觀察</div><label class="label">最有效嘅教法</label><textarea id="re" class="m-textarea" style="margin-bottom:12px;font-size:13px">'+esc(ref.effective)+'</textarea><label class="label">最大卡位</label><textarea id="ri" class="m-textarea" style="font-size:13px">'+esc(ref.issue)+'</textarea></div>';
@@ -570,6 +638,19 @@ function genReport(){
 var p=getPlan(S.selPlan);if(!p)return;
 var c=getClass(p.classId);var ref=p.reflection||{};var students=c?c.students||[]:[];
 var h='<div class="report-card slide-up" id="reportCard"><h3>📋 課後報告</h3><div style="font-size:12px;color:var(--g500);margin-bottom:14px">'+(c?esc(c.name):'')+' · '+esc(p.date)+'</div>';
+
+// Attendance in report
+if(students.length){
+var attS=getAttStats(p.id,students);
+if(attS.unmarked<attS.total){
+h+='<div style="font-size:12px;padding:8px 12px;background:var(--green-l);border-radius:10px;margin-bottom:10px;color:#065f46;font-weight:600">✅ 出席 '+attS.here+'/'+attS.total;
+if(attS.late>0)h+=' · ⏰遲到 '+attS.late;
+if(attS.absent>0)h+=' · ❌缺席 '+attS.absent;
+if(attS.excused>0)h+=' · 📝請假 '+attS.excused;
+var absentNames=[];students.forEach(function(st){var a=(p.attendance||{})[st.id];if(a&&(a.status==='absent'||a.status==='excused'))absentNames.push(st.name)});
+if(absentNames.length)h+='<div style="font-size:11px;margin-top:4px;font-weight:500">缺席：'+esc(absentNames.join('、'))+'</div>';
+h+='</div>'}}
+
 if(p.goals&&p.goals.length){p.goals.forEach(g=>{if(g.text)h+='<div style="font-size:13px;font-weight:600;margin-bottom:2px">🎯 '+esc(g.text)+'</div>';if(g.criteria)h+='<div style="font-size:11px;color:var(--g500);margin-bottom:6px">標準：'+esc(g.criteria)+'</div>'})}
 if(ref.rate)h+='<div style="font-size:13px;font-weight:600;margin:10px 0;padding:8px 12px;background:var(--accent-l);border-radius:10px;color:var(--accent)">成功率：'+esc(ref.rate)+'</div>';
 students.forEach(st=>{var sr=(ref.studentResults&&ref.studentResults[st.id])||{};h+='<div class="report-stu"><div style="font-size:14px;font-weight:700">'+esc(st.name)+'</div>';if(sr.result)h+='<div style="font-size:12px;color:var(--g600)">表現：'+esc(sr.result)+'</div>';if(sr.notes)h+='<div style="font-size:12px;color:var(--g500)">'+esc(sr.notes)+'</div>';if(sr.next)h+='<div style="font-size:12px;color:var(--accent);font-weight:600">下堂：'+esc(sr.next)+'</div>';h+='</div>'});
@@ -583,7 +664,20 @@ document.getElementById('reportArea').innerHTML=h}
 function copyReport(){
 var p=getPlan(S.selPlan);if(!p)return;
 var c=getClass(p.classId);var ref=p.reflection||{};var students=c?c.students||[]:[];
-var t='📋 課後報告\n'+(c?c.name:'')+' · '+p.date+'\n\n';
+var t='📋 課後報告\n'+(c?c.name:'')+' · '+p.date+'\n';
+
+// Attendance in copy
+if(students.length){
+var attS=getAttStats(p.id,students);
+if(attS.unmarked<attS.total){
+t+='\n✅ 出席 '+attS.here+'/'+attS.total;
+if(attS.late>0)t+=' · ⏰遲到 '+attS.late;
+if(attS.absent>0)t+=' · ❌缺席 '+attS.absent;
+var absentNames=[];students.forEach(function(st){var a=(p.attendance||{})[st.id];if(a&&(a.status==='absent'||a.status==='excused'))absentNames.push(st.name)});
+if(absentNames.length)t+='\n缺席：'+absentNames.join('、');
+t+='\n'}}
+
+t+='\n';
 if(p.goals)p.goals.forEach(g=>{if(g.text)t+='🎯 '+g.text+'\n';if(g.criteria)t+='標準：'+g.criteria+'\n'});
 if(ref.rate)t+='\n成功率：'+ref.rate+'\n';
 students.forEach(st=>{var sr=(ref.studentResults&&ref.studentResults[st.id])||{};t+='\n👤 '+st.name+'\n';if(sr.result)t+='表現：'+sr.result+'\n';if(sr.notes)t+=sr.notes+'\n';if(sr.next)t+='下堂：'+sr.next+'\n'});
