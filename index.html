@@ -777,38 +777,65 @@ function newInvoice(cid,sid){
 var st=null;var c=getClass(cid);
 if(sid){st=c?c.students.find(s=>s.id===sid):null}
 var num='RSREG-'+dateStr().replace(/-/g,'').substring(0,6)+'S-'+String(INVOICES.length+1).padStart(3,'0');
-INVOICES.push({id:uid(),no:num,studentId:sid||'',classId:cid,className:c?c.name:'',date:dateStr(),month:new Date().getFullYear()+'年'+(new Date().getMonth()+1)+'月',dates:[],perClassFee:0,otherItems:[],subtotal:0,discount:0,total:0,status:'draft',notes:'',parentName:st?st.name:'',parentPhone:''});
+INVOICES.push({id:uid(),no:num,studentId:sid||'',classId:cid,className:c?c.name:'',date:dateStr(),dueDate:'',month:new Date().getFullYear()+'年'+(new Date().getMonth()+1)+'月',dates:[],perClassFee:0,otherItems:[],subtotal:0,discount:0,total:0,status:'draft',notes:'',parentName:st?st.name:'',parentPhone:''});
 S.selInv=INVOICES[INVOICES.length-1].id;S.page='invoiceEdit';R()}
-function calcInv(inv){var ct=inv.dates.length*(inv.perClassFee||0);var ot=(inv.otherItems||[]).reduce((a,it)=>a+(it.price||0),0);inv.subtotal=ct+ot;inv.total=inv.subtotal-(inv.discount||0)}
-function setInvStatus(id,st){var inv=gInv(id);if(!inv)return;inv.status=st;cloudSave();R()}
-function delInvoice(id){showMo('刪除','確定？',()=>{INVOICES=INVOICES.filter(i=>i.id!==id);cloudSave();S.page='home';S.tab='billing';R()},'刪除')}
 
 // === INVOICE HTML (跟你第二張圖格式) ===
 function buildInvHTML(inv){
 var c=inv.classId?getClass(inv.classId):null;
 var brandTitle=BRAND.name||(c?c.name:'')||'教練';
-var h='<div style="font-family:\'Noto Sans TC\',sans-serif;max-width:700px;margin:0 auto;padding:40px 32px;background:#fff;border-top:5px solid #1a365d">';
-h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1a365d;padding-bottom:16px;margin-bottom:24px">';
-h+='<div><h1 style="font-size:20px;font-weight:800;color:#1a365d;margin:0">'+esc(brandTitle)+'</h1>';
-if(BRAND.phone)h+='<div style="font-size:12px;color:#666;margin-top:4px">📞 '+esc(BRAND.phone)+'</div>';
-h+='</div><div style="text-align:right"><div style="font-size:10px;color:#999;letter-spacing:1px">INVOICE</div><div style="font-size:15px;font-weight:800;color:#1a365d">#'+esc(inv.no)+'</div></div></div>';
-h+='<div style="display:flex;justify-content:space-between;margin-bottom:24px;font-size:12px;line-height:1.8">';
-h+='<div><div style="color:#999;font-size:10px;font-weight:600">收費對象</div><div style="font-weight:700;font-size:14px">'+esc(inv.parentName||'-')+'</div><div>學生：'+esc(inv.parentName||'-')+'</div>';
-if(inv.parentPhone)h+='<div>電話：'+esc(inv.parentPhone)+'</div>';h+='</div>';
-h+='<div style="text-align:right"><div>發出日期：<strong>'+esc(inv.date)+'</strong></div><div>班別：'+esc(inv.className||'-')+'</div><div>月份：<strong>'+esc(inv.month)+'</strong></div></div></div>';
-h+='<table style="width:100%;border-collapse:collapse;margin:20px 0"><thead><tr><th style="text-align:left;padding:10px 0;border-bottom:2px solid #e5e5e5;font-size:12px;color:#737373">日期</th><th style="text-align:right;padding:10px 0;border-bottom:2px solid #e5e5e5;font-size:12px;color:#737373">費用</th></tr></thead><tbody>';
-var dn=['日','一','二','三','四','五','六'];
-(inv.dates||[]).forEach(d=>{var dt=new Date(d);h+='<tr><td style="padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;font-weight:600">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn[dt.getDay()]+')</td><td style="padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;text-align:right;font-weight:600">$'+(inv.perClassFee||0)+'</td></tr>'});
-h+='<tr><td style="padding:12px 0;font-size:14px;font-weight:700">課堂小計（'+inv.dates.length+' 堂）</td><td style="padding:12px 0;font-size:14px;font-weight:700;text-align:right">$'+(inv.dates.length*(inv.perClassFee||0))+'</td></tr>';
-(inv.otherItems||[]).forEach(it=>{if(it.desc)h+='<tr><td style="padding:8px 0;font-size:12px;border-top:1px solid #f5f5f5">'+esc(it.desc)+'</td><td style="padding:8px 0;font-size:12px;text-align:right;border-top:1px solid #f5f5f5">$'+(it.price||0)+'</td></tr>'});
-h+='</tbody></table>';
-h+='<div style="margin:24px 0;display:flex;justify-content:space-between;align-items:center"><span style="font-size:16px;color:#999;font-weight:600">應繳總額</span><span style="font-size:36px;font-weight:900;color:#1a365d">$'+inv.total+'</span></div>';
-h+='<div style="border:1.5px solid #e5e5e5;border-radius:16px;padding:20px;margin:20px 0"><div style="font-size:14px;font-weight:700;color:#d97706;margin-bottom:12px">💰 付款方式</div>';
-if(BRAND.paymeQR||BRAND.fpsQR){h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:center">';if(BRAND.paymeQR)h+='<div><div style="font-size:12px;font-weight:700;color:#4a7dff;margin-bottom:6px">PayMe</div><img src="'+esc(BRAND.paymeQR)+'" style="width:100%;max-width:200px;border-radius:8px;border:1px solid #e5e5e5"></div>';if(BRAND.fpsQR)h+='<div><div style="font-size:12px;font-weight:700;color:#10b981;margin-bottom:6px">FPS 轉數快</div><img src="'+esc(BRAND.fpsQR)+'" style="width:100%;max-width:200px;border-radius:8px;border:1px solid #e5e5e5"></div>';h+='</div>'}
-else h+='<div style="font-size:13px;color:#666">PayMe / FPS（請聯絡教練取得付款資料）</div>';
+var h='<div style="font-family:\'Noto Sans TC\',sans-serif;max-width:700px;margin:0 auto;padding:48px 36px;background:#fff">';
+
+// Header
+h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1a365d;padding-bottom:20px;margin-bottom:32px">';
+h+='<div style="flex:1;min-width:0"><h1 style="font-size:24px;font-weight:900;color:#1a365d;margin:0 0 8px 0;line-height:1.4">'+esc(brandTitle)+'</h1>';
+if(BRAND.phone)h+='<div style="font-size:13px;color:#555">📞 '+esc(BRAND.phone)+'</div>';
+h+='</div><div style="text-align:right;flex-shrink:0;margin-left:16px"><div style="font-size:10px;color:#999;letter-spacing:2px">INVOICE</div><div style="font-size:14px;font-weight:800;color:#1a365d;margin-top:2px">#'+esc(inv.no)+'</div></div></div>';
+
+// Info
+h+='<div style="display:flex;justify-content:space-between;margin-bottom:36px;font-size:13px;line-height:2.2">';
+h+='<div><div style="color:#999;font-size:11px;font-weight:600;letter-spacing:.5px">收費對象</div><div style="font-weight:800;font-size:16px;color:#1a365d;margin:4px 0">'+esc(inv.parentName||'-')+'</div><div style="color:#555">學生：'+esc(inv.parentName||'-')+'</div>';
+if(inv.parentPhone)h+='<div style="color:#555">電話：'+esc(inv.parentPhone)+'</div>';
 h+='</div>';
-if(BRAND.policy)h+='<div style="background:#fef9f0;border:1.5px solid #fde8c8;border-radius:14px;padding:16px;margin:16px 0"><div style="font-size:13px;font-weight:700;color:#7c5e2c;margin-bottom:6px">📋 收費政策</div><div style="font-size:12px;color:#7c5e2c;white-space:pre-wrap;line-height:1.7">'+esc(BRAND.policy)+'</div></div>';
-h+='<div style="text-align:center;margin-top:20px;font-size:13px;color:#14b8a6;font-weight:600">有其他問題，都可以隨時問我 👌</div></div>';
+h+='<div style="text-align:right;color:#555"><div>發出日期：<strong style="color:#1a365d">'+esc(inv.date)+'</strong></div>';
+if(inv.dueDate)h+='<div>繳費限期：<strong style="color:#dc2626">'+esc(inv.dueDate)+'</strong></div>';
+h+='<div>班別：'+esc(inv.className||'-')+'</div><div>月份：<strong style="color:#1a365d">'+esc(inv.month)+'</strong></div></div></div>';
+
+// Table
+h+='<table style="width:100%;border-collapse:collapse;margin:28px 0"><thead><tr><th style="text-align:left;padding:14px 0;border-bottom:2px solid #d4d4d4;font-size:13px;color:#737373;font-weight:600">日期</th><th style="text-align:right;padding:14px 0;border-bottom:2px solid #d4d4d4;font-size:13px;color:#737373;font-weight:600">費用</th></tr></thead><tbody>';
+var dn=['日','一','二','三','四','五','六'];
+(inv.dates||[]).forEach(function(d){var dt=new Date(d);h+='<tr><td style="padding:16px 0;border-bottom:1px solid #f0f0f0;font-size:15px;font-weight:600;color:#262626">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn[dt.getDay()]+')</td><td style="padding:16px 0;border-bottom:1px solid #f0f0f0;font-size:15px;text-align:right;font-weight:600;color:#262626">$'+(inv.perClassFee||0)+'</td></tr>'});
+h+='<tr><td style="padding:16px 0;font-size:15px;font-weight:800;color:#262626;border-top:2px solid #e5e5e5">課堂小計（'+inv.dates.length+' 堂）</td><td style="padding:16px 0;font-size:15px;font-weight:800;text-align:right;color:#262626;border-top:2px solid #e5e5e5">$'+(inv.dates.length*(inv.perClassFee||0))+'</td></tr>';
+
+// Other items
+(inv.otherItems||[]).forEach(function(it){if(it.desc)h+='<tr><td style="padding:12px 0;font-size:14px;color:#555;border-top:1px solid #f0f0f0">'+esc(it.desc)+'</td><td style="padding:12px 0;font-size:14px;text-align:right;color:#555;border-top:1px solid #f0f0f0">$'+(it.price||0)+'</td></tr>'});
+
+// Discount
+if(inv.discount>0)h+='<tr><td style="padding:12px 0;font-size:14px;color:#16a34a;border-top:1px solid #f0f0f0">折扣</td><td style="padding:12px 0;font-size:14px;text-align:right;color:#16a34a;border-top:1px solid #f0f0f0">-$'+inv.discount+'</td></tr>';
+
+h+='</tbody></table>';
+
+// Total
+h+='<div style="margin:36px 0;display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:18px;color:#a3a3a3;font-weight:600">應繳總額</span><span style="font-size:44px;font-weight:900;color:#1a365d;letter-spacing:-1px">$'+inv.total+'</span></div>';
+
+// Notes
+if(inv.notes)h+='<div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:14px;padding:18px;margin:20px 0"><div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:6px">📝 備註</div><div style="font-size:13px;color:#64748b;white-space:pre-wrap;line-height:1.7">'+esc(inv.notes)+'</div></div>';
+
+// Payment
+h+='<div style="border:1.5px solid #e5e5e5;border-radius:20px;padding:28px;margin:32px 0"><div style="font-size:16px;font-weight:800;color:#d97706;margin-bottom:20px">💰 付款方式</div>';
+if(BRAND.paymeQR||BRAND.fpsQR){
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;text-align:center">';
+if(BRAND.paymeQR)h+='<div><div style="font-size:14px;font-weight:800;color:#e2164b;margin-bottom:12px">PayMe</div><img src="'+esc(BRAND.paymeQR)+'" style="width:100%;max-width:200px;border-radius:12px;border:1px solid #eee"></div>';
+if(BRAND.fpsQR)h+='<div><div style="font-size:14px;font-weight:800;color:#003d79;margin-bottom:12px">FPS 轉數快</div><img src="'+esc(BRAND.fpsQR)+'" style="width:100%;max-width:200px;border-radius:12px;border:1px solid #eee"></div>';
+h+='</div>'}
+else h+='<div style="font-size:14px;color:#666;line-height:1.8">PayMe / FPS（請聯絡教練取得付款資料）</div>';
+if(inv.dueDate)h+='<div style="margin-top:16px;padding:10px 14px;background:#fef2f2;border-radius:10px;font-size:13px;font-weight:700;color:#dc2626">⏰ 請於 '+esc(inv.dueDate)+' 或之前繳付</div>';
+h+='</div>';
+
+// Policy
+if(BRAND.policy)h+='<div style="background:#fefbf3;border:1.5px solid #f5e6c8;border-radius:18px;padding:22px;margin:24px 0"><div style="font-size:14px;font-weight:800;color:#7c5e2c;margin-bottom:10px">📋 收費政策</div><div style="font-size:13px;color:#8b6914;white-space:pre-wrap;line-height:1.9">'+esc(BRAND.policy)+'</div></div>';
+
+h+='<div style="text-align:center;margin-top:32px;font-size:14px;color:#14b8a6;font-weight:700">有其他問題，都可以隨時問我 👌</div></div>';
 return h}
 
 function printInvoice(id){var inv=gInv(id);if(!inv)return;document.getElementById('printArea').innerHTML=buildInvHTML(inv);window.print();setTimeout(()=>{document.getElementById('printArea').innerHTML=''},1500)}
@@ -823,25 +850,67 @@ INVOICES.slice().reverse().forEach(inv=>{var sl={draft:'草稿',unpaid:'未付',
 h+='<div class="m-card" style="cursor:pointer" onclick="S.selInv=\''+inv.id+'\';S.page=\'invoiceEdit\';R()"><div style="display:flex;justify-content:space-between"><div><div style="font-size:13px;font-weight:700">'+esc(inv.no)+'</div><div style="font-size:11px;color:var(--g400)">'+esc(inv.parentName||'')+' · $'+inv.total+'</div></div><span style="padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;background:'+(inv.status==='paid'?'var(--green-l)':'var(--amber-l)')+';color:'+(inv.status==='paid'?'var(--green)':'var(--amber)')+'">'+sl+'</span></div></div>'});
 return h}
 
+function calcInv(inv){
+var ct=inv.dates.length*(inv.perClassFee||0);
+var ot=(inv.otherItems||[]).reduce(function(a,it){return a+(it.price||0)},0);
+inv.subtotal=ct+ot;
+inv.total=inv.subtotal-(inv.discount||0)}
+
+function setInvStatus(id,st){var inv=gInv(id);if(!inv)return;inv.status=st;cloudSave();R()}
+
+function delInvoice(id){showMo('刪除','確定？',function(){INVOICES=INVOICES.filter(function(i){return i.id!==id});cloudSave();S.page='home';S.tab='billing';R()},'刪除')}
+
 // === INVOICE EDIT ===
 function pgInvoiceEdit(){
 var inv=gInv(S.selInv);if(!inv){S.page='home';S.tab='billing';return''}
-var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'billing\';R()">‹</button><div style="flex:1;font-size:18px;font-weight:800">'+esc(inv.no)+'</div></div>';
-h+='<div class="m-card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label class="label">收費對象</label><input class="m-input" value="'+esc(inv.parentName)+'" onchange="gInv(\''+inv.id+'\').parentName=this.value" style="font-size:12px"></div><div><label class="label">電話</label><input class="m-input" value="'+esc(inv.parentPhone||'')+'" onchange="gInv(\''+inv.id+'\').parentPhone=this.value" style="font-size:12px"></div></div>';
+var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'billing\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">🧾 出 Invoice</div><div style="font-size:11px;color:var(--g400)">根據已確認嘅 '+inv.dates.length+' 堂出單</div></div></div>';
+
+// Invoice 資料
+h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:12px">Invoice 資料</div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">';
+h+='<div><input class="m-input" placeholder="Invoice 編號" value="'+esc(inv.no)+'" onchange="gInv(\''+inv.id+'\').no=this.value" style="font-size:12px"></div>';
+h+='<div><input type="date" class="m-input" value="'+inv.date+'" onchange="gInv(\''+inv.id+'\').date=this.value" style="font-size:12px"></div>';
+h+='<div><input type="date" class="m-input" placeholder="繳費限期" value="'+(inv.dueDate||'')+'" onchange="gInv(\''+inv.id+'\').dueDate=this.value" style="font-size:12px"></div></div>';
+h+='<div style="font-size:10px;color:var(--g400);margin-bottom:12px">編號 / 發出日期 / 繳費限期</div>';
+
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label class="label">收費對象</label><input class="m-input" value="'+esc(inv.parentName)+'" onchange="gInv(\''+inv.id+'\').parentName=this.value" style="font-size:12px"></div><div><label class="label">電話</label><input class="m-input" value="'+esc(inv.parentPhone||'')+'" onchange="gInv(\''+inv.id+'\').parentPhone=this.value" style="font-size:12px"></div></div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label class="label">班名</label><input class="m-input" value="'+esc(inv.className)+'" onchange="gInv(\''+inv.id+'\').className=this.value" style="font-size:12px"></div><div><label class="label">月份</label><input class="m-input" value="'+esc(inv.month)+'" onchange="gInv(\''+inv.id+'\').month=this.value" style="font-size:12px"></div></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><div><label class="label">每堂費用($)</label><input type="number" class="m-input" value="'+(inv.perClassFee||0)+'" onchange="gInv(\''+inv.id+'\').perClassFee=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px"></div><div><label class="label">發出日期</label><input type="date" class="m-input" value="'+inv.date+'" onchange="gInv(\''+inv.id+'\').date=this.value" style="font-size:12px"></div></div></div>';
-// Dates
-h+='<div class="m-card"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;font-weight:700">📅 課堂日期（'+inv.dates.length+'堂）</span></div>';
-h+='<div style="display:flex;gap:4px;margin-bottom:8px"><input type="date" id="newInvDate" class="m-input" style="flex:1;font-size:12px"><button class="btn btn-xs btn-green" onclick="var d=document.getElementById(\'newInvDate\').value;if(!d)return;gInv(\''+inv.id+'\').dates.push(d);calcInv(gInv(\''+inv.id+'\'));R()">＋</button></div>';
-(inv.dates||[]).forEach((d,i)=>{var dt=new Date(d);var dn=['日','一','二','三','四','五','六'];h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--g100)"><span style="font-size:12px;font-weight:600">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn[dt.getDay()]+')</span><div><span style="font-size:12px;color:var(--accent);font-weight:700">$'+(inv.perClassFee||0)+'</span> <button style="background:none;border:none;color:var(--rose);cursor:pointer" onclick="gInv(\''+inv.id+'\').dates.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div></div>'});
+h+='<div style="margin-top:8px"><label class="label">每堂費用($)</label><input type="number" class="m-input" value="'+(inv.perClassFee||0)+'" onchange="gInv(\''+inv.id+'\').perClassFee=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div></div>';
+
+// 已確認課堂
+h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">已確認課堂（'+inv.dates.length+' 堂）</span></div>';
+h+='<div style="display:flex;gap:4px;margin-bottom:10px"><input type="date" id="newInvDate" class="m-input" style="flex:1;font-size:12px"><button class="btn btn-xs btn-green" onclick="var d=document.getElementById(\'newInvDate\').value;if(!d)return;gInv(\''+inv.id+'\').dates.push(d);gInv(\''+inv.id+'\').dates.sort();calcInv(gInv(\''+inv.id+'\'));R()">＋ 加入</button></div>';
+var dn=['日','一','二','三','四','五','六'];
+(inv.dates||[]).forEach(function(d,i){var dt=new Date(d);
+h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g100)"><span style="font-size:13px;font-weight:600">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn[dt.getDay()]+')</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:var(--accent);font-weight:700">$'+(inv.perClassFee||0)+'</span><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').dates.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div></div>'});
+if(inv.dates.length)h+='<div style="display:flex;justify-content:space-between;padding:12px 0;font-size:13px;font-weight:700"><span>課堂小計</span><span>$'+(inv.dates.length*(inv.perClassFee||0))+'</span></div>';
+else h+='<div style="font-size:12px;color:var(--g400);padding:8px 0">未有課堂日期</div>';
 h+='</div>';
-// Total
-h+='<div style="background:linear-gradient(135deg,#1a365d,#2d3748);color:#fff;padding:14px 20px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span style="font-size:14px;font-weight:600">總計</span><span style="font-size:28px;font-weight:900">$'+inv.total+'</span></div>';
+
+// 其他項目
+h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">其他項目（衫、裝備等）</span><button class="btn btn-xs btn-outline" onclick="gInv(\''+inv.id+'\').otherItems.push({desc:\'\',price:0});R()">＋ 加項目</button></div>';
+if(!inv.otherItems||!inv.otherItems.length)h+='<div style="font-size:12px;color:var(--g400)">未有其他項目</div>';
+else (inv.otherItems||[]).forEach(function(it,i){
+h+='<div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><input class="m-input" placeholder="項目描述" value="'+esc(it.desc)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].desc=this.value;calcInv(gInv(\''+inv.id+'\'))" style="flex:1;font-size:12px"><input type="number" class="m-input" placeholder="$" value="'+(it.price||0)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].price=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="width:80px;font-size:12px"><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').otherItems.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div>'});
+h+='</div>';
+
+// 備註
+h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">備註</div><textarea class="m-textarea" placeholder="自訂備註..." style="font-size:12px;min-height:70px" onchange="gInv(\''+inv.id+'\').notes=this.value">'+esc(inv.notes||'')+'</textarea></div>';
+
+// 折扣
+h+='<div class="m-card"><label class="label">折扣 ($)</label><input type="number" class="m-input" value="'+(inv.discount||0)+'" onchange="gInv(\''+inv.id+'\').discount=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div>';
+
+// Total bar
+h+='<div style="background:linear-gradient(135deg,#1a365d,#2d3748);color:#fff;padding:16px 24px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;margin:12px 0"><span style="font-size:16px;font-weight:700">總計</span><span style="font-size:32px;font-weight:900">$'+inv.total+'</span></div>';
+
 // Status
-h+='<div class="m-card" style="padding:12px"><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px">';
-['draft','unpaid','paid','refunded'].forEach(st2=>{var labels={draft:'草稿',unpaid:'未付',paid:'已付',refunded:'退款'};var on=inv.status===st2;h+='<button style="padding:7px;border-radius:8px;border:1.5px solid '+(on?'var(--accent)':'var(--g200)')+';background:'+(on?'var(--accent-l)':'transparent')+';color:'+(on?'var(--accent)':'var(--g400)')+';font-size:10px;font-weight:600;cursor:pointer" onclick="setInvStatus(\''+inv.id+'\',\''+st2+'\')">'+labels[st2]+'</button>'});h+='</div></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn btn-dark" onclick="cloudSave()">💾 儲存</button><button class="btn btn-accent" onclick="S.page=\'invoicePreview\';R()">👁 預覽</button></div>';
-h+='<button class="btn btn-outline" style="margin-top:8px" onclick="printInvoice(\''+inv.id+'\')">🖨 列印</button>';
+h+='<div class="m-card" style="padding:12px"><div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px">狀態</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px">';
+['draft','unpaid','paid','refunded'].forEach(function(st2){var labels={draft:'草稿',unpaid:'未付',paid:'已付',refunded:'退款'};var on=inv.status===st2;h+='<button style="padding:9px;border-radius:10px;border:1.5px solid '+(on?'var(--accent)':'var(--g200)')+';background:'+(on?'var(--accent-l)':'transparent')+';color:'+(on?'var(--accent)':'var(--g400)')+';font-size:11px;font-weight:600;cursor:pointer" onclick="setInvStatus(\''+inv.id+'\',\''+st2+'\')">'+labels[st2]+'</button>'});
+h+='</div></div>';
+
+// Buttons
+h+='<button class="btn btn-accent" style="margin-bottom:8px;font-size:15px;padding:15px" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave();S.page=\'invoicePreview\';R()">預覽 Invoice →</button>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn btn-dark" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave()">💾 儲存</button><button class="btn btn-outline" onclick="printInvoice(\''+inv.id+'\')">🖨 列印</button></div>';
 h+='<button class="btn btn-danger" style="margin-top:8px" onclick="delInvoice(\''+inv.id+'\')">🗑 刪除</button>';
 return h}
 
