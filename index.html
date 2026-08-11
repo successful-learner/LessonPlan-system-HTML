@@ -838,8 +838,51 @@ if(BRAND.policy)h+='<div style="background:#fefbf3;border:1.5px solid #f5e6c8;bo
 h+='<div style="text-align:center;margin-top:32px;font-size:14px;color:#14b8a6;font-weight:700">有其他問題，都可以隨時問我 👌</div></div>';
 return h}
 
-function printInvoice(id){var inv=gInv(id);if(!inv)return;document.getElementById('printArea').innerHTML=buildInvHTML(inv);window.print();setTimeout(()=>{document.getElementById('printArea').innerHTML=''},1500)}
+function printInvoice(id){
+  var inv = gInv(id);
+  if(!inv) return;
+  var html = buildInvHTML(inv);
+  
+  // 開新分頁，用戶自己撳 Share → Print
+  var fullHTML = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet"><title>Invoice '+inv.no+'</title></head><body style="margin:0;padding:0">'+html+'</body></html>';
+  
+  var blob = new Blob([fullHTML], {type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
 
+function shareInvoice(id){
+  var inv = gInv(id);
+  if(!inv) return;
+  var html = buildInvHTML(inv);
+  
+  var fullHTML = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0">'+html+'</body></html>';
+  
+  var w = window.open('', '_blank');
+  w.document.write(fullHTML);
+  w.document.close();
+}
+
+function renderInvPreview(containerId, inv) {
+  var html = buildInvHTML(inv);
+  var iframe = document.createElement('iframe');
+  iframe.style.cssText = 'width:100%;border:none;min-height:1200px;border-radius:12px;background:#fff';
+  
+  var container = document.getElementById(containerId);
+  container.innerHTML = '';
+  container.appendChild(iframe);
+  
+  var doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open();
+  doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0">' + html + '</body></html>');
+  doc.close();
+  
+  // Auto-resize iframe height
+  setTimeout(function(){
+    iframe.style.height = doc.body.scrollHeight + 'px';
+  }, 300);
+}
+  
 // === TAB: BILLING ===
 function tabBilling(){
 var paid=INVOICES.filter(i=>i.status==='paid').reduce((a,i)=>a+i.total,0);
@@ -862,57 +905,76 @@ function delInvoice(id){showMo('刪除','確定？',function(){INVOICES=INVOICES
 
 // === INVOICE EDIT ===
 function pgInvoiceEdit(){
-var inv=gInv(S.selInv);if(!inv){S.page='home';S.tab='billing';return''}
-var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'billing\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">🧾 出 Invoice</div><div style="font-size:11px;color:var(--g400)">根據已確認嘅 '+inv.dates.length+' 堂出單</div></div></div>';
+  var inv = gInv(S.selInv);
+  if(!inv){ S.page='home'; S.tab='billing'; return '' }
 
-// Invoice 資料
-h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:12px">Invoice 資料</div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">';
-h+='<div><input class="m-input" placeholder="Invoice 編號" value="'+esc(inv.no)+'" onchange="gInv(\''+inv.id+'\').no=this.value" style="font-size:12px"></div>';
-h+='<div><input type="date" class="m-input" value="'+inv.date+'" onchange="gInv(\''+inv.id+'\').date=this.value" style="font-size:12px"></div>';
-h+='<div><input type="date" class="m-input" placeholder="繳費限期" value="'+(inv.dueDate||'')+'" onchange="gInv(\''+inv.id+'\').dueDate=this.value" style="font-size:12px"></div></div>';
-h+='<div style="font-size:10px;color:var(--g400);margin-bottom:12px">編號 / 發出日期 / 繳費限期</div>';
+  var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'billing\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">🧾 出 Invoice</div><div style="font-size:11px;color:var(--g400)">根據已確認嘅 '+inv.dates.length+' 堂出單</div></div></div>';
 
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label class="label">收費對象</label><input class="m-input" value="'+esc(inv.parentName)+'" onchange="gInv(\''+inv.id+'\').parentName=this.value" style="font-size:12px"></div><div><label class="label">電話</label><input class="m-input" value="'+esc(inv.parentPhone||'')+'" onchange="gInv(\''+inv.id+'\').parentPhone=this.value" style="font-size:12px"></div></div>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label class="label">班名</label><input class="m-input" value="'+esc(inv.className)+'" onchange="gInv(\''+inv.id+'\').className=this.value" style="font-size:12px"></div><div><label class="label">月份</label><input class="m-input" value="'+esc(inv.month)+'" onchange="gInv(\''+inv.id+'\').month=this.value" style="font-size:12px"></div></div>';
-h+='<div style="margin-top:8px"><label class="label">每堂費用($)</label><input type="number" class="m-input" value="'+(inv.perClassFee||0)+'" onchange="gInv(\''+inv.id+'\').perClassFee=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div></div>';
+  // Invoice 資料
+  h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:12px">Invoice 資料</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">';
+  h+='<div><input class="m-input" placeholder="Invoice 編號" value="'+esc(inv.no)+'" onchange="gInv(\''+inv.id+'\').no=this.value" style="font-size:12px"></div>';
+  h+='<div><input type="date" class="m-input" value="'+inv.date+'" onchange="gInv(\''+inv.id+'\').date=this.value" style="font-size:12px"></div>';
+  h+='<div><input type="date" class="m-input" placeholder="繳費限期" value="'+(inv.dueDate||'')+'" onchange="gInv(\''+inv.id+'\').dueDate=this.value" style="font-size:12px"></div></div>';
+  h+='<div style="font-size:10px;color:var(--g400);margin-bottom:12px">編號 / 發出日期 / 繳費限期</div>';
 
-// 已確認課堂
-h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">已確認課堂（'+inv.dates.length+' 堂）</span></div>';
-h+='<div style="display:flex;gap:4px;margin-bottom:10px"><input type="date" id="newInvDate" class="m-input" style="flex:1;font-size:12px"><button class="btn btn-xs btn-green" onclick="var d=document.getElementById(\'newInvDate\').value;if(!d)return;gInv(\''+inv.id+'\').dates.push(d);gInv(\''+inv.id+'\').dates.sort();calcInv(gInv(\''+inv.id+'\'));R()">＋ 加入</button></div>';
-var dn=['日','一','二','三','四','五','六'];
-(inv.dates||[]).forEach(function(d,i){var dt=new Date(d);
-h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g100)"><span style="font-size:13px;font-weight:600">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn[dt.getDay()]+')</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:var(--accent);font-weight:700">$'+(inv.perClassFee||0)+'</span><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').dates.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div></div>'});
-if(inv.dates.length)h+='<div style="display:flex;justify-content:space-between;padding:12px 0;font-size:13px;font-weight:700"><span>課堂小計</span><span>$'+(inv.dates.length*(inv.perClassFee||0))+'</span></div>';
-else h+='<div style="font-size:12px;color:var(--g400);padding:8px 0">未有課堂日期</div>';
-h+='</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label class="label">收費對象</label><input class="m-input" value="'+esc(inv.parentName)+'" onchange="gInv(\''+inv.id+'\').parentName=this.value" style="font-size:12px"></div><div><label class="label">電話</label><input class="m-input" value="'+esc(inv.parentPhone||'')+'" onchange="gInv(\''+inv.id+'\').parentPhone=this.value" style="font-size:12px"></div></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label class="label">班名</label><input class="m-input" value="'+esc(inv.className)+'" onchange="gInv(\''+inv.id+'\').className=this.value" style="font-size:12px"></div><div><label class="label">月份</label><input class="m-input" value="'+esc(inv.month)+'" onchange="gInv(\''+inv.id+'\').month=this.value" style="font-size:12px"></div></div>';
+  h+='<div style="margin-top:8px"><label class="label">每堂費用($)</label><input type="number" class="m-input" value="'+(inv.perClassFee||0)+'" onchange="gInv(\''+inv.id+'\').perClassFee=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div></div>';
 
-// 其他項目
-h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">其他項目（衫、裝備等）</span><button class="btn btn-xs btn-outline" onclick="gInv(\''+inv.id+'\').otherItems.push({desc:\'\',price:0});R()">＋ 加項目</button></div>';
-if(!inv.otherItems||!inv.otherItems.length)h+='<div style="font-size:12px;color:var(--g400)">未有其他項目</div>';
-else (inv.otherItems||[]).forEach(function(it,i){
-h+='<div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><input class="m-input" placeholder="項目描述" value="'+esc(it.desc)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].desc=this.value;calcInv(gInv(\''+inv.id+'\'))" style="flex:1;font-size:12px"><input type="number" class="m-input" placeholder="$" value="'+(it.price||0)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].price=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="width:80px;font-size:12px"><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').otherItems.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div>'});
-h+='</div>';
+  // 已確認課堂
+  h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">已確認課堂（'+inv.dates.length+' 堂）</span></div>';
+  h+='<div style="display:flex;gap:4px;margin-bottom:10px"><input type="date" id="newInvDate" class="m-input" style="flex:1;font-size:12px"><button class="btn btn-xs btn-green" onclick="var d=document.getElementById(\'newInvDate\').value;if(!d)return;gInv(\''+inv.id+'\').dates.push(d);gInv(\''+inv.id+'\').dates.sort();calcInv(gInv(\''+inv.id+'\'));R()">＋ 加入</button></div>';
+  var dn2=['日','一','二','三','四','五','六'];
+  (inv.dates||[]).forEach(function(d,i){var dt=new Date(d);
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g100)"><span style="font-size:13px;font-weight:600">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn2[dt.getDay()]+')</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:var(--accent);font-weight:700">$'+(inv.perClassFee||0)+'</span><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').dates.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div></div>'});
+  if(inv.dates.length)h+='<div style="display:flex;justify-content:space-between;padding:12px 0;font-size:13px;font-weight:700"><span>課堂小計</span><span>$'+(inv.dates.length*(inv.perClassFee||0))+'</span></div>';
+  else h+='<div style="font-size:12px;color:var(--g400);padding:8px 0">未有課堂日期</div>';
+  h+='</div>';
 
-// 備註
-h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">備註</div><textarea class="m-textarea" placeholder="自訂備註..." style="font-size:12px;min-height:70px" onchange="gInv(\''+inv.id+'\').notes=this.value">'+esc(inv.notes||'')+'</textarea></div>';
+  // 其他項目
+  h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">其他項目（衫、裝備等）</span><button class="btn btn-xs btn-outline" onclick="gInv(\''+inv.id+'\').otherItems.push({desc:\'\',price:0});R()">＋ 加項目</button></div>';
+  if(!inv.otherItems||!inv.otherItems.length)h+='<div style="font-size:12px;color:var(--g400)">未有其他項目</div>';
+  else (inv.otherItems||[]).forEach(function(it,i){
+  h+='<div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><input class="m-input" placeholder="項目描述" value="'+esc(it.desc)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].desc=this.value;calcInv(gInv(\''+inv.id+'\'))" style="flex:1;font-size:12px"><input type="number" class="m-input" placeholder="$" value="'+(it.price||0)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].price=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="width:80px;font-size:12px"><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').otherItems.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div>'});
+  h+='</div>';
 
-// 折扣
-h+='<div class="m-card"><label class="label">折扣 ($)</label><input type="number" class="m-input" value="'+(inv.discount||0)+'" onchange="gInv(\''+inv.id+'\').discount=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div>';
+  // 備註
+  h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">備註</div><textarea class="m-textarea" placeholder="自訂備註..." style="font-size:12px;min-height:70px" onchange="gInv(\''+inv.id+'\').notes=this.value">'+esc(inv.notes||'')+'</textarea></div>';
 
-// Total bar
-h+='<div style="background:linear-gradient(135deg,#1a365d,#2d3748);color:#fff;padding:16px 24px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;margin:12px 0"><span style="font-size:16px;font-weight:700">總計</span><span style="font-size:32px;font-weight:900">$'+inv.total+'</span></div>';
+  // 折扣
+  h+='<div class="m-card"><label class="label">折扣 ($)</label><input type="number" class="m-input" value="'+(inv.discount||0)+'" onchange="gInv(\''+inv.id+'\').discount=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div>';
 
-// Status
-h+='<div class="m-card" style="padding:12px"><div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px">狀態</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px">';
-['draft','unpaid','paid','refunded'].forEach(function(st2){var labels={draft:'草稿',unpaid:'未付',paid:'已付',refunded:'退款'};var on=inv.status===st2;h+='<button style="padding:9px;border-radius:10px;border:1.5px solid '+(on?'var(--accent)':'var(--g200)')+';background:'+(on?'var(--accent-l)':'transparent')+';color:'+(on?'var(--accent)':'var(--g400)')+';font-size:11px;font-weight:600;cursor:pointer" onclick="setInvStatus(\''+inv.id+'\',\''+st2+'\')">'+labels[st2]+'</button>'});
-h+='</div></div>';
+  // Total bar
+  h+='<div style="background:linear-gradient(135deg,#1a365d,#2d3748);color:#fff;padding:16px 24px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;margin:12px 0"><span style="font-size:16px;font-weight:700">總計</span><span style="font-size:32px;font-weight:900">$'+inv.total+'</span></div>';
 
-// Buttons
-h+='<button class="btn btn-accent" style="margin-bottom:8px;font-size:15px;padding:15px" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave();S.page=\'invoicePreview\';R()">預覽 Invoice →</button>';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn btn-dark" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave()">💾 儲存</button><button class="btn btn-outline" onclick="printInvoice(\''+inv.id+'\')">🖨 列印</button></div>';
-h+='<button class="btn btn-danger" style="margin-top:8px" onclick="delInvoice(\''+inv.id+'\')">🗑 刪除</button>';
-return h}
+  // Status
+  h+='<div class="m-card" style="padding:12px"><div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px">狀態</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px">';
+  ['draft','unpaid','paid','refunded'].forEach(function(st2){var labels={draft:'草稿',unpaid:'未付',paid:'已付',refunded:'退款'};var on=inv.status===st2;h+='<button style="padding:9px;border-radius:10px;border:1.5px solid '+(on?'var(--accent)':'var(--g200)')+';background:'+(on?'var(--accent-l)':'transparent')+';color:'+(on?'var(--accent)':'var(--g400)')+';font-size:11px;font-weight:600;cursor:pointer" onclick="setInvStatus(\''+inv.id+'\',\''+st2+'\')">'+labels[st2]+'</button>'});
+  h+='</div></div>';
+
+  // Buttons
+  h+='<button class="btn btn-accent" style="margin-bottom:8px;font-size:15px;padding:15px" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave();S.page=\'invoicePreview\';R()">預覽 Invoice →</button>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn btn-dark" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave()">💾 儲存</button><button class="btn btn-outline" onclick="printInvoice(\''+inv.id+'\')">🖨 列印</button></div>';
+
+  // 檢視 / 列印（新頁面）
+  h+='<div style="text-align:center;margin:16px 0">';
+  h+='<button onclick="shareInvoice(\''+inv.id+'\')" style="background:#2563eb;color:#fff;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">📄 檢視 / 列印（新頁面）</button>';
+  h+='</div>';
+
+  h+='<button class="btn btn-danger" style="margin-top:8px" onclick="delInvoice(\''+inv.id+'\')">🗑 刪除</button>';
+
+  // 預覽區
+  h+='<div id="invPreviewFrame" style="margin:20px 0"></div>';
+
+  // setTimeout 觸發預覽渲染
+  setTimeout(function(){
+    var inv2 = gInv(S.selInv);
+    if(inv2) renderInvPreview('invPreviewFrame', inv2);
+  }, 100);
+
+  return h;
+}
 
 function pgInvoicePreview(){var inv=gInv(S.selInv);if(!inv){S.page='home';return''}
 return '<div style="margin-bottom:10px"><button class="btn btn-sm btn-outline" onclick="S.page=\'invoiceEdit\';R()">← 返回</button></div>'+buildInvHTML(inv)}
