@@ -288,20 +288,6 @@ var tags=c.tags||[];
 h+='<div class="m-card m-card-hover fade-in" style="cursor:pointer;animation-delay:'+(ci*50)+'ms" onclick="S.selClass=\''+c.id+'\';S.page=\'classDetail\';R()"><div style="display:flex;align-items:center;gap:14px"><div class="class-ico" style="background:'+clr+'">'+cat.emoji+'</div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700">'+esc(c.name)+'</div><div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap"><span class="chip chip-'+c.category+'">'+cat.name+'</span>'+(orgLabel?'<span style="font-size:10px;color:var(--g400)">🏛 '+esc(orgLabel)+'</span>':'')+'<span style="font-size:11px;color:var(--g400)">'+n+'人</span><span style="font-size:11px;color:var(--g400)">'+plans.length+'教案</span></div>';
 if(tags.length){h+='<div style="margin-top:4px">';tags.forEach(t=>{h+='<span class="tag-pill">'+esc(t)+'</span>'});h+='</div>'}
 h+='</div><span style="color:var(--g300);font-size:20px">›</span></div></div>'});
-
-// Brand settings
-h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">🏢 品牌/收據設定</div>';
-h+='<label class="label">品牌名</label><input id="bn" class="m-input" value="'+esc(BRAND.name)+'" style="margin-bottom:6px">';
-h+='<label class="label">電話</label><input id="bp" class="m-input" value="'+esc(BRAND.phone)+'" style="margin-bottom:6px">';
-h+='<label class="label">FPS</label><input id="bf" class="m-input" value="'+esc(BRAND.fps)+'" style="margin-bottom:6px">';
-h+='<label class="label">PayMe</label><input id="bpm" class="m-input" value="'+esc(BRAND.payme)+'" style="margin-bottom:6px">';
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div style="text-align:center"><div style="font-size:10px;color:var(--g400);margin-bottom:4px">PayMe QR</div>';
-if(BRAND.paymeQR)h+='<img src="'+esc(BRAND.paymeQR)+'" style="width:100px;border-radius:8px;margin-bottom:4px"><br>';
-h+='<button class="btn btn-xs btn-outline" onclick="uploadQR(\'payme\')">'+(BRAND.paymeQR?'更換':'上載')+'</button></div><div style="text-align:center"><div style="font-size:10px;color:var(--g400);margin-bottom:4px">FPS QR</div>';
-if(BRAND.fpsQR)h+='<img src="'+esc(BRAND.fpsQR)+'" style="width:100px;border-radius:8px;margin-bottom:4px"><br>';
-h+='<button class="btn btn-xs btn-outline" onclick="uploadQR(\'fps\')">'+(BRAND.fpsQR?'更換':'上載')+'</button></div></div>';
-h+='<label class="label">收費政策</label><textarea id="bpol" class="m-textarea" style="font-size:11px;min-height:60px">'+esc(BRAND.policy||'')+'</textarea>';
-h+='<button class="btn btn-sm btn-dark" style="margin-top:8px" onclick="BRAND.name=document.getElementById(\'bn\').value;BRAND.phone=document.getElementById(\'bp\').value;BRAND.fps=document.getElementById(\'bf\').value;BRAND.payme=document.getElementById(\'bpm\').value;BRAND.policy=document.getElementById(\'bpol\').value;cloudSave()">💾 儲存設定</button></div>';
 return h}
 
 function addOrg(){var n=prompt('堂會名稱：');if(!n||!n.trim())return;ORGS.push({id:uid(),name:n.trim()});cloudSave();R()}
@@ -754,6 +740,20 @@ if(TEMPLATES.length){
 h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">📁 教案模板（'+TEMPLATES.length+'）</div>';
 TEMPLATES.forEach(tpl=>{h+='<div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:var(--g50);border-radius:10px;margin-bottom:4px"><div><div style="font-size:12px;font-weight:600">'+esc(tpl.name)+'</div><div style="font-size:10px;color:var(--g400)">'+(tpl.segments||[]).length+'環節</div></div><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delTemplate(\''+tpl.id+'\')">✕</button></div>'});
 h+='</div>'}
+
+// Brand settings
+h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">🏢 品牌/收據設定</div>';
+h+='<label class="label">品牌名</label><input id="bn" class="m-input" value="'+esc(BRAND.name)+'" style="margin-bottom:6px">';
+h+='<label class="label">電話</label><input id="bp" class="m-input" value="'+esc(BRAND.phone)+'" style="margin-bottom:6px">';
+h+='<label class="label">FPS</label><input id="bf" class="m-input" value="'+esc(BRAND.fps)+'" style="margin-bottom:6px">';
+h+='<label class="label">PayMe</label><input id="bpm" class="m-input" value="'+esc(BRAND.payme)+'" style="margin-bottom:6px">';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div style="text-align:center"><div style="font-size:10px;color:var(--g400);margin-bottom:4px">PayMe QR</div>';
+if(BRAND.paymeQR)h+='<img src="'+esc(BRAND.paymeQR)+'" style="width:100px;border-radius:8px;margin-bottom:4px"><br>';
+h+='<button class="btn btn-xs btn-outline" onclick="uploadQR(\'payme\')">'+(BRAND.paymeQR?'更換':'上載')+'</button></div><div style="text-align:center"><div style="font-size:10px;color:var(--g400);margin-bottom:4px">FPS QR</div>';
+if(BRAND.fpsQR)h+='<img src="'+esc(BRAND.fpsQR)+'" style="width:100px;border-radius:8px;margin-bottom:4px"><br>';
+h+='<button class="btn btn-xs btn-outline" onclick="uploadQR(\'fps\')">'+(BRAND.fpsQR?'更換':'上載')+'</button></div></div>';
+h+='<label class="label">收費政策</label><textarea id="bpol" class="m-textarea" style="font-size:11px;min-height:60px">'+esc(BRAND.policy||'')+'</textarea>';
+h+='<button class="btn btn-sm btn-dark" style="margin-top:8px" onclick="BRAND.name=document.getElementById(\'bn\').value;BRAND.phone=document.getElementById(\'bp\').value;BRAND.fps=document.getElementById(\'bf\').value;BRAND.payme=document.getElementById(\'bpm\').value;BRAND.policy=document.getElementById(\'bpol\').value;cloudSave()">💾 儲存設定</button></div>';
 return h}
 function doManualLoad(){var a=document.getElementById('loadA');if(!a||!a.value.trim()){toast('請貼入JSON');return}try{applyLoad(JSON.parse(a.value.trim()));toast('✅ 已讀入');a.value='';R()}catch(e){toast('JSON格式錯誤')}}
 
@@ -763,7 +763,7 @@ function doManualLoad(){var a=document.getElementById('loadA');if(!a||!a.value.t
 
 // === HELPER ===
 function gSC(id){return SC.find(s=>s.id===id)||SC[0]}
-function gStu(id){return STUDENTS.find(s=>s.id===id)}
+function gStu(id){var s=STUDENTS.find(s=>s.id===id);if(s)return s;for(var i=0;i<CLASSES.length;i++){if(CLASSES[i].students){var f=CLASSES[i].students.find(s=>s.id===id);if(f)return f}}return null}
 function gInv(id){return INVOICES.find(i=>i.id===id)}
 function gFw(id){return FRAMEWORKS.find(f=>f.id===id)}
 function gStuSP(sid,skId){var st=gStu(sid);if(!st||!st.skillProgress)return null;return st.skillProgress[skId]||null}
