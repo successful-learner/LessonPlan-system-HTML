@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
-<title>Lesson Plan Builder</title>
+<title>Lesson Plan Builder v10</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -29,34 +29,27 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .btm-item.active{color:var(--accent);font-weight:700}
 .btm-item.active::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:20px;height:3px;border-radius:3px;background:var(--accent)}
 .btm-item .bi-ico{font-size:20px;line-height:1;transition:.2s}
-.btm-item:active .bi-ico{transform:scale(.85)}
 .hero-card{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);border-radius:24px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;margin-bottom:16px;box-shadow:0 8px 32px rgba(15,52,96,.3)}
-.hero-card::before{content:'';position:absolute;top:-60%;right:-30%;width:250px;height:250px;background:radial-gradient(circle,rgba(108,92,231,.25) 0%,transparent 70%);border-radius:50%;pointer-events:none}
-.hero-card::after{content:'';position:absolute;bottom:-40%;left:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(20,184,166,.15) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero-card::before{content:'';position:absolute;top:-60%;right:-30%;width:250px;height:250px;background:radial-gradient(circle,rgba(108,92,231,.25) 0%,transparent 70%);border-radius:50%}
 .hero-stat{position:relative;z-index:1}
 .hero-num{font-size:48px;font-weight:900;letter-spacing:-2px;line-height:1}
 .hero-sub{font-size:13px;opacity:.5;margin-top:4px}
 .hero-label{font-size:12px;opacity:.7;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.m-card{background:var(--g0);border-radius:var(--r);padding:18px;margin-bottom:10px;box-shadow:var(--sh);border:1px solid rgba(0,0,0,.04);transition:box-shadow .25s var(--ease),transform .25s var(--ease)}
-.m-card:active{transform:scale(.985)}
+.m-card{background:var(--g0);border-radius:var(--r);padding:18px;margin-bottom:10px;box-shadow:var(--sh);border:1px solid rgba(0,0,0,.04);transition:box-shadow .25s var(--ease)}
 .m-card-hover:hover{box-shadow:var(--sh-lg)}
 .m-input{width:100%;border:1.5px solid var(--g200);border-radius:12px;padding:11px 14px;font-size:14px;font-family:var(--font);background:var(--g50);transition:.25s var(--ease)}
 .m-input:focus{border-color:var(--accent);outline:none;background:var(--g0);box-shadow:0 0 0 4px rgba(108,92,231,.1)}
 .m-textarea{width:100%;border:1.5px solid var(--g200);border-radius:12px;padding:12px 14px;font-size:14px;font-family:var(--font);resize:vertical;min-height:60px;background:var(--g50);transition:.25s var(--ease)}
 .m-textarea:focus{border-color:var(--accent);outline:none;background:var(--g0);box-shadow:0 0 0 4px rgba(108,92,231,.1)}
-.m-select{width:100%;border:1.5px solid var(--g200);border-radius:12px;padding:11px 14px;font-size:14px;font-family:var(--font);background:var(--g50);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;transition:.25s var(--ease)}
+.m-select{width:100%;border:1.5px solid var(--g200);border-radius:12px;padding:11px 14px;font-size:14px;font-family:var(--font);background:var(--g50);appearance:none;transition:.25s var(--ease)}
 .m-select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 4px rgba(108,92,231,.1)}
-.btn{padding:13px 18px;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px;width:100%;position:relative;overflow:hidden}
+.btn{padding:13px 18px;border:none;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
 .btn:active{transform:scale(.96)}
 .btn:disabled{opacity:.4;pointer-events:none}
 .btn-dark{background:var(--g900);color:#fff}
-.btn-dark:active{background:var(--g700)}
 .btn-accent{background:linear-gradient(135deg,var(--accent),var(--accent-d));color:#fff;box-shadow:0 4px 16px rgba(108,92,231,.3)}
-.btn-accent:active{box-shadow:0 2px 8px rgba(108,92,231,.2)}
 .btn-outline{background:transparent;color:var(--g700);border:1.5px solid var(--g200)}
-.btn-outline:active{background:var(--g50)}
 .btn-ghost{background:var(--g100);color:var(--g700)}
-.btn-ghost:active{background:var(--g200)}
 .btn-danger{background:var(--rose);color:#fff}
 .btn-green{background:linear-gradient(135deg,var(--green),#059669);color:#fff;box-shadow:0 4px 16px rgba(16,185,129,.3)}
 .btn-sm{padding:8px 14px;font-size:12px;width:auto;border-radius:10px}
@@ -64,11 +57,11 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .pg-back{width:40px;height:40px;border-radius:50%;background:var(--g0);border:1px solid var(--g100);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:.2s}
 .pg-back:active{background:var(--g100);transform:scale(.92)}
 .label{font-size:11px;color:var(--g500);font-weight:600;margin-bottom:5px;display:block;letter-spacing:.3px}
-.chip{display:inline-flex;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px}
+.chip{display:inline-flex;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700}
 .chip-rope{background:#fff7ed;color:#c2410c}
 .chip-gym{background:var(--purple-l);color:var(--purple)}
 .chip-mixed{background:var(--teal-l);color:#0d9488}
-.seg-card{background:var(--g0);border-radius:16px;border:1px solid var(--g100);margin-bottom:8px;overflow:hidden;border-left:4px solid var(--accent);transition:.2s}
+.seg-card{background:var(--g0);border-radius:16px;border:1px solid var(--g100);margin-bottom:8px;overflow:hidden;border-left:4px solid var(--accent)}
 .seg-head{padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:.15s}
 .seg-head:active{background:var(--g50)}
 .seg-body{padding:0 16px 16px;border-top:1px solid var(--g100);display:none}
@@ -88,7 +81,7 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .report-stu:last-child{border:none}
 .share-card{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:24px;padding:24px;color:#fff;margin-bottom:12px;box-shadow:0 8px 32px rgba(15,52,96,.3)}
 .share-seg{background:rgba(255,255,255,.08);border-radius:14px;padding:14px;margin-bottom:8px;border:1px solid rgba(255,255,255,.06)}
-.share-link-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:10px;background:rgba(108,92,231,.3);color:#c4b5fd;font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(108,92,231,.4);transition:.2s}
+.share-link-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:10px;background:rgba(108,92,231,.3);color:#c4b5fd;font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(108,92,231,.4)}
 .video-field{background:linear-gradient(135deg,#faf5ff,#ede9fe);border-radius:12px;padding:12px;margin-bottom:10px;border:1px solid #e9d5ff}
 .att-bar{background:var(--green-l);border-radius:14px;padding:10px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:.2s;border:1px solid rgba(16,185,129,.15)}
 .att-bar:active{background:#d1fae5}
@@ -113,43 +106,43 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .cloud-st.ok{background:var(--green-l);color:#065f46}
 .cloud-st.err{background:var(--rose-l);color:var(--rose)}
 .cloud-st.loading{background:var(--amber-l);color:#92400e}
-input[type=number]{-moz-appearance:textfield}
-input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
-.divider{height:1px;background:var(--g100);margin:16px 0}
-.class-ico{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-.stu-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent-l),#ddd6fe);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--accent);flex-shrink:0}
-.prog-bar{height:6px;background:var(--g100);border-radius:6px;overflow:hidden;margin:8px 0}
-.prog-fill{height:100%;border-radius:6px;transition:width .4s var(--ease)}
 .org-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0;margin-bottom:12px;-webkit-overflow-scrolling:touch}
 .org-tab{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--g200);background:var(--g0);color:var(--g600);cursor:pointer;white-space:nowrap;transition:.2s;flex-shrink:0}
 .org-tab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.org-tab:active{transform:scale(.95)}
 .color-grid{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
 .color-sw{width:36px;height:36px;border-radius:12px;cursor:pointer;border:3px solid transparent;transition:.2s;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .color-sw.on{border-color:var(--g800);transform:scale(1.15)}
-.color-sw:active{transform:scale(.9)}
 .tag-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;margin:2px;background:var(--accent-l);color:var(--accent)}
 .backup-banner{background:linear-gradient(135deg,var(--amber-l),#fef3c7);border:1.5px solid var(--amber);border-radius:14px;padding:12px 16px;margin-bottom:14px;font-size:12px;font-weight:600;color:#92400e}
 .star-btn{background:none;border:none;font-size:24px;cursor:pointer;padding:2px;transition:.15s}
 .star-btn:active{transform:scale(.8)}
 .cues-display{white-space:pre-wrap;font-size:13px;color:#78350f;line-height:1.6}
-/* === v9 新增 CSS === */
+.class-ico{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.stu-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent-l),#ddd6fe);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--accent);flex-shrink:0}
+.prog-bar{height:6px;background:var(--g100);border-radius:6px;overflow:hidden;margin:8px 0}
+.prog-fill{height:100%;border-radius:6px;transition:width .4s var(--ease)}
 .tl-line{position:relative;padding-left:24px;margin:6px 0}
 .tl-line::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--g200)}
 .tl-dot{position:absolute;left:3px;top:6px;width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.15)}
-.sc-dot{width:16px;height:16px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:.2s;flex-shrink:0}
-.sc-dot.on{border-color:var(--g800);transform:scale(1.2)}
-.inv-total{background:linear-gradient(135deg,#1a365d,#2d3748);color:#fff;padding:14px 20px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin:16px 0}
-.stu-hero{background:linear-gradient(135deg,#0f3460,#1a365d,#2d3748);border-radius:24px;padding:28px;color:#fff;text-align:center;margin-bottom:16px}
-.fw-card{background:var(--g0);border-radius:16px;padding:14px;margin-bottom:8px;box-shadow:var(--sh);border:1px solid var(--g100);border-left:4px solid var(--accent)}
-@media print{body>*{display:none!important}#printArea{display:block!important;position:fixed;inset:0;z-index:9999;background:#fff;padding:20px;overflow:auto}}
-#printArea{display:none}
+.skill-tree-wrap{position:relative;width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;background:linear-gradient(180deg,#0f0f23 0%,#1a1a3e 50%,#0d1b2a 100%);border-radius:20px;min-height:300px;padding:20px;margin-bottom:12px}
+.skill-tree-wrap svg{display:block}
+.sk-node{cursor:pointer;transition:transform .2s}
+.sk-node:hover{transform:scale(1.15)}
+.sk-legend{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;background:var(--g0);border-radius:12px}
+.sk-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--g600)}
+.sk-legend-dot{width:12px;height:12px;border-radius:50%}
+.stu-portal{min-height:100vh;background:linear-gradient(180deg,#0f0f23,#1a1a3e);color:#fff;padding:20px}
+.stu-portal h1{font-size:24px;font-weight:900;text-align:center;margin-bottom:4px}
+.stu-portal .sub{font-size:12px;opacity:.5;text-align:center;margin-bottom:24px}
+.stu-skill-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;transition:.2s}
+.stu-skill-card:active{transform:scale(.98);background:rgba(255,255,255,.1)}
+.stu-skill-card.unlocked{border-color:rgba(16,185,129,.4);box-shadow:0 0 20px rgba(16,185,129,.1)}
+.stu-skill-card.current{border-color:rgba(108,92,231,.6);box-shadow:0 0 20px rgba(108,92,231,.2)}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div class="toast" id="toast"></div>
-<div id="printArea"></div>
 <div class="modal-ov" id="mo"><div class="modal-bx"><h3 id="mT"></h3><p id="mM"></p><div class="modal-btns"><button class="btn btn-outline" onclick="closeMo()">取消</button><button class="btn btn-danger" id="mC">確定</button></div></div></div>
 
 <script>
@@ -223,8 +216,25 @@ function saveAsTemplate(pid){var p=getPlan(pid);if(!p)return;var name=prompt('Te
 function loadTemplate(tid,pid){var tpl=TEMPLATES.find(t=>t.id===tid);var p=getPlan(pid);if(!tpl||!p)return;p.goals=JSON.parse(JSON.stringify(tpl.goals));p.segments=JSON.parse(JSON.stringify(tpl.segments));p.segments.forEach(s=>{s.id=uid();s.studentTasks={}});S.segOpen={};toast('✅ 已載入Template');R()}
 function delTemplate(tid){showMo('刪除','確定刪除此Template？',function(){TEMPLATES=TEMPLATES.filter(t=>t.id!==tid);cloudSave();R()},'刪除')}
 
+/* === V9 HELPERS === */
+function gSC(id){return SC.find(s=>s.id===id)||SC[0]}
+function gStu(id){var s=STUDENTS.find(s=>s.id===id);if(s)return s;for(var i=0;i<CLASSES.length;i++){if(CLASSES[i].students){var f=CLASSES[i].students.find(s=>s.id===id);if(f)return f}}return null}
+function gInv(id){return INVOICES.find(i=>i.id===id)}
+function gFw(id){return FRAMEWORKS.find(f=>f.id===id)}
+function gStuSP(sid,skId){var st=gStu(sid);if(!st||!st.skillProgress)return null;return st.skillProgress[skId]||null}
+function setStuSP(sid,skId,status){var st=gStu(sid);if(!st)return;if(!st.skillProgress)st.skillProgress={};if(!st.skillProgress[skId])st.skillProgress[skId]={status:'none',timeline:[]};st.skillProgress[skId].status=status}
+function addTimeline(sid,skId,entry){var st=gStu(sid);if(!st)return;if(!st.skillProgress)st.skillProgress={};if(!st.skillProgress[skId])st.skillProgress[skId]={status:'none',timeline:[]};entry.id=uid();st.skillProgress[skId].timeline.push(entry);st.skillProgress[skId].status=entry.status}
+function fwProgress(sid,fw){var total=0,done=0;(fw.levels||[]).forEach(lv=>{(lv.skills||[]).forEach(sk=>{total++;var sp=gStuSP(sid,sk.id);if(sp&&(sp.status==='green'||sp.status==='blue'))done++;(sk.variations||[]).forEach(v=>{total++;var vp=gStuSP(sid,v.id);if(vp&&(vp.status==='green'||vp.status==='blue'))done++})})});return{total:total,done:done,pct:total>0?Math.round(done/total*100):0}}
+function getStuShareLink(sid){return location.origin+location.pathname+'?stuId='+sid}
+
 /* === RENDER === */
-function R(){var app=document.getElementById('app');var h='<div class="container" style="padding-top:16px">';
+function R(){
+var app=document.getElementById('app');
+if(IS_STUDENT){
+if(S.page==='stuSkillView')app.innerHTML=pgStuSkillView();
+else app.innerHTML=pgStudentPortal();
+return}
+var h='<div class="container" style="padding-top:16px">';
 if(S.page==='classDetail')h+=pgClassDetail();
 else if(S.page==='addClass')h+=pgAddClass();
 else if(S.page==='editClass')h+=pgEditClass();
@@ -237,6 +247,7 @@ else if(S.page==='studentProfile')h+=pgStudentProfile();
 else if(S.page==='invoiceEdit')h+=pgInvoiceEdit();
 else if(S.page==='invoicePreview')h+=pgInvoicePreview();
 else if(S.page==='fwEdit')h+=pgFwEdit();
+else if(S.page==='fwManage')h+=pgFwManage();
 else if(S.page==='skillDetail')h+=pgSkillDetail();
 else{
 if(S.tab==='classes')h+=tabClasses();
@@ -244,40 +255,38 @@ else if(S.tab==='plans')h+=tabPlans();
 else if(S.tab==='teach')h+=tabTeach();
 else if(S.tab==='reflect')h+=tabReflect();
 else if(S.tab==='billing')h+=tabBilling();
-else h+=tabSave();
-}
+else h+=tabSave()}
 h+='</div>'+btmNav();app.innerHTML=h;scrollTo(0,0)}
 
-function btmNav(){var tabs=[{id:'classes',ico:'🏠',l:'班別'},{id:'plans',ico:'📋',l:'教案'},{id:'teach',ico:'▶️',l:'上堂'},{id:'reflect',ico:'💬',l:'反思'},{id:'billing',ico:'💰',l:'收費'},{id:'save',ico:'☁️',l:'存檔'}];
-var h='<nav class="btm-nav"><div class="btm-nav-inner">';
-tabs.forEach(t=>{h+='<button class="btm-item '+(S.tab===t.id&&S.page==='home'?'active':'')+'" onclick="S.tab=\''+t.id+'\';S.page=\'home\';R()"><span class="bi-ico">'+t.ico+'</span>'+t.l+'</button>'});
-return h+'</div></nav>'}
+/* ====== BOTTOM NAV ====== */
+function btmNav(){
+var tabs=[
+{id:'classes',ico:'📚',label:'班別'},
+{id:'plans',ico:'📋',label:'教案'},
+{id:'teach',ico:'▶️',label:'上堂'},
+{id:'reflect',ico:'💬',label:'反思'},
+{id:'billing',ico:'💰',label:'收費'},
+{id:'save',ico:'☁️',label:'存檔'}];
+var h='<div class="btm-nav"><div class="btm-nav-inner">';
+tabs.forEach(function(t){h+='<button class="btm-item'+(S.tab===t.id&&S.page==='home'?' active':'')+'" onclick="S.page=\'home\';S.tab=\''+t.id+'\';R()"><span class="bi-ico">'+t.ico+'</span>'+t.label+'</button>'});
+h+='</div></div>';return h}
 
 /* ====== TAB: CLASSES ====== */
 function tabClasses(){
 var h='<div class="hero-card fade-in"><div class="hero-stat"><div class="hero-label">課堂計劃系統</div><div class="hero-num">'+CLASSES.length+'</div><div class="hero-sub">個班別 · '+PLANS.length+' 份教案</div></div></div>';
-
-// Backup banner
 if(S.fromBackup)h+='<div class="backup-banner">⚠️ 你正在使用備份版本<br><span style="font-weight:500;font-size:11px">去「存檔」頁撳「儲存到雲端」覆蓋為最新版</span></div>';
-
-// Cloud load + backup versions
 h+='<div class="m-card" style="padding:14px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:13px;font-weight:700">📥 從雲端讀取</span></div><div style="display:flex;gap:6px;flex-wrap:wrap">';
 h+='<button class="btn btn-xs btn-accent" onclick="cloudLoadBackup(\'latest\')">最新版本</button>';
 h+='<button class="btn btn-xs btn-outline" onclick="cloudLoadBackup(\'6h\')">6小時前</button>';
 h+='<button class="btn btn-xs btn-outline" onclick="cloudLoadBackup(\'daily\')">1日前</button>';
 h+='<button class="btn btn-xs btn-outline" onclick="cloudLoadBackup(\'weekly\')">7日前</button>';
 h+='</div></div>';
-
-// Org filter
 h+='<div class="org-tabs"><button class="org-tab '+(S.selOrg===''?'on':'')+'" onclick="S.selOrg=\'\';R()">全部</button>';
 ORGS.forEach(o=>{h+='<button class="org-tab '+(S.selOrg===o.id?'on':'')+'" onclick="S.selOrg=\''+o.id+'\';R()">'+esc(o.name)+'</button>'});
 h+='<button class="org-tab" style="border-style:dashed;color:var(--g400)" onclick="addOrg()">＋ 堂會</button></div>';
-
 h+='<button class="btn btn-dark" style="margin-bottom:16px" onclick="S.page=\'addClass\';R()">＋ 新增班別</button>';
-
 var filtered=CLASSES.filter(c=>!S.selOrg||c.orgId===S.selOrg);
 if(!filtered.length)return h+'<div class="empty fade-in"><div class="em-ico">📚</div>'+(CLASSES.length?'此堂會未有班別':'未有班別')+'<br>撳上面新增</div>';
-
 filtered.forEach((c,ci)=>{
 var n=c.students?c.students.length:0;
 var plans=getClassPlans(c.id);
@@ -285,7 +294,9 @@ var cat=CATS[c.category]||CATS.mixed;
 var clr=getClsColor(c);
 var orgLabel=c.orgId?getOrgName(c.orgId):'';
 var tags=c.tags||[];
-h+='<div class="m-card m-card-hover fade-in" style="cursor:pointer;animation-delay:'+(ci*50)+'ms" onclick="S.selClass=\''+c.id+'\';S.page=\'classDetail\';R()"><div style="display:flex;align-items:center;gap:14px"><div class="class-ico" style="background:'+clr+'">'+cat.emoji+'</div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700">'+esc(c.name)+'</div><div style="display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap"><span class="chip chip-'+c.category+'">'+cat.name+'</span>'+(orgLabel?'<span style="font-size:10px;color:var(--g400)">🏛 '+esc(orgLabel)+'</span>':'')+'<span style="font-size:11px;color:var(--g400)">'+n+'人</span><span style="font-size:11px;color:var(--g400)">'+plans.length+'教案</span></div>';
+h+='<div class="m-card m-card-hover fade-in" style="cursor:pointer;animation-delay:'+(ci*50)+'ms" onclick="S.selClass=\''+c.id+'\';S.page=\'classDetail\';R()"><div style="display:flex;align-items:center;gap:14px">';
+if(c.iconUrl)h+='<img src="'+esc(c.iconUrl)+'" style="width:48px;height:48px;border-radius:16px;object-fit:cover;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,.15)">';
+else h+='<div class="class-ico" style="background:'+clr+'">'+cat.emoji+'</div>';
 if(tags.length){h+='<div style="margin-top:4px">';tags.forEach(t=>{h+='<span class="tag-pill">'+esc(t)+'</span>'});h+='</div>'}
 h+='</div><span style="color:var(--g300);font-size:20px">›</span></div></div>'});
 return h}
@@ -328,13 +339,9 @@ var stIdx=c.students.indexOf(st);var attR=getStuAttRate(c.id,st.id);var perfs=ge
 var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="S.page=\'classDetail\';R()">‹</button><div style="flex:1;font-size:20px;font-weight:800">學生資料</div><button class="btn btn-sm btn-ghost" onclick="editStudent(\''+c.id+'\','+stIdx+')">✏️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delStudent(\''+c.id+'\','+stIdx+')">✕</button></div>';
 
 h+='<div style="text-align:center;margin-bottom:20px" class="slide-up"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,'+getClsColor(c)+','+getClsColor(c)+'88);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#fff;margin:0 auto 12px">'+esc(st.name.charAt(0))+'</div><div style="font-size:22px;font-weight:800">'+esc(st.name)+'</div><div style="font-size:12px;color:var(--g400);margin-top:4px">'+esc(st.level||'未設定')+' · '+esc(c.name)+'</div>';
-
-// Stars
 h+='<div style="margin-top:12px">';
 for(var i=1;i<=5;i++){h+='<button class="star-btn" onclick="setStuStars(\''+c.id+'\',\''+st.id+'\','+i+')">'+(i<=stars?'⭐':'☆')+'</button>'}
 h+='</div>';
-
-// Tags
 h+='<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center">';
 tags.forEach(function(tag,ti){h+='<span class="tag-pill">'+esc(tag)+' <span style="cursor:pointer;opacity:.5" onclick="event.stopPropagation();removeStuTag(\''+c.id+'\',\''+st.id+'\','+ti+')">✕</span></span>'});
 h+='<button style="padding:3px 10px;border-radius:20px;border:1px dashed var(--g300);background:transparent;font-size:10px;color:var(--g400);cursor:pointer" onclick="addStuTag(\''+c.id+'\',\''+st.id+'\')">＋ 標籤</button></div></div>';
@@ -359,19 +366,24 @@ h+='</div>';
 // Invoice button
 h+='<div class="m-card"><button class="btn btn-green" onclick="newInvoice(\''+c.id+'\',\''+st.id+'\')">💰 開收據</button></div>';
 
+// Student Portal Link
+h+='<div style="background:var(--accent-l);border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:var(--accent);font-weight:600">🔗 學生Portal連結</span><button class="btn btn-xs btn-accent" onclick="copyTxt(getStuShareLink(\''+st.id+'\'))">複製</button></div>';
+
 // Skill Frameworks
 if(FRAMEWORKS.length){
 h+='<div class="m-card"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:15px;font-weight:700">🌳 技能進度</span></div>';
 h+='<div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px">';SC.forEach(s=>{h+='<span style="padding:2px 6px;border-radius:10px;font-size:9px;background:'+s.bg+';color:'+s.color+'">'+s.emoji+' '+s.label+'</span>'});h+='</div>';
 FRAMEWORKS.forEach(fw=>{var fp=fwProgress(st.id,fw);
-h+='<div style="background:var(--g50);border-radius:14px;padding:10px;margin-bottom:6px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:18px">'+fw.emoji+'</span><div style="flex:1"><div style="font-size:13px;font-weight:700">'+esc(fw.sport)+'</div><div class="prog-bar"><div class="prog-fill" style="width:'+fp.pct+'%;background:var(--accent)"></div></div></div><span style="font-size:11px;font-weight:800;color:var(--accent)">'+fp.pct+'%</span></div>';
+h+='<div style="display:flex;gap:4px;margin-bottom:8px"><button class="btn btn-xs btn-outline" onclick="addFw()">＋ 新框架</button><button class="btn btn-xs btn-ghost" onclick="S.page=\'fwManage\';R()">⚙️ 管理框架</button></div>';                        
+h+='<div style="background:var(--g50);border-radius:14px;padding:10px;margin-bottom:6px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:18px">'+fw.emoji+'</span><div style="flex:1"><div style="font-size:13px;font-weight:700">'+esc(fw.sport)+' <button class="btn btn-xs btn-ghost" style="padding:2px 6px;font-size:9px" onclick="event.stopPropagation();S.selFw=\''+fw.id+'\';S.page=\'fwEdit\';R()">✏️ 編輯</button></div>
+// Skill Tree SVG
+h+=renderSkillTree(fw,st.id);
 (fw.levels||[]).forEach(lv=>{h+='<div style="margin-bottom:3px"><div style="font-size:10px;font-weight:700;color:var(--accent);margin-bottom:2px">'+esc(lv.name)+'</div>';
 (lv.skills||[]).forEach(sk=>{var sp=gStuSP(st.id,sk.id);var sc=gSC(sp?sp.status:'none');
 h+='<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--g0);border-radius:8px;margin-bottom:2px;cursor:pointer;border:1px solid var(--g100)" onclick="S.selSkill=\''+sk.id+'\';S.selFw=\''+fw.id+'\';S.page=\'skillDetail\';R()"><div style="width:12px;height:12px;border-radius:50%;background:'+sc.color+'"></div><span style="flex:1;font-size:11px;font-weight:600">'+esc(sk.name)+'</span><span style="color:var(--g300)">›</span></div>'});h+='</div>'});h+='</div>'});
-h+='<button class="btn btn-sm btn-outline" style="margin-top:6px" onclick="addFw()">＋ 新框架</button>';
 h+='</div>'}
 else{h+='<div class="m-card"><button class="btn btn-outline" onclick="addFw()">🌳 建立技能框架</button></div>'}
-  
+
 // Notes
 h+='<div class="m-card"><div style="font-size:15px;font-weight:700;margin-bottom:8px">📝 備註</div><textarea class="m-textarea" id="spNotes" style="font-size:12px">'+esc(st.notes||'')+'</textarea><button class="btn btn-sm btn-dark" style="margin-top:8px" onclick="var s2=getClass(\''+c.id+'\').students.find(x=>x.id===\''+st.id+'\');if(s2){s2.notes=document.getElementById(\'spNotes\').value;cloudSave();toast(\'✅ 已儲存\')}">💾 儲存</button></div>';
 return h}
@@ -405,9 +417,14 @@ h+='<div class="m-card"><label class="label">班別名稱</label><input id="cn" 
 h+='<label class="label">所屬堂會</label><select id="corg" class="m-select" style="margin-bottom:14px"><option value="">— 無 —</option>';
 ORGS.forEach(o=>{h+='<option value="'+o.id+'"'+(c.orgId===o.id?' selected':'')+'>'+esc(o.name)+'</option>'});
 h+='</select>';
-// Org management
 if(ORGS.length){h+='<div style="margin-bottom:14px">';ORGS.forEach(o=>{h+='<div style="display:inline-flex;align-items:center;gap:4px;margin:2px"><span class="tag-pill" style="background:var(--g100);color:var(--g600)">🏛 '+esc(o.name)+' <span style="cursor:pointer;opacity:.6" onclick="editOrg(\''+o.id+'\')">✏️</span> <span style="cursor:pointer;opacity:.6" onclick="delOrg(\''+o.id+'\')">✕</span></span></div>'});h+='</div>'}
 h+='<label class="label">類別</label><select id="cc" class="m-select" style="margin-bottom:14px"><option value="rope" '+(c.category==='rope'?'selected':'')+'>🪢 跳繩</option><option value="gym" '+(c.category==='gym'?'selected':'')+'>🤸 體操</option><option value="mixed" '+(c.category==='mixed'?'selected':'')+'>🔀 混合</option></select>';
+h+='<label class="label">班別圖示</label><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">';
+if(c.iconUrl)h+='<img src="'+esc(c.iconUrl)+'" style="width:48px;height:48px;border-radius:16px;object-fit:cover;border:1px solid var(--g200)">';
+else h+='<div style="width:48px;height:48px;border-radius:16px;background:'+getClsColor(c)+';display:flex;align-items:center;justify-content:center;font-size:22px">'+(CATS[c.category]||CATS.mixed).emoji+'</div>';
+h+='<button class="btn btn-xs btn-outline" onclick="uploadClassIcon(\''+c.id+'\')">📷 上載圖片</button>';
+if(c.iconUrl)h+='<button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="getClass(\''+c.id+'\').iconUrl=\'\';cloudSave();R()">✕</button>';
+h+='</div>';
 h+='<label class="label">顏色</label><div class="color-grid">';
 CL_COLORS.forEach(cl=>{h+='<div class="color-sw'+(cl.id===(c.color||'navy')?' on':'')+'" style="background:'+cl.c+'" onclick="pickColor(this,\''+cl.id+'\')"></div>'});
 h+='</div><input type="hidden" id="ccolor" value="'+(c.color||'navy')+'">';
@@ -452,28 +469,22 @@ h+='<div class="att-bar '+(allUnmarked?'warn':'')+'" onclick="savePlan();S.selPl
 
 h+='<div class="m-card"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label class="label">日期</label><input type="date" id="pd" class="m-input" value="'+p.date+'" onchange="getPlan(\''+p.id+'\').date=this.value"></div><div><label class="label">課堂長度</label><input type="number" id="pdu" class="m-input" value="'+p.duration+'" onchange="getPlan(\''+p.id+'\').duration=parseInt(this.value)||60"></div></div></div>';
 
-// Goals
 h+='<div class="m-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div style="font-size:15px;font-weight:700">🎯 核心目標</div><button class="btn btn-xs btn-outline" onclick="getPlan(\''+p.id+'\').goals.push({text:\'\',criteria:\'\'});R()">＋</button></div>';
 (p.goals||[]).forEach((g,i)=>{
 h+='<div style="background:var(--g50);border-radius:12px;padding:14px;margin-bottom:8px;position:relative"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;font-weight:700;color:var(--accent)">目標 '+(i+1)+'</span><button style="background:none;border:none;color:var(--g400);cursor:pointer;font-size:14px" onclick="getPlan(\''+p.id+'\').goals.splice('+i+',1);R()">✕</button></div><input class="m-input" placeholder="目標描述" value="'+esc(g.text)+'" onchange="getPlan(\''+p.id+'\').goals['+i+'].text=this.value" style="margin-bottom:8px;font-size:13px"><input class="m-input" placeholder="成功標準" value="'+esc(g.criteria)+'" onchange="getPlan(\''+p.id+'\').goals['+i+'].criteria=this.value" style="font-size:13px"></div>'});
 h+='</div>';
 
-// Segments
 var timeColor=over>0?'var(--rose)':over===0?'var(--green)':'var(--g500)';var barColor=over>0?'var(--rose)':over===0?'var(--green)':'var(--accent)';
 h+='<div class="m-card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><div style="font-size:15px;font-weight:700">⏱ 環節編排</div><span style="font-size:13px;font-weight:700;color:'+timeColor+'">'+totalMin+'/'+p.duration+'分鐘</span></div>';
 h+='<div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+barColor+'"></div></div>';
-
-// Preset templates
 h+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin:12px 0"><button class="btn btn-xs btn-ghost" onclick="loadTpl(\''+p.id+'\',\'rope\')">🪢 跳繩</button><button class="btn btn-xs btn-ghost" onclick="loadTpl(\''+p.id+'\',\'gym\')">🤸 體操</button><button class="btn btn-xs btn-ghost" onclick="loadTpl(\''+p.id+'\',\'mixed\')">🔀 混合</button></div>';
 
-// My templates
 if(TEMPLATES.length){
 h+='<div style="background:var(--accent-l);border-radius:12px;padding:12px;margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:8px">📁 我的教案模板</div>';
 TEMPLATES.forEach(tpl=>{
 h+='<div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:var(--g0);border-radius:10px;margin-bottom:4px"><div><div style="font-size:12px;font-weight:600">'+esc(tpl.name)+'</div><div style="font-size:10px;color:var(--g400)">'+(tpl.segments||[]).length+'環節 · '+esc(tpl.createdAt||'')+'</div></div><div style="display:flex;gap:4px"><button class="btn btn-xs btn-accent" onclick="loadTemplate(\''+tpl.id+'\',\''+p.id+'\')">載入</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delTemplate(\''+tpl.id+'\')">✕</button></div></div>'});
 h+='</div>'}
 
-// Segment list
 (p.segments||[]).forEach((seg,i)=>{
 var isOpen=S.segOpen[i];
 h+='<div class="seg-card"><div class="seg-head" onclick="S.segOpen['+i+']=!S.segOpen['+i+'];R()"><span style="font-size:12px;font-weight:800;color:var(--accent);width:22px">'+(i+1)+'</span><span style="flex:1;font-size:13px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(seg.name||'未命名')+'</span>'+(seg.videoUrl?'<span style="font-size:11px">🎬</span>':'')+'<span style="font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0">'+seg.duration+'\'</span><span style="color:var(--g400);font-size:11px;margin-left:2px">'+(isOpen?'▲':'▼')+'</span></div>';
@@ -560,7 +571,6 @@ if(seg.desc)h+='<div style="font-size:14px;color:var(--g600);margin-bottom:10px;
 
 if(seg.videoUrl){h+='<div style="background:linear-gradient(135deg,#faf5ff,#ede9fe);border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid #e9d5ff"><div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:11px;font-weight:700;color:#7c3aed">🎬 教學片</div>'+(seg.bpm?'<div style="font-size:12px;color:var(--g500);margin-top:2px">🎵 BPM: '+seg.bpm+'</div>':'')+'</div><a href="'+esc(seg.videoUrl)+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;font-size:12px;font-weight:700;text-decoration:none">▶ 播放</a></div></div>'}
 
-/* === 教練提示 - 支援分行 === */
 if(seg.cues)h+='<div style="background:var(--amber-l);border-radius:12px;padding:12px;margin-bottom:12px"><div style="font-size:10px;font-weight:700;color:#92400e;margin-bottom:4px">💡 教練提示</div><div class="cues-display">'+esc(seg.cues)+'</div></div>';
 
 if(seg.diff){var hasDiff=seg.diff.simplified||seg.diff.basic||seg.diff.standard||seg.diff.challenge;
@@ -660,38 +670,27 @@ var c=getClass(p.classId);if(c&&c.students){if(!p.reflection.studentResults)p.re
 c.students.forEach(st=>{var res=document.querySelector('.stu-result[data-sid="'+st.id+'"]');var notes=document.querySelector('.stu-notes[data-sid="'+st.id+'"]');var next=document.querySelector('.stu-next[data-sid="'+st.id+'"]');p.reflection.studentResults[st.id]={result:res?res.value:'',notes:notes?notes.value:'',next:next?next.value:''}})}
 cloudSave();toast('✅ 已儲存')}
 
-/* === 獨立學生報告 === */
 function genStudentReport(pid,sid){
 var p=getPlan(pid);if(!p)return;var c=getClass(p.classId);if(!c)return;
 var st=c.students.find(s=>s.id===sid);if(!st)return;
 var ref=p.reflection||{};var sr=(ref.studentResults&&ref.studentResults[sid])||{};
 var attA=(p.attendance&&p.attendance[sid])||{};
 var attLabel=attA.status?({'present':'✅ 出席','late':'⏰ 遲到','absent':'❌ 缺席','excused':'📝 請假'}[attA.status]||''):'未記錄';
-
-var t='📋 *學生課堂報告*\n\n';
-t+='👤 *'+st.name+'*\n';
-t+='🏫 '+c.name+'\n';
-t+='📅 '+p.date+'\n';
-t+='出席：'+attLabel+'\n';
+var t='📋 *學生課堂報告*\n\n👤 *'+st.name+'*\n🏫 '+c.name+'\n📅 '+p.date+'\n出席：'+attLabel+'\n';
 if(p.goals&&p.goals.length){t+='\n🎯 *今堂目標*\n';p.goals.forEach(g=>{if(g.text)t+='• '+g.text+'\n'})}
 if(sr.result)t+='\n📊 *表現：*'+sr.result+'\n';
 if(sr.notes)t+='💬 '+sr.notes+'\n';
 if(sr.next)t+='\n📝 *下堂建議：*'+sr.next+'\n';
 t+='\n——————\n💪 繼續努力！';
-
-// Show in UI
 var h='<div class="report-card slide-up" style="border-color:var(--green)"><h3>📋 '+esc(st.name)+' 獨立報告</h3>';
 h+='<div style="font-size:12px;color:var(--g500);margin-bottom:10px">'+esc(c.name)+' · '+esc(p.date)+'</div>';
 h+='<div style="font-size:12px;margin-bottom:4px">出席：'+attLabel+'</div>';
 if(sr.result)h+='<div style="font-size:13px;font-weight:600;color:var(--accent);margin:8px 0">表現：'+esc(sr.result)+'</div>';
 if(sr.notes)h+='<div style="font-size:12px;color:var(--g600);margin-bottom:4px">💬 '+esc(sr.notes)+'</div>';
 if(sr.next)h+='<div style="font-size:12px;color:var(--green);font-weight:600">📝 下堂：'+esc(sr.next)+'</div>';
-h+='<button class="btn btn-sm btn-dark" style="margin-top:12px" onclick="copyTxt(this.dataset.t)" data-t="">📋 複製報告（WhatsApp）</button></div>';
-
+h+='<button class="btn btn-sm btn-dark" style="margin-top:12px" id="copyStudentReport">📋 複製報告（WhatsApp）</button></div>';
 document.getElementById('reportArea').innerHTML=h;
-// Set the data attribute for copy
-var btn=document.getElementById('reportArea').querySelector('button');
-if(btn)btn.dataset.t=t;btn.onclick=function(){copyTxt(t)}}
+document.getElementById('copyStudentReport').onclick=function(){copyTxt(t)}}
 
 function genReport(){
 var p=getPlan(S.selPlan);if(!p)return;var c=getClass(p.classId);var ref=p.reflection||{};var students=c?c.students||[]:[];
@@ -723,25 +722,17 @@ var h='<div style="text-align:center;padding:20px" class="fade-in"><div style="f
 if(S.fromBackup)h+='<div class="backup-banner" style="text-align:left;margin-bottom:16px">⚠️ 你正在使用備份版本<br><span style="font-weight:500;font-size:11px">撳「儲存到雲端」會覆蓋主檔案，備份不受影響</span></div>';
 h+='<button class="btn btn-dark" style="margin-bottom:12px;font-size:16px;padding:16px" onclick="cloudSave()">☁️ 儲存到雲端</button>';
 h+='<div class="cloud-st" id="cloudSt"></div></div>';
-
-// Load section (smaller)
 h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">📥 從雲端讀取</div><div style="display:flex;gap:6px;flex-wrap:wrap">';
 h+='<button class="btn btn-xs btn-accent" onclick="cloudLoadBackup(\'latest\')">最新版本</button>';
 h+='<button class="btn btn-xs btn-outline" onclick="cloudLoadBackup(\'6h\')">6小時前</button>';
 h+='<button class="btn btn-xs btn-outline" onclick="cloudLoadBackup(\'daily\')">1日前</button>';
 h+='<button class="btn btn-xs btn-outline" onclick="cloudLoadBackup(\'weekly\')">7日前</button>';
 h+='</div></div>';
-
-// Manual backup
 h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">💾 手動備份</div><button class="btn btn-outline btn-sm" style="margin-bottom:8px;width:100%" onclick="copyTxt(JSON.stringify(buildSave()))">📋 複製 JSON</button><textarea id="loadA" class="m-textarea" style="min-height:50px;margin-bottom:8px;font-size:11px" placeholder="貼入存檔 JSON"></textarea><button class="btn btn-ghost btn-sm" style="width:100%" onclick="doManualLoad()">讀入存檔</button></div>';
-
-// Template management
 if(TEMPLATES.length){
 h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">📁 教案模板（'+TEMPLATES.length+'）</div>';
 TEMPLATES.forEach(tpl=>{h+='<div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:var(--g50);border-radius:10px;margin-bottom:4px"><div><div style="font-size:12px;font-weight:600">'+esc(tpl.name)+'</div><div style="font-size:10px;color:var(--g400)">'+(tpl.segments||[]).length+'環節</div></div><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delTemplate(\''+tpl.id+'\')">✕</button></div>'});
 h+='</div>'}
-
-// Brand settings
 h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:10px">🏢 品牌/收據設定</div>';
 h+='<label class="label">品牌名</label><input id="bn" class="m-input" value="'+esc(BRAND.name)+'" style="margin-bottom:6px">';
 h+='<label class="label">電話</label><input id="bp" class="m-input" value="'+esc(BRAND.phone)+'" style="margin-bottom:6px">';
@@ -757,133 +748,7 @@ h+='<button class="btn btn-sm btn-dark" style="margin-top:8px" onclick="BRAND.na
 return h}
 function doManualLoad(){var a=document.getElementById('loadA');if(!a||!a.value.trim()){toast('請貼入JSON');return}try{applyLoad(JSON.parse(a.value.trim()));toast('✅ 已讀入');a.value='';R()}catch(e){toast('JSON格式錯誤')}}
 
-/* ============================================
-   V9 新功能：收費 / 框架 / 技能追蹤
-   ============================================ */
-
-// === HELPER ===
-function gSC(id){return SC.find(s=>s.id===id)||SC[0]}
-function gStu(id){var s=STUDENTS.find(s=>s.id===id);if(s)return s;for(var i=0;i<CLASSES.length;i++){if(CLASSES[i].students){var f=CLASSES[i].students.find(s=>s.id===id);if(f)return f}}return null}
-function gInv(id){return INVOICES.find(i=>i.id===id)}
-function gFw(id){return FRAMEWORKS.find(f=>f.id===id)}
-function gStuSP(sid,skId){var st=gStu(sid);if(!st||!st.skillProgress)return null;return st.skillProgress[skId]||null}
-function setStuSP(sid,skId,status){var st=gStu(sid);if(!st)return;if(!st.skillProgress)st.skillProgress={};if(!st.skillProgress[skId])st.skillProgress[skId]={status:'none',timeline:[]};st.skillProgress[skId].status=status}
-function addTimeline(sid,skId,entry){var st=gStu(sid);if(!st)return;if(!st.skillProgress)st.skillProgress={};if(!st.skillProgress[skId])st.skillProgress[skId]={status:'none',timeline:[]};entry.id=uid();st.skillProgress[skId].timeline.push(entry);st.skillProgress[skId].status=entry.status}
-function fwProgress(sid,fw){var total=0,done=0;(fw.levels||[]).forEach(lv=>{(lv.skills||[]).forEach(sk=>{total++;var sp=gStuSP(sid,sk.id);if(sp&&(sp.status==='green'||sp.status==='blue'))done++;(sk.variations||[]).forEach(v=>{total++;var vp=gStuSP(sid,v.id);if(vp&&(vp.status==='green'||vp.status==='blue'))done++})})});return{total,done,pct:total>0?Math.round(done/total*100):0}}
-function getStuShareLink(sid){return location.origin+location.pathname+'?stuId='+sid}
-
-// === INVOICE ===
-function newInvoice(cid,sid){
-var st=null;var c=getClass(cid);
-if(sid){st=c?c.students.find(s=>s.id===sid):null}
-var num='RSREG-'+dateStr().replace(/-/g,'').substring(0,6)+'S-'+String(INVOICES.length+1).padStart(3,'0');
-INVOICES.push({id:uid(),no:num,studentId:sid||'',classId:cid,className:c?c.name:'',date:dateStr(),dueDate:'',month:new Date().getFullYear()+'年'+(new Date().getMonth()+1)+'月',dates:[],perClassFee:0,otherItems:[],subtotal:0,discount:0,total:0,status:'draft',notes:'',parentName:st?st.name:'',parentPhone:''});
-S.selInv=INVOICES[INVOICES.length-1].id;S.page='invoiceEdit';R()}
-
-// === INVOICE HTML (跟你第二張圖格式) ===
-function buildInvHTML(inv){
-var c=inv.classId?getClass(inv.classId):null;
-var brandTitle=BRAND.name||(c?c.name:'')||'教練';
-var h='<div style="font-family:\'Noto Sans TC\',sans-serif;max-width:700px;margin:0 auto;padding:48px 36px;background:#fff">';
-
-// Header
-h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1a365d;padding-bottom:20px;margin-bottom:32px">';
-h+='<div style="flex:1;min-width:0"><h1 style="font-size:24px;font-weight:900;color:#1a365d;margin:0 0 8px 0;line-height:1.4">'+esc(brandTitle)+'</h1>';
-if(BRAND.phone)h+='<div style="font-size:13px;color:#555">📞 '+esc(BRAND.phone)+'</div>';
-h+='</div><div style="text-align:right;flex-shrink:0;margin-left:16px"><div style="font-size:10px;color:#999;letter-spacing:2px">INVOICE</div><div style="font-size:14px;font-weight:800;color:#1a365d;margin-top:2px">#'+esc(inv.no)+'</div></div></div>';
-
-// Info
-h+='<div style="display:flex;justify-content:space-between;margin-bottom:36px;font-size:13px;line-height:2.2">';
-h+='<div><div style="color:#999;font-size:11px;font-weight:600;letter-spacing:.5px">收費對象</div><div style="font-weight:800;font-size:16px;color:#1a365d;margin:4px 0">'+esc(inv.parentName||'-')+'</div><div style="color:#555">學生：'+esc(inv.parentName||'-')+'</div>';
-if(inv.parentPhone)h+='<div style="color:#555">電話：'+esc(inv.parentPhone)+'</div>';
-h+='</div>';
-h+='<div style="text-align:right;color:#555"><div>發出日期：<strong style="color:#1a365d">'+esc(inv.date)+'</strong></div>';
-if(inv.dueDate)h+='<div>繳費限期：<strong style="color:#dc2626">'+esc(inv.dueDate)+'</strong></div>';
-h+='<div>班別：'+esc(inv.className||'-')+'</div><div>月份：<strong style="color:#1a365d">'+esc(inv.month)+'</strong></div></div></div>';
-
-// Table
-h+='<table style="width:100%;border-collapse:collapse;margin:28px 0"><thead><tr><th style="text-align:left;padding:14px 0;border-bottom:2px solid #d4d4d4;font-size:13px;color:#737373;font-weight:600">日期</th><th style="text-align:right;padding:14px 0;border-bottom:2px solid #d4d4d4;font-size:13px;color:#737373;font-weight:600">費用</th></tr></thead><tbody>';
-var dn=['日','一','二','三','四','五','六'];
-(inv.dates||[]).forEach(function(d){var dt=new Date(d);h+='<tr><td style="padding:16px 0;border-bottom:1px solid #f0f0f0;font-size:15px;font-weight:600;color:#262626">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn[dt.getDay()]+')</td><td style="padding:16px 0;border-bottom:1px solid #f0f0f0;font-size:15px;text-align:right;font-weight:600;color:#262626">$'+(inv.perClassFee||0)+'</td></tr>'});
-h+='<tr><td style="padding:16px 0;font-size:15px;font-weight:800;color:#262626;border-top:2px solid #e5e5e5">課堂小計（'+inv.dates.length+' 堂）</td><td style="padding:16px 0;font-size:15px;font-weight:800;text-align:right;color:#262626;border-top:2px solid #e5e5e5">$'+(inv.dates.length*(inv.perClassFee||0))+'</td></tr>';
-
-// Other items
-(inv.otherItems||[]).forEach(function(it){if(it.desc)h+='<tr><td style="padding:12px 0;font-size:14px;color:#555;border-top:1px solid #f0f0f0">'+esc(it.desc)+'</td><td style="padding:12px 0;font-size:14px;text-align:right;color:#555;border-top:1px solid #f0f0f0">$'+(it.price||0)+'</td></tr>'});
-
-// Discount
-if(inv.discount>0)h+='<tr><td style="padding:12px 0;font-size:14px;color:#16a34a;border-top:1px solid #f0f0f0">折扣</td><td style="padding:12px 0;font-size:14px;text-align:right;color:#16a34a;border-top:1px solid #f0f0f0">-$'+inv.discount+'</td></tr>';
-
-h+='</tbody></table>';
-
-// Total
-h+='<div style="margin:36px 0;display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:18px;color:#a3a3a3;font-weight:600">應繳總額</span><span style="font-size:44px;font-weight:900;color:#1a365d;letter-spacing:-1px">$'+inv.total+'</span></div>';
-
-// Notes
-if(inv.notes)h+='<div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:14px;padding:18px;margin:20px 0"><div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:6px">📝 備註</div><div style="font-size:13px;color:#64748b;white-space:pre-wrap;line-height:1.7">'+esc(inv.notes)+'</div></div>';
-
-// Payment
-h+='<div style="border:1.5px solid #e5e5e5;border-radius:20px;padding:28px;margin:32px 0"><div style="font-size:16px;font-weight:800;color:#d97706;margin-bottom:20px">💰 付款方式</div>';
-if(BRAND.paymeQR||BRAND.fpsQR){
-h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;text-align:center">';
-if(BRAND.paymeQR)h+='<div><div style="font-size:14px;font-weight:800;color:#e2164b;margin-bottom:12px">PayMe</div><img src="'+esc(BRAND.paymeQR)+'" style="width:100%;max-width:200px;border-radius:12px;border:1px solid #eee"></div>';
-if(BRAND.fpsQR)h+='<div><div style="font-size:14px;font-weight:800;color:#003d79;margin-bottom:12px">FPS 轉數快</div><img src="'+esc(BRAND.fpsQR)+'" style="width:100%;max-width:200px;border-radius:12px;border:1px solid #eee"></div>';
-h+='</div>'}
-else h+='<div style="font-size:14px;color:#666;line-height:1.8">PayMe / FPS（請聯絡教練取得付款資料）</div>';
-if(inv.dueDate)h+='<div style="margin-top:16px;padding:10px 14px;background:#fef2f2;border-radius:10px;font-size:13px;font-weight:700;color:#dc2626">⏰ 請於 '+esc(inv.dueDate)+' 或之前繳付</div>';
-h+='</div>';
-
-// Policy
-if(BRAND.policy)h+='<div style="background:#fefbf3;border:1.5px solid #f5e6c8;border-radius:18px;padding:22px;margin:24px 0"><div style="font-size:14px;font-weight:800;color:#7c5e2c;margin-bottom:10px">📋 收費政策</div><div style="font-size:13px;color:#8b6914;white-space:pre-wrap;line-height:1.9">'+esc(BRAND.policy)+'</div></div>';
-
-h+='<div style="text-align:center;margin-top:32px;font-size:14px;color:#14b8a6;font-weight:700">有其他問題，都可以隨時問我 👌</div></div>';
-return h}
-
-function printInvoice(id){
-  var inv = gInv(id);
-  if(!inv) return;
-  var html = buildInvHTML(inv);
-  
-  // 開新分頁，用戶自己撳 Share → Print
-  var fullHTML = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet"><title>Invoice '+inv.no+'</title></head><body style="margin:0;padding:0">'+html+'</body></html>';
-  
-  var blob = new Blob([fullHTML], {type:'text/html'});
-  var url = URL.createObjectURL(blob);
-  window.open(url, '_blank');
-}
-
-function shareInvoice(id){
-  var inv = gInv(id);
-  if(!inv) return;
-  var html = buildInvHTML(inv);
-  
-  var fullHTML = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0">'+html+'</body></html>';
-  
-  var w = window.open('', '_blank');
-  w.document.write(fullHTML);
-  w.document.close();
-}
-
-function renderInvPreview(containerId, inv) {
-  var html = buildInvHTML(inv);
-  var iframe = document.createElement('iframe');
-  iframe.style.cssText = 'width:100%;border:none;min-height:1200px;border-radius:12px;background:#fff';
-  
-  var container = document.getElementById(containerId);
-  container.innerHTML = '';
-  container.appendChild(iframe);
-  
-  var doc = iframe.contentDocument || iframe.contentWindow.document;
-  doc.open();
-  doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0">' + html + '</body></html>');
-  doc.close();
-  
-  // Auto-resize iframe height
-  setTimeout(function(){
-    iframe.style.height = doc.body.scrollHeight + 'px';
-  }, 300);
-}
-  
-// === TAB: BILLING ===
+/* ====== TAB: BILLING ====== */
 function tabBilling(){
 var paid=INVOICES.filter(i=>i.status==='paid').reduce((a,i)=>a+i.total,0);
 var h='<div style="font-size:20px;font-weight:800;margin-bottom:12px">💰 收費</div>';
@@ -893,93 +758,105 @@ INVOICES.slice().reverse().forEach(inv=>{var sl={draft:'草稿',unpaid:'未付',
 h+='<div class="m-card" style="cursor:pointer" onclick="S.selInv=\''+inv.id+'\';S.page=\'invoiceEdit\';R()"><div style="display:flex;justify-content:space-between"><div><div style="font-size:13px;font-weight:700">'+esc(inv.no)+'</div><div style="font-size:11px;color:var(--g400)">'+esc(inv.parentName||'')+' · $'+inv.total+'</div></div><span style="padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;background:'+(inv.status==='paid'?'var(--green-l)':'var(--amber-l)')+';color:'+(inv.status==='paid'?'var(--green)':'var(--amber)')+'">'+sl+'</span></div></div>'});
 return h}
 
+/* ====== INVOICE ====== */
 function calcInv(inv){
 var ct=inv.dates.length*(inv.perClassFee||0);
 var ot=(inv.otherItems||[]).reduce(function(a,it){return a+(it.price||0)},0);
 inv.subtotal=ct+ot;
 inv.total=inv.subtotal-(inv.discount||0)}
-
 function setInvStatus(id,st){var inv=gInv(id);if(!inv)return;inv.status=st;cloudSave();R()}
-
 function delInvoice(id){showMo('刪除','確定？',function(){INVOICES=INVOICES.filter(function(i){return i.id!==id});cloudSave();S.page='home';S.tab='billing';R()},'刪除')}
+function newInvoice(cid,sid){
+var st2=null;var c=getClass(cid);
+if(sid&&c)st2=c.students.find(function(s){return s.id===sid});
+var num='RSREG-'+dateStr().replace(/-/g,'').substring(0,6)+'S-'+String(INVOICES.length+1).padStart(3,'0');
+INVOICES.push({id:uid(),no:num,studentId:sid||'',classId:cid,className:c?c.name:'',date:dateStr(),dueDate:'',month:new Date().getFullYear()+'年'+(new Date().getMonth()+1)+'月',dates:[],perClassFee:0,otherItems:[],subtotal:0,discount:0,total:0,status:'draft',notes:'',parentName:st2?st2.name:'',parentPhone:''});
+S.selInv=INVOICES[INVOICES.length-1].id;S.page='invoiceEdit';R()}
 
-// === INVOICE EDIT ===
 function pgInvoiceEdit(){
-  var inv = gInv(S.selInv);
-  if(!inv){ S.page='home'; S.tab='billing'; return '' }
-
-  var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'billing\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">🧾 出 Invoice</div><div style="font-size:11px;color:var(--g400)">根據已確認嘅 '+inv.dates.length+' 堂出單</div></div></div>';
-
-  // Invoice 資料
-  h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:12px">Invoice 資料</div>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">';
-  h+='<div><input class="m-input" placeholder="Invoice 編號" value="'+esc(inv.no)+'" onchange="gInv(\''+inv.id+'\').no=this.value" style="font-size:12px"></div>';
-  h+='<div><input type="date" class="m-input" value="'+inv.date+'" onchange="gInv(\''+inv.id+'\').date=this.value" style="font-size:12px"></div>';
-  h+='<div><input type="date" class="m-input" placeholder="繳費限期" value="'+(inv.dueDate||'')+'" onchange="gInv(\''+inv.id+'\').dueDate=this.value" style="font-size:12px"></div></div>';
-  h+='<div style="font-size:10px;color:var(--g400);margin-bottom:12px">編號 / 發出日期 / 繳費限期</div>';
-
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label class="label">收費對象</label><input class="m-input" value="'+esc(inv.parentName)+'" onchange="gInv(\''+inv.id+'\').parentName=this.value" style="font-size:12px"></div><div><label class="label">電話</label><input class="m-input" value="'+esc(inv.parentPhone||'')+'" onchange="gInv(\''+inv.id+'\').parentPhone=this.value" style="font-size:12px"></div></div>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label class="label">班名</label><input class="m-input" value="'+esc(inv.className)+'" onchange="gInv(\''+inv.id+'\').className=this.value" style="font-size:12px"></div><div><label class="label">月份</label><input class="m-input" value="'+esc(inv.month)+'" onchange="gInv(\''+inv.id+'\').month=this.value" style="font-size:12px"></div></div>';
-  h+='<div style="margin-top:8px"><label class="label">每堂費用($)</label><input type="number" class="m-input" value="'+(inv.perClassFee||0)+'" onchange="gInv(\''+inv.id+'\').perClassFee=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div></div>';
-
-  // 已確認課堂
-  h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">已確認課堂（'+inv.dates.length+' 堂）</span></div>';
-  h+='<div style="display:flex;gap:4px;margin-bottom:10px"><input type="date" id="newInvDate" class="m-input" style="flex:1;font-size:12px"><button class="btn btn-xs btn-green" onclick="var d=document.getElementById(\'newInvDate\').value;if(!d)return;gInv(\''+inv.id+'\').dates.push(d);gInv(\''+inv.id+'\').dates.sort();calcInv(gInv(\''+inv.id+'\'));R()">＋ 加入</button></div>';
-  var dn2=['日','一','二','三','四','五','六'];
-  (inv.dates||[]).forEach(function(d,i){var dt=new Date(d);
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g100)"><span style="font-size:13px;font-weight:600">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn2[dt.getDay()]+')</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:var(--accent);font-weight:700">$'+(inv.perClassFee||0)+'</span><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').dates.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div></div>'});
-  if(inv.dates.length)h+='<div style="display:flex;justify-content:space-between;padding:12px 0;font-size:13px;font-weight:700"><span>課堂小計</span><span>$'+(inv.dates.length*(inv.perClassFee||0))+'</span></div>';
-  else h+='<div style="font-size:12px;color:var(--g400);padding:8px 0">未有課堂日期</div>';
-  h+='</div>';
-
-  // 其他項目
-  h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">其他項目（衫、裝備等）</span><button class="btn btn-xs btn-outline" onclick="gInv(\''+inv.id+'\').otherItems.push({desc:\'\',price:0});R()">＋ 加項目</button></div>';
-  if(!inv.otherItems||!inv.otherItems.length)h+='<div style="font-size:12px;color:var(--g400)">未有其他項目</div>';
-  else (inv.otherItems||[]).forEach(function(it,i){
-  h+='<div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><input class="m-input" placeholder="項目描述" value="'+esc(it.desc)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].desc=this.value;calcInv(gInv(\''+inv.id+'\'))" style="flex:1;font-size:12px"><input type="number" class="m-input" placeholder="$" value="'+(it.price||0)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].price=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="width:80px;font-size:12px"><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').otherItems.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div>'});
-  h+='</div>';
-
-  // 備註
-  h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">備註</div><textarea class="m-textarea" placeholder="自訂備註..." style="font-size:12px;min-height:70px" onchange="gInv(\''+inv.id+'\').notes=this.value">'+esc(inv.notes||'')+'</textarea></div>';
-
-  // 折扣
-  h+='<div class="m-card"><label class="label">折扣 ($)</label><input type="number" class="m-input" value="'+(inv.discount||0)+'" onchange="gInv(\''+inv.id+'\').discount=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div>';
-
-  // Total bar
-  h+='<div style="background:linear-gradient(135deg,#1a365d,#2d3748);color:#fff;padding:16px 24px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;margin:12px 0"><span style="font-size:16px;font-weight:700">總計</span><span style="font-size:32px;font-weight:900">$'+inv.total+'</span></div>';
-
-  // Status
-  h+='<div class="m-card" style="padding:12px"><div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px">狀態</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px">';
-  ['draft','unpaid','paid','refunded'].forEach(function(st2){var labels={draft:'草稿',unpaid:'未付',paid:'已付',refunded:'退款'};var on=inv.status===st2;h+='<button style="padding:9px;border-radius:10px;border:1.5px solid '+(on?'var(--accent)':'var(--g200)')+';background:'+(on?'var(--accent-l)':'transparent')+';color:'+(on?'var(--accent)':'var(--g400)')+';font-size:11px;font-weight:600;cursor:pointer" onclick="setInvStatus(\''+inv.id+'\',\''+st2+'\')">'+labels[st2]+'</button>'});
-  h+='</div></div>';
-
-  // Buttons
-  h+='<button class="btn btn-accent" style="margin-bottom:8px;font-size:15px;padding:15px" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave();S.page=\'invoicePreview\';R()">預覽 Invoice →</button>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn btn-dark" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave()">💾 儲存</button><button class="btn btn-outline" onclick="printInvoice(\''+inv.id+'\')">🖨 列印</button></div>';
-
-  // 檢視 / 列印（新頁面）
-  h+='<div style="text-align:center;margin:16px 0">';
-  h+='<button onclick="shareInvoice(\''+inv.id+'\')" style="background:#2563eb;color:#fff;border:none;padding:12px 24px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer">📄 檢視 / 列印（新頁面）</button>';
-  h+='</div>';
-
-  h+='<button class="btn btn-danger" style="margin-top:8px" onclick="delInvoice(\''+inv.id+'\')">🗑 刪除</button>';
-
-  // 預覽區
-  h+='<div id="invPreviewFrame" style="margin:20px 0"></div>';
-
-  // setTimeout 觸發預覽渲染
-  setTimeout(function(){
-    var inv2 = gInv(S.selInv);
-    if(inv2) renderInvPreview('invPreviewFrame', inv2);
-  }, 100);
-
-  return h;
-}
+var inv=gInv(S.selInv);if(!inv){S.page='home';S.tab='billing';return ''}
+var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'home\';S.tab=\'billing\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">🧾 出 Invoice</div><div style="font-size:11px;color:var(--g400)">根據已確認嘅 '+inv.dates.length+' 堂出單</div></div></div>';
+h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:12px">Invoice 資料</div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px">';
+h+='<div><input class="m-input" placeholder="Invoice 編號" value="'+esc(inv.no)+'" onchange="gInv(\''+inv.id+'\').no=this.value" style="font-size:12px"></div>';
+h+='<div><input type="date" class="m-input" value="'+inv.date+'" onchange="gInv(\''+inv.id+'\').date=this.value" style="font-size:12px"></div>';
+h+='<div><input type="date" class="m-input" placeholder="繳費限期" value="'+(inv.dueDate||'')+'" onchange="gInv(\''+inv.id+'\').dueDate=this.value" style="font-size:12px"></div></div>';
+h+='<div style="font-size:10px;color:var(--g400);margin-bottom:12px">編號 / 發出日期 / 繳費限期</div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><label class="label">收費對象</label><input class="m-input" value="'+esc(inv.parentName)+'" onchange="gInv(\''+inv.id+'\').parentName=this.value" style="font-size:12px"></div><div><label class="label">電話</label><input class="m-input" value="'+esc(inv.parentPhone||'')+'" onchange="gInv(\''+inv.id+'\').parentPhone=this.value" style="font-size:12px"></div></div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label class="label">班名</label><input class="m-input" value="'+esc(inv.className)+'" onchange="gInv(\''+inv.id+'\').className=this.value" style="font-size:12px"></div><div><label class="label">月份</label><input class="m-input" value="'+esc(inv.month)+'" onchange="gInv(\''+inv.id+'\').month=this.value" style="font-size:12px"></div></div>';
+h+='<div style="margin-top:8px"><label class="label">每堂費用($)</label><input type="number" class="m-input" value="'+(inv.perClassFee||0)+'" onchange="gInv(\''+inv.id+'\').perClassFee=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div></div>';
+h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">已確認課堂（'+inv.dates.length+' 堂）</span></div>';
+h+='<div style="display:flex;gap:4px;margin-bottom:10px"><input type="date" id="newInvDate" class="m-input" style="flex:1;font-size:12px"><button class="btn btn-xs btn-green" onclick="var d=document.getElementById(\'newInvDate\').value;if(!d)return;gInv(\''+inv.id+'\').dates.push(d);gInv(\''+inv.id+'\').dates.sort();calcInv(gInv(\''+inv.id+'\'));R()">＋ 加入</button></div>';
+var dn2=['日','一','二','三','四','五','六'];
+(inv.dates||[]).forEach(function(d,i){var dt=new Date(d);
+h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g100)"><span style="font-size:13px;font-weight:600">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn2[dt.getDay()]+')</span><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:var(--accent);font-weight:700">$'+(inv.perClassFee||0)+'</span><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').dates.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div></div>'});
+if(inv.dates.length)h+='<div style="display:flex;justify-content:space-between;padding:12px 0;font-size:13px;font-weight:700"><span>課堂小計</span><span>$'+(inv.dates.length*(inv.perClassFee||0))+'</span></div>';
+else h+='<div style="font-size:12px;color:var(--g400);padding:8px 0">未有課堂日期</div>';
+h+='</div>';
+h+='<div class="m-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:700">其他項目（衫、裝備等）</span><button class="btn btn-xs btn-outline" onclick="if(!gInv(\''+inv.id+'\').otherItems)gInv(\''+inv.id+'\').otherItems=[];gInv(\''+inv.id+'\').otherItems.push({desc:\'\',price:0});R()">＋ 加項目</button></div>';
+if(!inv.otherItems||!inv.otherItems.length)h+='<div style="font-size:12px;color:var(--g400)">未有其他項目</div>';
+else(inv.otherItems||[]).forEach(function(it,i){
+h+='<div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><input class="m-input" placeholder="項目描述" value="'+esc(it.desc)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].desc=this.value;calcInv(gInv(\''+inv.id+'\'))" style="flex:1;font-size:12px"><input type="number" class="m-input" placeholder="$" value="'+(it.price||0)+'" onchange="gInv(\''+inv.id+'\').otherItems['+i+'].price=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="width:80px;font-size:12px"><button style="background:none;border:none;color:var(--rose);cursor:pointer;font-size:14px" onclick="gInv(\''+inv.id+'\').otherItems.splice('+i+',1);calcInv(gInv(\''+inv.id+'\'));R()">✕</button></div>'});
+h+='</div>';
+h+='<div class="m-card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">備註</div><textarea class="m-textarea" placeholder="自訂備註..." style="font-size:12px;min-height:70px" onchange="gInv(\''+inv.id+'\').notes=this.value">'+esc(inv.notes||'')+'</textarea></div>';
+h+='<div class="m-card"><label class="label">折扣 ($)</label><input type="number" class="m-input" value="'+(inv.discount||0)+'" onchange="gInv(\''+inv.id+'\').discount=parseInt(this.value)||0;calcInv(gInv(\''+inv.id+'\'));R()" style="font-size:12px;max-width:160px"></div>';
+h+='<div style="background:linear-gradient(135deg,#1a365d,#2d3748);color:#fff;padding:16px 24px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;margin:12px 0"><span style="font-size:16px;font-weight:700">總計</span><span style="font-size:32px;font-weight:900">$'+inv.total+'</span></div>';
+h+='<div class="m-card" style="padding:12px"><div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px">狀態</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px">';
+['draft','unpaid','paid','refunded'].forEach(function(st2){var labels={draft:'草稿',unpaid:'未付',paid:'已付',refunded:'退款'};var on=inv.status===st2;h+='<button style="padding:9px;border-radius:10px;border:1.5px solid '+(on?'var(--accent)':'var(--g200)')+';background:'+(on?'var(--accent-l)':'transparent')+';color:'+(on?'var(--accent)':'var(--g400)')+';font-size:11px;font-weight:600;cursor:pointer" onclick="setInvStatus(\''+inv.id+'\',\''+st2+'\')">'+labels[st2]+'</button>'});
+h+='</div></div>';
+h+='<button class="btn btn-accent" style="margin-bottom:8px;font-size:15px;padding:15px" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave();generateInvoicePage(\''+inv.id+'\')">📄 生成 Invoice（可分享/列印）</button>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn btn-dark" onclick="calcInv(gInv(\''+inv.id+'\'));cloudSave()">💾 儲存</button><button class="btn btn-danger" onclick="delInvoice(\''+inv.id+'\')">🗑 刪除</button></div>';
+return h}
 
 function pgInvoicePreview(){var inv=gInv(S.selInv);if(!inv){S.page='home';return''}
 return '<div style="margin-bottom:10px"><button class="btn btn-sm btn-outline" onclick="S.page=\'invoiceEdit\';R()">← 返回</button></div>'+buildInvHTML(inv)}
 
-// === FRAMEWORK ===
+function buildInvHTML(inv){
+var c=inv.classId?getClass(inv.classId):null;
+var brandTitle=BRAND.name||(c?c.name:'')||'教練';
+var h='<div style="font-family:\'Noto Sans TC\',sans-serif;max-width:700px;margin:0 auto;padding:20px 28px;background:#fff">';
+h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1a365d;padding-bottom:14px;margin-bottom:18px">';
+h+='<div style="flex:1;min-width:0"><h1 style="font-size:18px;font-weight:900;color:#1a365d;margin:0 0 4px 0;line-height:1.4">'+esc(brandTitle)+'</h1>';
+if(BRAND.phone)h+='<div style="font-size:11px;color:#555">📞 '+esc(BRAND.phone)+'</div>';
+h+='</div><div style="text-align:right;flex-shrink:0;margin-left:16px"><div style="font-size:9px;color:#999;letter-spacing:2px">INVOICE</div><div style="font-size:12px;font-weight:800;color:#1a365d;margin-top:2px">#'+esc(inv.no)+'</div></div></div>';
+h+='<div style="display:flex;justify-content:space-between;margin-bottom:20px;font-size:12px;line-height:2">';
+h+='<div><div style="color:#999;font-size:10px;font-weight:600;letter-spacing:.5px">收費對象</div><div style="font-weight:800;font-size:14px;color:#1a365d;margin:2px 0">'+esc(inv.parentName||'-')+'</div>';
+if(inv.parentPhone)h+='<div style="color:#555">電話：'+esc(inv.parentPhone)+'</div>';
+h+='</div>';
+h+='<div style="text-align:right;color:#555"><div>發出日期：<strong style="color:#1a365d">'+esc(inv.date)+'</strong></div>';
+if(inv.dueDate)h+='<div>繳費限期：<strong style="color:#dc2626">'+esc(inv.dueDate)+'</strong></div>';
+h+='<div>班別：'+esc(inv.className||'-')+'</div><div>月份：<strong style="color:#1a365d">'+esc(inv.month)+'</strong></div></div></div>';
+h+='<table style="width:100%;border-collapse:collapse;margin:14px 0"><thead><tr><th style="text-align:left;padding:10px 0;border-bottom:2px solid #d4d4d4;font-size:11px;color:#737373;font-weight:600">日期</th><th style="text-align:right;padding:10px 0;border-bottom:2px solid #d4d4d4;font-size:11px;color:#737373;font-weight:600">費用</th></tr></thead><tbody>';
+var dn=['日','一','二','三','四','五','六'];
+(inv.dates||[]).forEach(function(d){var dt=new Date(d);h+='<tr><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:600;color:#262626">'+dt.getDate()+'/'+(dt.getMonth()+1)+' ('+dn[dt.getDay()]+')</td><td style="padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;text-align:right;font-weight:600;color:#262626">$'+(inv.perClassFee||0)+'</td></tr>'});
+h+='<tr><td style="padding:10px 0;font-size:13px;font-weight:800;color:#262626;border-top:2px solid #e5e5e5">課堂小計（'+inv.dates.length+' 堂）</td><td style="padding:10px 0;font-size:13px;font-weight:800;text-align:right;color:#262626;border-top:2px solid #e5e5e5">$'+(inv.dates.length*(inv.perClassFee||0))+'</td></tr>';
+(inv.otherItems||[]).forEach(function(it){if(it.desc)h+='<tr><td style="padding:8px 0;font-size:12px;color:#555;border-top:1px solid #f0f0f0">'+esc(it.desc)+'</td><td style="padding:8px 0;font-size:12px;text-align:right;color:#555;border-top:1px solid #f0f0f0">$'+(it.price||0)+'</td></tr>'});
+if(inv.discount>0)h+='<tr><td style="padding:8px 0;font-size:12px;color:#16a34a;border-top:1px solid #f0f0f0">折扣</td><td style="padding:8px 0;font-size:12px;text-align:right;color:#16a34a;border-top:1px solid #f0f0f0">-$'+inv.discount+'</td></tr>';
+h+='</tbody></table>';
+h+='<div style="margin:18px 0;display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:14px;color:#a3a3a3;font-weight:600">應繳總額</span><span style="font-size:36px;font-weight:900;color:#1a365d;letter-spacing:-1px">$'+inv.total+'</span></div>';
+if(inv.notes)h+='<div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:12px;margin:12px 0"><div style="font-size:11px;font-weight:700;color:#475569;margin-bottom:4px">📝 備註</div><div style="font-size:11px;color:#64748b;white-space:pre-wrap;line-height:1.6">'+esc(inv.notes)+'</div></div>';
+h+='<div style="border:1.5px solid #e5e5e5;border-radius:14px;padding:16px;margin:16px 0"><div style="font-size:13px;font-weight:800;color:#d97706;margin-bottom:12px">💰 付款方式</div>';
+if(BRAND.paymeQR||BRAND.fpsQR){
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:center">';
+if(BRAND.paymeQR)h+='<div><div style="font-size:12px;font-weight:800;color:#e2164b;margin-bottom:6px">PayMe</div><img src="'+esc(BRAND.paymeQR)+'" style="width:100%;max-width:150px;border-radius:8px;border:1px solid #eee"></div>';
+if(BRAND.fpsQR)h+='<div><div style="font-size:12px;font-weight:800;color:#003d79;margin-bottom:6px">FPS 轉數快</div><img src="'+esc(BRAND.fpsQR)+'" style="width:100%;max-width:150px;border-radius:8px;border:1px solid #eee"></div>';
+h+='</div>'}
+else h+='<div style="font-size:12px;color:#666;line-height:1.8">PayMe / FPS（請聯絡教練取得付款資料）</div>';
+if(inv.dueDate)h+='<div style="margin-top:10px;padding:8px 10px;background:#fef2f2;border-radius:8px;font-size:11px;font-weight:700;color:#dc2626">⏰ 請於 '+esc(inv.dueDate)+' 或之前繳付</div>';
+h+='</div>';
+if(BRAND.policy)h+='<div style="background:#fefbf3;border:1.5px solid #f5e6c8;border-radius:12px;padding:14px;margin:12px 0"><div style="font-size:12px;font-weight:800;color:#7c5e2c;margin-bottom:6px">📋 收費政策</div><div style="font-size:11px;color:#8b6914;white-space:pre-wrap;line-height:1.7">'+esc(BRAND.policy)+'</div></div>';
+h+='<div style="text-align:center;margin-top:16px;font-size:12px;color:#14b8a6;font-weight:700">有其他問題，都可以隨時問我 👌</div></div>';
+return h}
+
+function generateInvoicePage(invId){
+var inv=gInv(invId);if(!inv)return;calcInv(inv);
+var html=buildInvHTML(inv);
+var fullPage='<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;800;900&display=swap" rel="stylesheet"><title>Invoice '+inv.no+'</title><style>@page{size:A4;margin:8mm}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}body{margin:0;padding:0;background:#fff;font-family:"Noto Sans TC",sans-serif}</style></head><body>'+html+'</body></html>';
+var blob=new Blob([fullPage],{type:'text/html'});
+var url=URL.createObjectURL(blob);
+window.open(url,'_blank')}
+
+/* ====== FRAMEWORK ====== */
 function addFw(){var n=prompt('運動/技能名稱：');if(!n)return;var e=prompt('Emoji：')||'⚡';FRAMEWORKS.push({id:uid(),sport:n.trim(),emoji:e.trim(),levels:[]});cloudSave();R()}
 function addFwLevel(fid){var fw=gFw(fid);if(!fw)return;var n=prompt('級別名稱：');if(!n)return;fw.levels.push({id:uid(),name:n.trim(),skills:[]});cloudSave();R()}
 function addFwSkill(fid,lvId){var fw=gFw(fid);if(!fw)return;var lv=fw.levels.find(l=>l.id===lvId);if(!lv)return;var n=prompt('技能名稱：');if(!n)return;lv.skills.push({id:uid(),name:n.trim(),variations:[]});cloudSave();R()}
@@ -987,6 +864,19 @@ function addFwVar(fid,lvId,skId){var fw=gFw(fid);if(!fw)return;var lv=fw.levels.
 function delFwLevel(fid,lvId){var fw=gFw(fid);if(fw)fw.levels=fw.levels.filter(l=>l.id!==lvId);cloudSave();R()}
 function delFwSkill(fid,lvId,skId){var fw=gFw(fid);if(!fw)return;var lv=fw.levels.find(l=>l.id===lvId);if(lv)lv.skills=lv.skills.filter(s=>s.id!==skId);cloudSave();R()}
 
+function pgFwManage(){
+var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'studentProfile\';R()">‹</button><div style="flex:1;font-size:20px;font-weight:800">⚙️ 管理技能框架</div></div>';
+if(!FRAMEWORKS.length)h+='<div class="empty"><div class="em-ico">🌳</div>未有框架<br>撳下面新增</div>';
+FRAMEWORKS.forEach(function(fw){
+var lvCount=(fw.levels||[]).length;
+var skCount=0;(fw.levels||[]).forEach(function(lv){skCount+=(lv.skills||[]).length});
+h+='<div class="m-card"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:28px">'+fw.emoji+'</span><div style="flex:1"><div style="font-size:15px;font-weight:700">'+esc(fw.sport)+'</div><div style="font-size:11px;color:var(--g400)">'+lvCount+' 級別 · '+skCount+' 技能</div></div><div style="display:flex;gap:4px"><button class="btn btn-xs btn-accent" onclick="S.selFw=\''+fw.id+'\';S.page=\'fwEdit\';R()">✏️ 編輯</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delFw(\''+fw.id+'\')">✕</button></div></div></div>'});
+h+='<button class="btn btn-dark" style="margin-top:12px" onclick="addFw()">＋ 新增技能框架</button>';
+h+='<div class="m-card" style="margin-top:12px"><div style="font-size:12px;font-weight:700;margin-bottom:8px">💡 使用方法</div><div style="font-size:11px;color:var(--g500);line-height:1.8">1. 撳「新增技能框架」建立（例如：跳繩）<br>2. 撳「✏️ 編輯」入去加「級別」（例如：初班、中班）<br>3. 每個級別加「技能」（例如：前交叉、後交叉）<br>4. 每個技能可加「變化」（例如：連續10次）<br>5. 返回學生Profile就可以幫學生評分</div></div>';
+return h}
+
+function delFw(fid){showMo('刪除','確定刪除此框架？',function(){FRAMEWORKS=FRAMEWORKS.filter(function(f){return f.id!==fid});cloudSave();R()},'刪除')}
+  
 function pgFwEdit(){var fw=gFw(S.selFw);if(!fw){S.page='home';return''}
 var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'studentProfile\';R()">‹</button><div style="flex:1;font-size:20px;font-weight:800">'+fw.emoji+' '+esc(fw.sport)+'</div></div>';
 (fw.levels||[]).forEach(lv=>{h+='<div class="m-card" style="border-left:4px solid var(--accent)"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:14px;font-weight:700">'+esc(lv.name)+'</span><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delFwLevel(\''+fw.id+'\',\''+lv.id+'\')">✕</button></div>';
@@ -997,35 +887,141 @@ h+='<button class="btn btn-sm btn-outline" style="border-style:dashed;margin-top
 h+='<button class="btn btn-outline" style="border-style:dashed;margin-top:8px" onclick="addFwLevel(\''+fw.id+'\')">＋ 級別</button>';
 return h}
 
-// === SKILL DETAIL ===
+/* ====== SKILL DETAIL ====== */
 function pgSkillDetail(){
 var c=getClass(S.selClass);if(!c){S.page='home';return''}
 var st=c.students?c.students.find(s=>s.id===S.selStudentId):null;if(!st){S.page='studentProfile';return''}
 var fw=gFw(S.selFw);if(!fw){S.page='studentProfile';return''}
-var skill=null;(fw.levels||[]).forEach(lv=>{(lv.skills||[]).forEach(sk=>{if(sk.id===S.selSkill)skill=sk})});
+var skill=null;(fw.levels||[]).forEach(lv=>{(lv.skills||[]).forEach(sk=>{if(sk.id===S.selSkill)skill=sk;(sk.variations||[]).forEach(v=>{if(v.id===S.selSkill)skill=v})})});
 if(!skill){S.page='studentProfile';return''}
 var sp=gStuSP(st.id,skill.id)||{status:'none',timeline:[]};
 var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'studentProfile\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">'+esc(skill.name)+'</div><div style="font-size:11px;color:var(--g400)">'+esc(st.name)+'</div></div></div>';
 h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:8px">🎨 狀態</div><div style="display:flex;gap:4px;flex-wrap:wrap">';
 SC.forEach(s=>{var on=sp.status===s.id;h+='<div style="padding:5px 10px;border-radius:10px;cursor:pointer;border:2px solid '+(on?s.color:'var(--g200)')+';background:'+(on?s.bg:'transparent')+'" onclick="setStuSP(\''+st.id+'\',\''+skill.id+'\',\''+s.id+'\');cloudSave();R()"><span style="font-size:10px;font-weight:600;color:'+(on?s.color:'var(--g500)')+'">'+s.emoji+' '+s.label+'</span></div>'});
 h+='</div></div>';
-// Variations
 if(skill.variations&&skill.variations.length){h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:8px">🔀 變化</div>';
 skill.variations.forEach(v=>{var vp=gStuSP(st.id,v.id)||{status:'none'};h+='<div style="display:flex;align-items:center;gap:6px;padding:6px;background:var(--g50);border-radius:8px;margin-bottom:3px"><span style="font-size:11px;font-weight:600;flex:1">'+esc(v.name)+'</span><div style="display:flex;gap:2px">';SC.forEach(s2=>{h+='<div style="width:16px;height:16px;border-radius:50%;background:'+s2.color+';cursor:pointer;border:2px solid '+(vp.status===s2.id?'var(--g800)':'transparent')+'" onclick="setStuSP(\''+st.id+'\',\''+v.id+'\',\''+s2.id+'\');cloudSave();R()"></div>'});h+='</div></div>'});h+='</div>'}
-// Timeline
 h+='<div class="m-card"><div style="font-size:13px;font-weight:700;margin-bottom:8px">📹 時間線</div>';
 h+='<div style="background:var(--accent-l);border-radius:12px;padding:10px;margin-bottom:8px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:4px"><input type="date" id="tlDate" class="m-input" value="'+dateStr()+'" style="font-size:10px;padding:5px"><select id="tlStatus" class="m-select" style="font-size:10px;padding:5px">';SC.forEach(s=>{h+='<option value="'+s.id+'"'+(s.id===sp.status?' selected':'')+'>'+s.emoji+' '+s.label+'</option>'});h+='</select></div><input id="tlUrl" class="m-input" placeholder="影片link" style="font-size:10px;padding:5px;margin-bottom:3px"><input id="tlNote" class="m-input" placeholder="備註" style="font-size:10px;padding:5px;margin-bottom:4px"><button class="btn btn-xs btn-accent" onclick="addTimeline(\''+st.id+'\',\''+skill.id+'\',{date:document.getElementById(\'tlDate\').value,status:document.getElementById(\'tlStatus\').value,videoUrl:document.getElementById(\'tlUrl\').value,note:document.getElementById(\'tlNote\').value});cloudSave();R()">＋ 加入</button></div>';
 if(sp.timeline&&sp.timeline.length){h+='<div class="tl-line">';sp.timeline.slice().reverse().forEach(tl=>{var tc=gSC(tl.status);h+='<div style="margin-bottom:10px;position:relative"><div class="tl-dot" style="background:'+tc.color+'"></div><div style="font-size:10px;font-weight:700">'+esc(tl.date)+' <span style="color:'+tc.color+'">'+tc.emoji+'</span></div>';if(tl.note)h+='<div style="font-size:10px;color:var(--g600)">'+esc(tl.note)+'</div>';if(tl.videoUrl)h+='<a href="'+esc(tl.videoUrl)+'" target="_blank" style="font-size:10px;color:var(--accent)">▶ 影片</a>';h+='</div>'});h+='</div>'}
 h+='</div>';return h}
 
-// === 在 pgStudentProfile 下面加入框架顯示 ===
-// 你要喺現有 pgStudentProfile function 嘅 return h 之前加入以下code
-// （搜尋 pgStudentProfile 入面嘅 "// Notes" 註解之前加入）
-
-// === UPLOAD QR ===
+/* ====== UPLOAD QR ====== */
+function uploadClassIcon(cid){var input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(){var file=input.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(){toast('上傳中...');fetch(CLOUD_URL,{method:'POST',body:JSON.stringify({token:CLOUD_TOKEN,action:'uploadImage',imageData:reader.result.split(',')[1],imageName:'class_'+cid+'.png',mimeType:file.type,imgFolder:'CRE_Images'})}).then(function(r){return r.json()}).then(function(res){if(res.ok){var cl=getClass(cid);if(cl)cl.iconUrl=res.thumb||res.url;cloudSave();R()}else toast('❌')}).catch(function(){toast('❌')})};reader.readAsDataURL(file)};input.click()}
 function uploadQR(type){var input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(){var file=input.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(){toast('上傳中...');fetch(CLOUD_URL,{method:'POST',body:JSON.stringify({token:CLOUD_TOKEN,action:'uploadImage',imageData:reader.result.split(',')[1],imageName:type+'_qr.png',mimeType:file.type,imgFolder:'CRE_Images'})}).then(r=>r.json()).then(res=>{if(res.ok){if(type==='payme')BRAND.paymeQR=res.thumb||res.url;else BRAND.fpsQR=res.thumb||res.url;cloudSave();R()}else toast('❌')}).catch(()=>toast('❌'))};reader.readAsDataURL(file)};input.click()}
-  
-R();
+
+/* ====== SKILL TREE SVG ====== */
+function calcTreeLayout(fw){
+var nodes=[],edges=[];
+(fw.levels||[]).forEach(function(lv,li){
+var skills=lv.skills||[];
+var centerX=200;
+var levelWidth=skills.length*100;
+var startX=centerX-levelWidth/2+50;
+skills.forEach(function(sk,si){
+var nx=startX+si*100;
+var ny=80+li*120;
+nodes.push({id:sk.id,name:sk.name,x:nx,y:ny,level:li,skill:sk});
+if(li>0){var prevLv=fw.levels[li-1];(prevLv.skills||[]).forEach(function(psk){edges.push({from:psk.id,to:sk.id})})}
+(sk.variations||[]).forEach(function(v,vi){
+var vx=nx+(vi-(sk.variations.length-1)/2)*50;
+var vy=ny+50;
+nodes.push({id:v.id,name:v.name,x:vx,y:vy,level:li,isVar:true,parent:sk.id});
+edges.push({from:sk.id,to:v.id})})})});
+return{nodes:nodes,edges:edges}}
+
+function renderSkillTree(fw,studentId){
+var layout=calcTreeLayout(fw);var nodes=layout.nodes;var edges=layout.edges;
+var maxX=0,maxY=0;
+nodes.forEach(function(n){if(n.x>maxX)maxX=n.x;if(n.y>maxY)maxY=n.y});
+var svgW=Math.max(400,maxX+100);var svgH=Math.max(300,maxY+100);
+var h='<div class="skill-tree-wrap" style="min-height:'+(svgH+40)+'px">';
+h+='<svg width="'+svgW+'" height="'+svgH+'" viewBox="0 0 '+svgW+' '+svgH+'">';
+h+='<defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+edges.forEach(function(e){
+var fromN=nodes.find(function(n){return n.id===e.from});
+var toN=nodes.find(function(n){return n.id===e.to});
+if(!fromN||!toN)return;
+var sp=gStuSP(studentId,toN.id);var status=sp?sp.status:'none';
+var lineColor=status==='green'||status==='blue'?'#10b981':status==='yellow'?'#d97706':status==='orange'||status==='red'?'#ea580c':'rgba(255,255,255,.15)';
+var lineWidth=status==='green'||status==='blue'?3:1.5;
+h+='<line x1="'+fromN.x+'" y1="'+fromN.y+'" x2="'+toN.x+'" y2="'+toN.y+'" stroke="'+lineColor+'" stroke-width="'+lineWidth+'" stroke-linecap="round"/>'});
+nodes.forEach(function(n){
+var sp=gStuSP(studentId,n.id);var status=sp?sp.status:'none';var sc=gSC(status);
+var r=n.isVar?14:22;var strokeW=n.isVar?2:3;
+var fillColor=status==='none'?'rgba(255,255,255,.05)':sc.color+'33';
+var strokeColor=sc.color;
+var textColor=status==='none'?'rgba(255,255,255,.4)':'#fff';
+var filter=(status==='green'||status==='blue')?' filter="url(#glow)"':'';
+h+='<g class="sk-node" onclick="openSkillNode(\''+n.id+'\')"'+filter+'>';
+h+='<circle cx="'+n.x+'" cy="'+n.y+'" r="'+r+'" fill="'+fillColor+'" stroke="'+strokeColor+'" stroke-width="'+strokeW+'"/>';
+if(!n.isVar)h+='<text x="'+n.x+'" y="'+(n.y+4)+'" text-anchor="middle" fill="'+textColor+'" font-size="10" font-weight="700">'+esc(n.name.substring(0,2))+'</text>';
+h+='<text x="'+n.x+'" y="'+(n.y+r+14)+'" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="9" font-weight="600">'+esc(n.name.length>6?n.name.substring(0,6)+'..':n.name)+'</text>';
+h+='</g>'});
+h+='</svg></div>';
+h+='<div class="sk-legend">';
+SC.forEach(function(s){h+='<div class="sk-legend-item"><div class="sk-legend-dot" style="background:'+s.color+'"></div>'+s.label+'</div>'});
+h+='</div>';return h}
+
+function openSkillNode(skId){
+S.selSkill=skId;
+FRAMEWORKS.forEach(function(fw){(fw.levels||[]).forEach(function(lv){(lv.skills||[]).forEach(function(sk){
+if(sk.id===skId)S.selFw=fw.id;
+(sk.variations||[]).forEach(function(v){if(v.id===skId){S.selFw=fw.id;S.selSkill=skId}})})})});
+S.page='skillDetail';R()}
+
+/* ====== STUDENT PORTAL ====== */
+function pgStudentPortal(){
+var stuId=new URLSearchParams(window.location.search).get('stuId');
+var st=gStu(stuId);
+if(!st)return'<div class="stu-portal"><h1>🔒</h1><p style="text-align:center;opacity:.5">搵唔到學生資料</p></div>';
+var h='<div class="stu-portal"><div style="text-align:center;margin-bottom:24px"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 32px rgba(108,92,231,.4)">'+esc(st.name.charAt(0))+'</div><h1>'+esc(st.name)+'</h1><div class="sub">我嘅技能進度</div></div>';
+if(FRAMEWORKS.length){FRAMEWORKS.forEach(function(fw){
+var fp=fwProgress(st.id,fw);
+h+='<div style="margin-bottom:24px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><span style="font-size:28px">'+fw.emoji+'</span><div style="flex:1"><div style="font-size:18px;font-weight:800">'+esc(fw.sport)+'</div><div class="prog-bar" style="background:rgba(255,255,255,.1)"><div class="prog-fill" style="width:'+fp.pct+'%;background:var(--accent)"></div></div></div><span style="font-size:16px;font-weight:900;color:var(--accent)">'+fp.pct+'%</span></div>';
+h+=renderSkillTree(fw,st.id);
+(fw.levels||[]).forEach(function(lv){
+h+='<div style="margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;padding-left:4px">'+esc(lv.name)+'</div>';
+(lv.skills||[]).forEach(function(sk){
+var sp2=gStuSP(st.id,sk.id);var sc2=gSC(sp2?sp2.status:'none');
+var isUnlocked=sp2&&(sp2.status==='green'||sp2.status==='blue');
+var isCurrent=sp2&&(sp2.status==='yellow'||sp2.status==='orange');
+h+='<div class="stu-skill-card'+(isUnlocked?' unlocked':'')+(isCurrent?' current':'')+'" onclick="stuOpenSkill(\''+st.id+'\',\''+sk.id+'\',\''+fw.id+'\')"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:'+sc2.color+'22;border:2px solid '+sc2.color+';display:flex;align-items:center;justify-content:center"><span style="font-size:14px">'+sc2.emoji+'</span></div><div style="flex:1"><div style="font-size:14px;font-weight:700">'+esc(sk.name)+'</div><div style="font-size:10px;opacity:.5">'+sc2.label+'</div></div>';
+if(sp2&&sp2.timeline&&sp2.timeline.length)h+='<span style="font-size:10px;opacity:.4">📹 '+sp2.timeline.length+'</span>';
+h+='<span style="opacity:.3;font-size:16px">›</span></div></div>'});
+h+='</div>'});h+='</div>'})}
+else h+='<div style="text-align:center;padding:40px;opacity:.4"><div style="font-size:48px;margin-bottom:8px">🌳</div>教練未設定技能樹</div>';
+h+='</div>';return h}
+
+function stuOpenSkill(stuId,skId,fwId){S.selStudentId=stuId;S.selSkill=skId;S.selFw=fwId;S.page='stuSkillView';R()}
+
+function pgStuSkillView(){
+var stuId=S.selStudentId||new URLSearchParams(window.location.search).get('stuId');
+var st=gStu(stuId);if(!st){S.page='home';return''}
+var fw=gFw(S.selFw);var skill=null;
+if(fw){(fw.levels||[]).forEach(function(lv){(lv.skills||[]).forEach(function(sk){if(sk.id===S.selSkill)skill=sk;(sk.variations||[]).forEach(function(v){if(v.id===S.selSkill)skill=v})})})}
+if(!skill){S.page='home';return''}
+var sp=gStuSP(st.id,skill.id)||{status:'none',timeline:[]};var sc=gSC(sp.status);
+var h='<div class="stu-portal"><div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><button class="pg-back" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff" onclick="S.page=\'home\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">'+esc(skill.name)+'</div><div style="font-size:11px;opacity:.5">'+esc(st.name)+'</div></div></div>';
+h+='<div style="text-align:center;margin-bottom:24px"><div style="width:80px;height:80px;border-radius:50%;background:'+sc.color+'22;border:3px solid '+sc.color+';display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px;box-shadow:0 0 40px '+sc.color+'33">'+sc.emoji+'</div><div style="font-size:16px;font-weight:700;color:'+sc.color+'">'+sc.label+'</div></div>';
+h+='<div style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.3);border-radius:16px;padding:16px;margin-bottom:16px"><div style="font-size:13px;font-weight:700;margin-bottom:10px">📹 上載練習影片</div><input id="stuVidUrl" class="m-input" placeholder="貼入Google Drive影片連結" style="margin-bottom:8px;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.2);color:#fff"><input id="stuVidNote" class="m-input" placeholder="備註（選填）" style="margin-bottom:8px;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.2);color:#fff"><button class="btn btn-accent" onclick="stuSubmitVideo(\''+st.id+'\',\''+skill.id+'\')">📤 提交</button></div>';
+if(sp.timeline&&sp.timeline.length){h+='<div style="font-size:13px;font-weight:700;margin-bottom:10px">📅 歷史紀錄</div>';
+sp.timeline.slice().reverse().forEach(function(tl){var tc=gSC(tl.status);
+h+='<div style="background:rgba(255,255,255,.05);border-radius:12px;padding:12px;margin-bottom:6px;border-left:3px solid '+tc.color+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:700">'+esc(tl.date)+'</span><span style="font-size:10px;color:'+tc.color+'">'+tc.emoji+' '+tc.label+'</span></div>';
+if(tl.note)h+='<div style="font-size:11px;opacity:.6;margin-top:4px">'+esc(tl.note)+'</div>';
+if(tl.videoUrl)h+='<a href="'+esc(tl.videoUrl)+'" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:none;margin-top:4px;display:block">▶ 睇影片</a>';
+h+='</div>'})}
+h+='</div>';return h}
+
+function stuSubmitVideo(stuId,skId){
+var url=document.getElementById('stuVidUrl').value.trim();
+var note=document.getElementById('stuVidNote').value.trim();
+if(!url){toast('請貼入影片連結');return}
+addTimeline(stuId,skId,{date:dateStr(),status:'yellow',videoUrl:url,note:note||'學生自行提交'});
+cloudSave();toast('✅ 已提交！等教練確認');R()}
+
+/* ====== INIT ====== */
+cloudLoad(function(){ R(); });
 </script>
 </body>
 </html>
