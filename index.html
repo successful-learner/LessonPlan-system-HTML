@@ -131,13 +131,22 @@ body{font-family:var(--font);background:#f0f0f5;color:var(--g800);line-height:1.
 .sk-legend{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;background:var(--g0);border-radius:12px}
 .sk-legend-item{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600;color:var(--g600)}
 .sk-legend-dot{width:12px;height:12px;border-radius:50%}
-.stu-portal{min-height:100vh;background:linear-gradient(180deg,#0f0f23,#1a1a3e);color:#fff;padding:20px}
+.stu-portal{min-height:100vh;color:#fff;padding:20px;padding-bottom:100px;position:relative}
 .stu-portal h1{font-size:24px;font-weight:900;text-align:center;margin-bottom:4px}
 .stu-portal .sub{font-size:12px;opacity:.5;text-align:center;margin-bottom:24px}
 .stu-skill-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;margin-bottom:10px;cursor:pointer;transition:.2s}
 .stu-skill-card:active{transform:scale(.98);background:rgba(255,255,255,.1)}
 .stu-skill-card.unlocked{border-color:rgba(16,185,129,.4);box-shadow:0 0 20px rgba(16,185,129,.1)}
 .stu-skill-card.current{border-color:rgba(108,92,231,.6);box-shadow:0 0 20px rgba(108,92,231,.2)}
+.stu-btm-nav{position:fixed;bottom:0;left:0;right:0;z-index:200;padding:8px 16px env(safe-area-inset-bottom,8px)}
+.stu-btm-inner{max-width:420px;margin:0 auto;background:rgba(20,20,40,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:24px;display:flex;align-items:center;justify-content:space-around;padding:6px 8px;border:1px solid rgba(255,255,255,.08)}
+.stu-btm-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px;border:none;background:transparent;color:rgba(255,255,255,.4);font-size:10px;font-weight:500;cursor:pointer;transition:.2s;border-radius:14px}
+.stu-btm-item.active{color:#fff;background:rgba(108,92,231,.3)}
+.stu-btm-item .sbi{font-size:18px;line-height:1}
+.stu-att-row{background:rgba(255,255,255,.06);border-radius:12px;padding:12px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,.08)}
+.stu-inv-card{background:rgba(255,255,255,.06);border-radius:14px;padding:14px;margin-bottom:8px;border:1px solid rgba(255,255,255,.08)}
+.theme-option{width:56px;height:56px;border-radius:16px;cursor:pointer;border:3px solid transparent;transition:.2s;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.theme-option.on{border-color:#fff;transform:scale(1.1);box-shadow:0 0 20px rgba(255,255,255,.3)}
 </style>
 </head>
 <body>
@@ -169,9 +178,18 @@ mixed:[{name:'集合及目標介紹',duration:5,desc:''},{name:'熱身',duration
 
 let ORGS=[],CLASSES=[],PLANS=[],TEMPLATES=[],STUDENTS=[],INVOICES=[],FRAMEWORKS=[];
 let BRAND={name:'',phone:'',fps:'',payme:'',paymeQR:'',fpsQR:'',driveFolderId:'',policy:'• 場地預約後不設退款\n• 繳交學費時請假 → 獲堂數扣減，不設補堂\n• 繳交學費後請假（如病假）→ 獲半數退款，不設補堂'};
+const STU_THEMES=[
+{id:'default',name:'深空',bg:'linear-gradient(180deg,#0f0f23 0%,#1a1a3e 50%,#0d1b2a 100%)'},
+{id:'purple',name:'紫夜',bg:'linear-gradient(180deg,#1a0533 0%,#2d1b69 50%,#0f0f23 100%)'},
+{id:'ocean',name:'深海',bg:'linear-gradient(180deg,#0a192f 0%,#0d3b66 50%,#041c32 100%)'},
+{id:'forest',name:'森林',bg:'linear-gradient(180deg,#0b1a0f 0%,#1a4d2e 50%,#0d1f12 100%)'},
+{id:'sunset',name:'日落',bg:'linear-gradient(180deg,#1a0a2e 0%,#4a1942 50%,#16213e 100%)'},
+{id:'fire',name:'烈焰',bg:'linear-gradient(180deg,#1a0000 0%,#4a0e0e 50%,#1a0505 100%)'},
+{id:'candy',name:'糖果',bg:'linear-gradient(180deg,#1a0f2e 0%,#3d1f5c 40%,#1f3a5c 100%)'}
+];
 const SC=[{id:'none',label:'未接觸',color:'#d4d4d4',bg:'#f5f5f5',emoji:'⚪'},{id:'red',label:'需要協助',color:'#dc2626',bg:'#fef2f2',emoji:'🔴'},{id:'orange',label:'需要提示',color:'#ea580c',bg:'#fff7ed',emoji:'🟠'},{id:'yellow',label:'偶爾成功',color:'#d97706',bg:'#fefce8',emoji:'🟡'},{id:'green',label:'穩定掌握',color:'#16a34a',bg:'#f0fdf4',emoji:'🟢'},{id:'blue',label:'可示範',color:'#2563eb',bg:'#eff6ff',emoji:'🔵'}];
 var IS_STUDENT=new URLSearchParams(window.location.search).has('stuId');
-let S={tab:'classes',page:'home',selClass:null,selPlan:null,teachSeg:0,editPlanId:null,segOpen:{},planTab:'current',attBack:'home',selOrg:'',selStudentId:null,fromBackup:false,selInv:null,selFw:null,selSkill:null,stuSub:'list'};
+let S={tab:'classes',page:'home',selClass:null,selPlan:null,teachSeg:0,editPlanId:null,segOpen:{},planTab:'current',attBack:'home',selOrg:'',selStudentId:null,fromBackup:false,selInv:null,selFw:null,selSkill:null,stuSub:'skills'};
 
 function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2,5)}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
@@ -231,7 +249,13 @@ function getStuShareLink(sid){return location.origin+location.pathname+'?stuId='
 function R(){
 var app=document.getElementById('app');
 if(IS_STUDENT){
+var stuId=new URLSearchParams(window.location.search).get('stuId');
+var st=gStu(stuId);
+if(!st){app.innerHTML='<div class="stu-portal" style="background:linear-gradient(180deg,#0f0f23,#1a1a3e)"><h1>🔒</h1><p style="text-align:center;opacity:.5;margin-top:12px">搵唔到學生資料</p></div>';return}
 if(S.page==='stuSkillView')app.innerHTML=pgStuSkillView();
+else if(S.stuSub==='attendance')app.innerHTML=pgStuAttendance(st);
+else if(S.stuSub==='invoices')app.innerHTML=pgStuInvoices(st);
+else if(S.stuSub==='settings')app.innerHTML=pgStuSettings(st);
 else app.innerHTML=pgStudentPortal();
 return}
 var h='<div class="container" style="padding-top:16px">';
@@ -436,7 +460,7 @@ return h}
 function doEditClass(){var c=getClass(S.selClass);if(!c)return;c.name=document.getElementById('cn').value.trim()||c.name;c.category=document.getElementById('cc').value;c.defaultDuration=parseInt(document.getElementById('cd').value)||60;c.orgId=document.getElementById('corg').value;c.color=document.getElementById('ccolor').value;c.tags=document.getElementById('ctags').value.split(',').map(t=>t.trim()).filter(t=>t);toast('✅ 已儲存');cloudSave();S.page='classDetail';R()}
 
 /* ====== STUDENT CRUD ====== */
-function addStudent(){var c=getClass(S.selClass);if(!c)return;var n=prompt('學生姓名：');if(!n||!n.trim())return;if(!c.students)c.students=[];c.students.push({id:uid(),name:n.trim(),level:'未設定',notes:'',stars:0,tags:[]});toast('✅ 已新增');cloudSave();R()}
+function addStudent(){var c=getClass(S.selClass);if(!c)return;var n=prompt('學生姓名：');if(!n||!n.trim())return;if(!c.students)c.students=[];c.students.push({id:uid(),name:n.trim(),level:'未設定',notes:'',stars:0,tags:[],displayName:'',theme:'default',themeBgUrl:'',skillProgress:{}});toast('✅ 已新增');cloudSave();R()}
 function editStudent(cid,idx){var c=getClass(cid);if(!c||!c.students[idx])return;var st=c.students[idx];
 var app=document.getElementById('app');
 app.innerHTML='<div class="container" style="padding-top:16px"><div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="R()">‹</button><div style="font-size:20px;font-weight:800">編輯學生</div></div><div class="m-card"><label class="label">姓名</label><input id="sn" class="m-input" value="'+esc(st.name)+'" style="margin-bottom:14px"><label class="label">程度</label><select id="sl" class="m-select" style="margin-bottom:14px">'+LEVELS.map(l=>'<option'+(st.level===l?' selected':'')+'>'+l+'</option>').join('')+'</select><label class="label">備註</label><textarea id="sno" class="m-textarea" style="margin-bottom:20px">'+esc(st.notes||'')+'</textarea><button class="btn btn-dark" onclick="doEditStu(\''+cid+'\','+idx+')">儲存</button></div></div>'+btmNav()}
@@ -971,14 +995,28 @@ if(sk.id===skId)S.selFw=fw.id;
 S.page='skillDetail';R()}
 
 /* ====== STUDENT PORTAL ====== */
+function getStuThemeBg(st){if(st.themeBgUrl)return'url('+st.themeBgUrl+') center/cover no-repeat fixed';var themeId=st.theme||'default';var t=STU_THEMES.find(function(x){return x.id===themeId});return t?t.bg:STU_THEMES[0].bg}
+function getStuAttHistory(sid){var cid=getStuClassId(sid);if(!cid)return[];var plans=getClassPlans(cid);var recs=[];plans.forEach(function(p){if(p.attendance&&p.attendance[sid]&&p.attendance[sid].status){recs.push({date:p.date,status:p.attendance[sid].status,notes:p.attendance[sid].notes||''})}});return recs}
+function getStuInvoices(sid){return INVOICES.filter(function(inv){return inv.studentId===sid})}
+
+function stuBtmNav(){
+var tabs=[{id:'skills',ico:'🌳',label:'技能'},{id:'attendance',ico:'📊',label:'出席'},{id:'invoices',ico:'🧾',label:'收據'},{id:'settings',ico:'⚙️',label:'設定'}];
+var h='<div class="stu-btm-nav"><div class="stu-btm-inner">';
+tabs.forEach(function(t){h+='<button class="stu-btm-item'+(S.stuSub===t.id?' active':'')+'" onclick="S.stuSub=\''+t.id+'\';S.page=\'home\';R()"><span class="sbi">'+t.ico+'</span>'+t.label+'</button>'});
+h+='</div></div>';return h}
+
 function pgStudentPortal(){
 var stuId=new URLSearchParams(window.location.search).get('stuId');
 var st=gStu(stuId);
-if(!st)return'<div class="stu-portal"><h1>🔒</h1><p style="text-align:center;opacity:.5">搵唔到學生資料</p></div>';
-var h='<div class="stu-portal"><div style="text-align:center;margin-bottom:24px"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 32px rgba(108,92,231,.4)">'+esc(st.name.charAt(0))+'</div><h1>'+esc(st.name)+'</h1><div class="sub">我嘅技能進度</div></div>';
+if(!st)return'<div class="stu-portal" style="background:linear-gradient(180deg,#0f0f23,#1a1a3e)"><h1>🔒</h1><p style="text-align:center;opacity:.5">搵唔到學生資料</p></div>';
+var bg=getStuThemeBg(st);
+var displayName=st.displayName||st.name;
+var h='<div class="stu-portal" style="background:'+bg+'">';
+if(st.themeBgUrl)h+='<div style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:-1"></div>';
+h+='<div style="text-align:center;margin-bottom:24px" class="fade-in"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#6c5ce7,#a29bfe);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin:0 auto 12px;box-shadow:0 8px 32px rgba(108,92,231,.4)">'+esc(displayName.charAt(0))+'</div><h1>'+esc(displayName)+'</h1><div class="sub">我嘅技能進度</div></div>';
 if(FRAMEWORKS.length){FRAMEWORKS.forEach(function(fw){
 var fp=fwProgress(st.id,fw);
-h+='<div style="margin-bottom:24px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><span style="font-size:28px">'+fw.emoji+'</span><div style="flex:1"><div style="font-size:18px;font-weight:800">'+esc(fw.sport)+'</div><div class="prog-bar" style="background:rgba(255,255,255,.1)"><div class="prog-fill" style="width:'+fp.pct+'%;background:var(--accent)"></div></div></div><span style="font-size:16px;font-weight:900;color:var(--accent)">'+fp.pct+'%</span></div>';
+h+='<div style="margin-bottom:24px" class="slide-up"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><span style="font-size:28px">'+fw.emoji+'</span><div style="flex:1"><div style="font-size:18px;font-weight:800">'+esc(fw.sport)+'</div><div class="prog-bar" style="background:rgba(255,255,255,.1)"><div class="prog-fill" style="width:'+fp.pct+'%;background:var(--accent)"></div></div></div><span style="font-size:16px;font-weight:900;color:var(--accent)">'+fp.pct+'%</span></div>';
 h+=renderSkillTree(fw,st.id);
 (fw.levels||[]).forEach(function(lv){
 h+='<div style="margin-bottom:12px"><div style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;padding-left:4px">'+esc(lv.name)+'</div>';
@@ -987,11 +1025,96 @@ var sp2=gStuSP(st.id,sk.id);var sc2=gSC(sp2?sp2.status:'none');
 var isUnlocked=sp2&&(sp2.status==='green'||sp2.status==='blue');
 var isCurrent=sp2&&(sp2.status==='yellow'||sp2.status==='orange');
 h+='<div class="stu-skill-card'+(isUnlocked?' unlocked':'')+(isCurrent?' current':'')+'" onclick="stuOpenSkill(\''+st.id+'\',\''+sk.id+'\',\''+fw.id+'\')"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:'+sc2.color+'22;border:2px solid '+sc2.color+';display:flex;align-items:center;justify-content:center"><span style="font-size:14px">'+sc2.emoji+'</span></div><div style="flex:1"><div style="font-size:14px;font-weight:700">'+esc(sk.name)+'</div><div style="font-size:10px;opacity:.5">'+sc2.label+'</div></div>';
-if(sp2&&sp2.timeline&&sp2.timeline.length)h+='<span style="font-size:10px;opacity:.4">📹 '+sp2.timeline.length+'</span>';
+if(sp2&&sp2.timeline&&sp2.timeline.length){var lastTl=sp2.timeline[sp2.timeline.length-1];var reviewLabel=lastTl.reviewed?'✅ 已批改':'⏳ 等待批改';h+='<span style="font-size:9px;padding:3px 8px;border-radius:10px;background:rgba(255,255,255,.1)">'+reviewLabel+'</span>'}
 h+='<span style="opacity:.3;font-size:16px">›</span></div></div>'});
 h+='</div>'});h+='</div>'})}
 else h+='<div style="text-align:center;padding:40px;opacity:.4"><div style="font-size:48px;margin-bottom:8px">🌳</div>教練未設定技能樹</div>';
-h+='</div>';return h}
+h+=stuBtmNav()+'</div>';return h}
+
+function pgStuAttendance(st){
+var bg=getStuThemeBg(st);
+var displayName=st.displayName||st.name;
+var recs=getStuAttHistory(st.id);
+var cid=getStuClassId(st.id);
+var attR=cid?getStuAttRate(cid,st.id):{total:0,here:0,rate:null};
+var statusLabels={present:'✅ 出席',late:'⏰ 遲到',absent:'❌ 缺席',excused:'📝 請假'};
+var h='<div class="stu-portal" style="background:'+bg+'">';
+h+='<div style="text-align:center;margin-bottom:24px" class="fade-in"><h1 style="font-size:20px">📊 出席紀錄</h1><div class="sub">'+esc(displayName)+'</div></div>';
+if(attR.rate!==null){
+var pct=attR.rate;var ac=pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--rose)';
+h+='<div style="text-align:center;margin-bottom:20px" class="slide-up"><div style="font-size:48px;font-weight:900;color:'+ac+'">'+pct+'%</div><div style="font-size:12px;opacity:.5">出席率（'+attR.here+'/'+attR.total+' 堂）</div><div class="prog-bar" style="background:rgba(255,255,255,.1);margin:12px auto;max-width:200px"><div class="prog-fill" style="width:'+pct+'%;background:'+ac+'"></div></div></div>'}
+else h+='<div style="text-align:center;padding:20px;opacity:.4">暫無出席紀錄</div>';
+if(recs.length){h+='<div style="margin-bottom:80px">';recs.slice().reverse().forEach(function(r){
+h+='<div class="stu-att-row"><div><div style="font-size:13px;font-weight:700">'+esc(r.date)+'</div>';
+if(r.notes)h+='<div style="font-size:10px;opacity:.5;margin-top:2px">'+esc(r.notes)+'</div>';
+h+='</div><span style="font-size:12px;font-weight:600">'+(statusLabels[r.status]||'')+'</span></div>'});
+h+='</div>'}
+h+=stuBtmNav()+'</div>';return h}
+
+function pgStuInvoices(st){
+var bg=getStuThemeBg(st);
+var displayName=st.displayName||st.name;
+var invs=getStuInvoices(st.id);
+var statusLabels={draft:'草稿',unpaid:'⏳ 未付',paid:'✅ 已付',refunded:'↩️ 退款'};
+var h='<div class="stu-portal" style="background:'+bg+'">';
+h+='<div style="text-align:center;margin-bottom:24px" class="fade-in"><h1 style="font-size:20px">🧾 收據</h1><div class="sub">'+esc(displayName)+'</div></div>';
+if(!invs.length)h+='<div style="text-align:center;padding:40px;opacity:.4"><div style="font-size:48px;margin-bottom:8px">🧾</div>暫無收據</div>';
+else{h+='<div style="margin-bottom:80px">';invs.slice().reverse().forEach(function(inv){
+var stLabel=statusLabels[inv.status]||'';
+var stColor=inv.status==='paid'?'var(--green)':inv.status==='unpaid'?'var(--amber)':'rgba(255,255,255,.5)';
+h+='<div class="stu-inv-card"><div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px"><div><div style="font-size:14px;font-weight:700">'+esc(inv.no)+'</div><div style="font-size:11px;opacity:.5">'+esc(inv.date)+' · '+esc(inv.month)+'</div></div><span style="padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;background:rgba(255,255,255,.1);color:'+stColor+'">'+stLabel+'</span></div>';
+h+='<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:11px;opacity:.5">'+inv.dates.length+' 堂</span><span style="font-size:24px;font-weight:900;color:var(--accent)">$'+inv.total+'</span></div>';
+if(inv.status==='unpaid'&&inv.dueDate)h+='<div style="margin-top:8px;padding:6px 10px;background:rgba(245,158,11,.15);border-radius:8px;font-size:10px;color:var(--amber);font-weight:600">⏰ 繳費限期：'+esc(inv.dueDate)+'</div>';
+if(inv.status==='unpaid'){h+='<div style="margin-top:8px;display:flex;gap:6px">';
+if(BRAND.paymeQR)h+='<a href="'+esc(BRAND.paymeQR)+'" target="_blank" style="flex:1;padding:8px;border-radius:10px;background:rgba(226,22,75,.2);color:#ff6b8a;font-size:11px;font-weight:700;text-align:center;text-decoration:none">PayMe</a>';
+if(BRAND.fpsQR)h+='<a href="'+esc(BRAND.fpsQR)+'" target="_blank" style="flex:1;padding:8px;border-radius:10px;background:rgba(0,61,121,.3);color:#64b5f6;font-size:11px;font-weight:700;text-align:center;text-decoration:none">FPS</a>';
+h+='</div>'}
+h+='</div>'});h+='</div>'}
+h+=stuBtmNav()+'</div>';return h}
+
+function pgStuSettings(st){
+var bg=getStuThemeBg(st);
+var displayName=st.displayName||st.name;
+var currentTheme=st.theme||'default';
+var h='<div class="stu-portal" style="background:'+bg+'">';
+h+='<div style="text-align:center;margin-bottom:24px" class="fade-in"><h1 style="font-size:20px">⚙️ 設定</h1><div class="sub">自訂你嘅頁面</div></div>';
+h+='<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;margin-bottom:16px" class="slide-up">';
+h+='<div style="font-size:14px;font-weight:700;margin-bottom:12px">👤 顯示名稱</div>';
+h+='<div style="font-size:11px;opacity:.5;margin-bottom:8px">可以用暱稱，其他人會睇到呢個名</div>';
+h+='<input id="stuDisplayName" class="m-input" value="'+esc(displayName)+'" placeholder="你嘅暱稱" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#fff;margin-bottom:10px">';
+h+='<button class="btn btn-sm btn-accent" onclick="saveStuDisplayName(\''+st.id+'\')">💾 儲存名稱</button></div>';
+h+='<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;margin-bottom:16px" class="slide-up">';
+h+='<div style="font-size:14px;font-weight:700;margin-bottom:12px">🎨 主題背景</div>';
+h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">';
+STU_THEMES.forEach(function(t){h+='<div class="theme-option'+(currentTheme===t.id&&!st.themeBgUrl?' on':'')+'" style="background:'+t.bg+'" onclick="setStuTheme(\''+st.id+'\',\''+t.id+'\')">'+esc(t.name)+'</div>'});
+h+='</div>';
+h+='<div style="font-size:12px;font-weight:600;margin-bottom:8px;opacity:.7">📷 或者上載自訂背景圖</div>';
+if(st.themeBgUrl)h+='<div style="margin-bottom:8px"><img src="'+esc(st.themeBgUrl)+'" style="width:100%;height:60px;object-fit:cover;border-radius:12px;opacity:.8"><button class="btn btn-xs" style="margin-top:6px;background:rgba(244,63,94,.2);color:#f43f5e" onclick="clearStuBg(\''+st.id+'\')">✕ 移除自訂背景</button></div>';
+h+='<button class="btn btn-sm btn-outline" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.7)" onclick="uploadStuBg(\''+st.id+'\')">📷 上載圖片</button>';
+h+='</div>';
+h+='<div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;margin-bottom:80px">';
+h+='<div style="font-size:14px;font-weight:700;margin-bottom:8px">📋 我嘅資料</div>';
+h+='<div style="font-size:12px;opacity:.5;line-height:2">真實姓名：'+esc(st.name)+'<br>程度：'+esc(st.level||'未設定')+'</div></div>';
+h+=stuBtmNav()+'</div>';return h}
+
+function saveStuDisplayName(sid){
+var st=gStu(sid);if(!st)return;
+var val=document.getElementById('stuDisplayName').value.trim();
+if(!val){toast('請輸入名稱');return}
+st.displayName=val;cloudSave();toast('✅ 已儲存');R()}
+
+function setStuTheme(sid,themeId){
+var st=gStu(sid);if(!st)return;
+st.theme=themeId;st.themeBgUrl='';cloudSave();R()}
+
+function uploadStuBg(sid){
+var input=document.createElement('input');input.type='file';input.accept='image/*';
+input.onchange=function(){var file=input.files[0];if(!file)return;
+var reader=new FileReader();reader.onload=function(){
+toast('上傳中...');
+fetch(CLOUD_URL,{method:'POST',body:JSON.stringify({token:CLOUD_TOKEN,action:'uploadImage',imageData:reader.result.split(',')[1],imageName:'stu_bg_'+sid+'.png',mimeType:file.type,imgFolder:'CRE_Images'})}).then(function(r){return r.json()}).then(function(res){if(res.ok){var st2=gStu(sid);if(st2){st2.themeBgUrl=res.thumb||res.url;st2.theme='custom'}cloudSave();R()}else toast('❌ 上傳失敗')}).catch(function(){toast('❌ 連接失敗')})};reader.readAsDataURL(file)};input.click()}
+
+function clearStuBg(sid){var st=gStu(sid);if(!st)return;st.themeBgUrl='';st.theme='default';cloudSave();R()}
 
 function stuOpenSkill(stuId,skId,fwId){S.selStudentId=stuId;S.selSkill=skId;S.selFw=fwId;S.page='stuSkillView';R()}
 
@@ -1002,24 +1125,27 @@ var fw=gFw(S.selFw);var skill=null;
 if(fw){(fw.levels||[]).forEach(function(lv){(lv.skills||[]).forEach(function(sk){if(sk.id===S.selSkill)skill=sk;(sk.variations||[]).forEach(function(v){if(v.id===S.selSkill)skill=v})})})}
 if(!skill){S.page='home';return''}
 var sp=gStuSP(st.id,skill.id)||{status:'none',timeline:[]};var sc=gSC(sp.status);
-var h='<div class="stu-portal"><div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><button class="pg-back" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff" onclick="S.page=\'home\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">'+esc(skill.name)+'</div><div style="font-size:11px;opacity:.5">'+esc(st.name)+'</div></div></div>';
-h+='<div style="text-align:center;margin-bottom:24px"><div style="width:80px;height:80px;border-radius:50%;background:'+sc.color+'22;border:3px solid '+sc.color+';display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px;box-shadow:0 0 40px '+sc.color+'33">'+sc.emoji+'</div><div style="font-size:16px;font-weight:700;color:'+sc.color+'">'+sc.label+'</div></div>';
+var bg=getStuThemeBg(st);
+var h='<div class="stu-portal" style="background:'+bg+'">';
+h+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:24px" class="fade-in"><button class="pg-back" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff" onclick="S.page=\'home\';S.stuSub=\'skills\';R()">‹</button><div style="flex:1"><div style="font-size:18px;font-weight:800">'+esc(skill.name)+'</div><div style="font-size:11px;opacity:.5">'+esc(st.displayName||st.name)+'</div></div></div>';
+h+='<div style="text-align:center;margin-bottom:24px" class="slide-up"><div style="width:80px;height:80px;border-radius:50%;background:'+sc.color+'22;border:3px solid '+sc.color+';display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px;box-shadow:0 0 40px '+sc.color+'33">'+sc.emoji+'</div><div style="font-size:16px;font-weight:700;color:'+sc.color+'">'+sc.label+'</div></div>';
 h+='<div style="background:rgba(108,92,231,.1);border:1px solid rgba(108,92,231,.3);border-radius:16px;padding:16px;margin-bottom:16px"><div style="font-size:13px;font-weight:700;margin-bottom:10px">📹 上載練習影片</div><input id="stuVidUrl" class="m-input" placeholder="貼入Google Drive影片連結" style="margin-bottom:8px;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.2);color:#fff"><input id="stuVidNote" class="m-input" placeholder="備註（選填）" style="margin-bottom:8px;background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.2);color:#fff"><button class="btn btn-accent" onclick="stuSubmitVideo(\''+st.id+'\',\''+skill.id+'\')">📤 提交</button></div>';
 if(sp.timeline&&sp.timeline.length){h+='<div style="font-size:13px;font-weight:700;margin-bottom:10px">📅 歷史紀錄</div>';
 sp.timeline.slice().reverse().forEach(function(tl){var tc=gSC(tl.status);
 h+='<div style="background:rgba(255,255,255,.05);border-radius:12px;padding:12px;margin-bottom:6px;border-left:3px solid '+tc.color+'"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:700">'+esc(tl.date)+'</span><span style="font-size:10px;color:'+tc.color+'">'+tc.emoji+' '+tc.label+'</span></div>';
+if(tl.reviewed){h+='<div style="margin-top:6px;padding:8px;background:rgba(16,185,129,.1);border-radius:8px;border:1px solid rgba(16,185,129,.2)"><div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:2px">✅ 教練已批改'+(tl.score?' · '+('⭐'.repeat(tl.score)):'')+'</div>';if(tl.feedback)h+='<div style="font-size:11px;opacity:.8;margin-top:2px">💬 '+esc(tl.feedback)+'</div>';h+='</div>'}
+else h+='<div style="margin-top:4px;font-size:10px;opacity:.4">⏳ 等待教練批改</div>';
 if(tl.note)h+='<div style="font-size:11px;opacity:.6;margin-top:4px">'+esc(tl.note)+'</div>';
 if(tl.videoUrl)h+='<a href="'+esc(tl.videoUrl)+'" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:none;margin-top:4px;display:block">▶ 睇影片</a>';
 h+='</div>'})}
-h+='</div>';return h}
+h+=stuBtmNav()+'</div>';return h}
 
 function stuSubmitVideo(stuId,skId){
 var url=document.getElementById('stuVidUrl').value.trim();
 var note=document.getElementById('stuVidNote').value.trim();
 if(!url){toast('請貼入影片連結');return}
-addTimeline(stuId,skId,{date:dateStr(),status:'yellow',videoUrl:url,note:note||'學生自行提交'});
+addTimeline(stuId,skId,{date:dateStr(),status:'yellow',videoUrl:url,note:note||'學生自行提交',reviewed:false,reviewDate:'',score:null,feedback:''});
 cloudSave();toast('✅ 已提交！等教練確認');R()}
-
 /* ====== INIT ====== */
 cloudLoad(function(){ R(); });
 </script>
