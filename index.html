@@ -281,8 +281,39 @@ function addOrg(){var n=prompt('堂會名稱：');if(!n||!n.trim())return;ORGS.p
 function editOrg(oid){var o=ORGS.find(x=>x.id===oid);if(!o)return;var n=prompt('修改堂會名稱：',o.name);if(!n||!n.trim())return;o.name=n.trim();cloudSave();R()}
 function delOrg(oid){showMo('刪除','確定刪除此堂會？\n（班別唔會刪除，只會取消關聯）',function(){ORGS=ORGS.filter(x=>x.id!==oid);CLASSES.forEach(c=>{if(c.orgId===oid)c.orgId=''});if(S.selOrg===oid)S.selOrg='';cloudSave();R()},'刪除')}
 
-function pgClassDetail(){var c=getClass(S.selClass);if(!c){S.page='home';return ''}var plans=getClassPlans(c.id);var cat=CATS[c.category]||CATS.mixed;var clr=getClsColor(c);var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="S.page=\'home\';R()">‹</button><div style="flex:1"><div style="font-size:20px;font-weight:800">'+esc(c.name)+'</div><div style="font-size:12px;color:var(--g400)">'+cat.emoji+' '+cat.name+' · '+(c.defaultDuration||60)+'分鐘'+(c.orgId?' · 🏛'+esc(getOrgName(c.orgId)):'')+'</div></div><button class="btn btn-sm btn-ghost" onclick="S.page=\'editClass\';R()">✏️</button></div>';if(c.tags&&c.tags.length){h+='<div style="margin-bottom:12px">';c.tags.forEach(t=>{h+='<span class="tag-pill">'+esc(t)+'</span>'});h+='</div>'}h+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div style="font-size:15px;font-weight:700">👤 學生（'+(c.students||[]).length+'）</div><button class="btn btn-sm btn-outline" onclick="addStudent()">＋ 新增</button></div>';if(!c.students||!c.students.length)h+='<div class="m-card" style="text-align:center;color:var(--g400);font-size:13px">未有學生</div>';else c.students.forEach((st,i)=>{var attR=getStuAttRate(c.id,st.id);var stars=st.stars||0;var attColor=attR.rate===null?'var(--g400)':attR.rate>=80?'var(--green)':attR.rate>=60?'var(--amber)':'var(--rose)';h+='<div class="m-card" style="cursor:pointer" onclick="S.selStudentId=\''+st.id+'\';S.page=\'studentProfile\';R()"><div style="display:flex;align-items:center;gap:10px"><div class="stu-ava">'+esc(st.name.charAt(0))+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">'+esc(st.name)+(stars>0?' <span style="font-size:11px">'+('⭐'.repeat(stars))+'</span>':'')+'</div><div style="display:flex;align-items:center;gap:8px;margin-top:2px;flex-wrap:wrap"><span style="font-size:11px;color:var(--g400)">'+esc(st.level||'未設定')+'</span>'+(attR.rate!==null?'<span style="font-size:10px;font-weight:700;color:'+attColor+'">📊'+attR.rate+'%</span>':'')+'</div>';if(st.tags&&st.tags.length){h+='<div style="margin-top:3px">';st.tags.forEach(t=>{h+='<span class="tag-pill" style="font-size:9px;padding:2px 7px">'+esc(t)+'</span>'});h+='</div>'}h+='</div><span style="color:var(--g300);font-size:16px">›</span></div></div>'});h+='<div style="display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px"><div style="font-size:15px;font-weight:700">📋 教案</div><button class="btn btn-sm btn-accent" onclick="newPlan(\''+c.id+'\')">＋ 新教案</button></div>';if(!plans.length)h+='<div class="m-card" style="text-align:center;color:var(--g400);font-size:13px">未有教案</div>';else plans.slice().reverse().forEach(p=>{var totalMin=p.segments?p.segments.reduce((a,s)=>a+s.duration,0):0;var students=c.students||[];var attS=getAttStats(p.id,students);var attLabel=attS.total>0?(attS.unmarked===attS.total?'未點名':attS.here+'/'+attS.total+'出席'):'';h+='<div class="m-card" style="cursor:pointer" onclick="S.editPlanId=\''+p.id+'\';S.page=\'planBuilder\';R()"><div style="display:flex;justify-content:space-between;align-items:start"><div style="flex:1"><div style="font-size:15px;font-weight:700">'+esc(p.date)+'</div><div style="font-size:11px;color:var(--g400);margin-top:3px">'+(p.goals||[]).length+'目標 · '+(p.segments||[]).length+'環節 · '+totalMin+'分鐘'+(attLabel?' · ✅'+attLabel:'')+'</div></div><div style="display:flex;gap:4px;flex-shrink:0"><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.attBack=\'classDetail\';S.page=\'attendance\';R()">✅</button><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'shareView\';R()">📤</button><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'teachMode\';S.teachSeg=0;R()">▶️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="event.stopPropagation();delPlan(\''+p.id+'\')">✕</button></div></div>';if(p.goals&&p.goals.length){h+='<div style="margin-top:8px">';p.goals.forEach(g=>{if(g.text)h+='<div style="font-size:12px;color:var(--g600);padding:2px 0">🎯 '+esc(g.text)+'</div>'});h+='</div>'}h+='</div>'});return h}
+function pgClassDetail(){
+  var c=getClass(S.selClass);if(!c){S.page='home';return ''}
+  var plans=getClassPlans(c.id);
+  var cat=CATS[c.category]||CATS.mixed;
+  var clr=getClsColor(c);
+  var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="S.page=\'home\';R()">‹</button><div style="flex:1"><div style="font-size:20px;font-weight:800">'+esc(c.name)+'</div><div style="font-size:12px;color:var(--g400)">'+cat.emoji+' '+cat.name+' · '+(c.defaultDuration||60)+'分鐘'+(c.orgId?' · 🏛'+esc(getOrgName(c.orgId)):'')+'</div></div><button class="btn btn-sm btn-ghost" onclick="S.page=\'editClass\';R()">✏️</button></div>';
+  if(c.tags&&c.tags.length){h+='<div style="margin-bottom:12px">';c.tags.forEach(t=>{h+='<span class="tag-pill">'+esc(t)+'</span>'});h+='</div>'}
 
+  // 班別資訊卡（教練 + 描述）
+  if(c.coach || c.schedule || c.description){
+    h+='<div class="m-card" style="border:1.5px solid var(--accent);border-radius:20px;overflow:hidden;margin-bottom:14px">';
+    if(c.coverUrl)h+='<img src="'+esc(c.coverUrl)+'" style="width:100%;height:120px;object-fit:cover">';
+    h+='<div style="padding:14px">';
+    if(c.coachTitle)h+='<div style="font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">👨‍🏫 '+esc(c.coachTitle)+'</div>';
+    if(c.classType)h+='<span class="chip chip-mixed" style="margin-bottom:8px">'+esc(c.classType)+'</span> ';
+    if(c.schedule)h+='<div style="font-size:12px;color:var(--g600);margin:4px 0">🕐 '+esc(c.schedule)+'</div>';
+    if(c.location)h+='<div style="font-size:12px;color:var(--g600);margin:4px 0">📍 '+esc(c.location)+'</div>';
+    if(c.fee)h+='<div style="font-size:12px;color:var(--g600);margin:4px 0">💰 $'+c.fee+'/堂'+(c.feeNote?' · '+esc(c.feeNote):'')+'</div>';
+    if(c.suitableLevel)h+='<div style="font-size:12px;color:var(--g600);margin:4px 0">📊 適合：'+esc(c.suitableLevel)+'</div>';
+    if(c.maxStudents)h+='<div style="font-size:12px;color:var(--g600);margin:4px 0">👥 名額：'+c.maxStudents+'人'+(c.students?' (已有'+c.students.length+'人)':'')+'</div>';
+    if(c.description)h+='<div style="font-size:12px;color:var(--g500);margin-top:8px;white-space:pre-wrap;line-height:1.6">'+esc(c.description)+'</div>';
+    h+='<button class="btn btn-xs btn-accent" style="margin-top:10px" onclick="shareClassInfo(\''+c.id+'\')">📤 分享班別資訊</button>';
+    h+='</div></div>';
+  }
+
+  h+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div style="font-size:15px;font-weight:700">👤 學生（'+(c.students||[]).length+'）</div><button class="btn btn-sm btn-outline" onclick="addStudent()">＋ 新增</button></div>';
+  if(!c.students||!c.students.length)h+='<div class="m-card" style="text-align:center;color:var(--g400);font-size:13px">未有學生</div>';
+  else c.students.forEach((st,i)=>{var attR=getStuAttRate(c.id,st.id);var stars=st.stars||0;var attColor=attR.rate===null?'var(--g400)':attR.rate>=80?'var(--green)':attR.rate>=60?'var(--amber)':'var(--rose)';h+='<div class="m-card" style="cursor:pointer" onclick="S.selStudentId=\''+st.id+'\';S.page=\'studentProfile\';R()"><div style="display:flex;align-items:center;gap:10px"><div class="stu-ava">'+esc(st.name.charAt(0))+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">'+esc(st.name)+(stars>0?' <span style="font-size:11px">'+('⭐'.repeat(stars))+'</span>':'')+'</div><div style="display:flex;align-items:center;gap:8px;margin-top:2px;flex-wrap:wrap"><span style="font-size:11px;color:var(--g400)">'+esc(st.level||'未設定')+'</span>'+(attR.rate!==null?'<span style="font-size:10px;font-weight:700;color:'+attColor+'">📊'+attR.rate+'%</span>':'')+'</div>';if(st.tags&&st.tags.length){h+='<div style="margin-top:3px">';st.tags.forEach(t=>{h+='<span class="tag-pill" style="font-size:9px;padding:2px 7px">'+esc(t)+'</span>'});h+='</div>'}h+='</div><span style="color:var(--g300);font-size:16px">›</span></div></div>'});
+  h+='<div style="display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px"><div style="font-size:15px;font-weight:700">📋 教案</div><button class="btn btn-sm btn-accent" onclick="newPlan(\''+c.id+'\')">＋ 新教案</button></div>';
+  if(!plans.length)h+='<div class="m-card" style="text-align:center;color:var(--g400);font-size:13px">未有教案</div>';
+  else plans.slice().reverse().forEach(p=>{var totalMin=p.segments?p.segments.reduce((a,s)=>a+s.duration,0):0;var students=c.students||[];var attS=getAttStats(p.id,students);var attLabel=attS.total>0?(attS.unmarked===attS.total?'未點名':attS.here+'/'+attS.total+'出席'):'';h+='<div class="m-card" style="cursor:pointer" onclick="S.editPlanId=\''+p.id+'\';S.page=\'planBuilder\';R()"><div style="display:flex;justify-content:space-between;align-items:start"><div style="flex:1"><div style="font-size:15px;font-weight:700">'+esc(p.date)+'</div><div style="font-size:11px;color:var(--g400);margin-top:3px">'+(p.goals||[]).length+'目標 · '+(p.segments||[]).length+'環節 · '+totalMin+'分鐘'+(attLabel?' · ✅'+attLabel:'')+'</div></div><div style="display:flex;gap:4px;flex-shrink:0"><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.attBack=\'classDetail\';S.page=\'attendance\';R()">✅</button><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'shareView\';R()">📤</button><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();S.selPlan=\''+p.id+'\';S.page=\'teachMode\';S.teachSeg=0;R()">▶️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="event.stopPropagation();delPlan(\''+p.id+'\')">✕</button></div></div>';if(p.goals&&p.goals.length){h+='<div style="margin-top:8px">';p.goals.forEach(g=>{if(g.text)h+='<div style="font-size:12px;color:var(--g600);padding:2px 0">🎯 '+esc(g.text)+'</div>'});h+='</div>'}h+='</div>'});
+  return h
+}
 function pgStudentProfile(){var c=getClass(S.selClass);if(!c){S.page='home';return ''}var st=c.students?c.students.find(s=>s.id===S.selStudentId):null;if(!st){S.page='classDetail';return ''}var stIdx=c.students.indexOf(st);var attR=getStuAttRate(c.id,st.id);var perfs=getStuPerf(c.id,st.id);var stars=st.stars||0;var tags=st.tags||[];var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="S.page=\'classDetail\';R()">‹</button><div style="flex:1;font-size:20px;font-weight:800">學生資料</div><button class="btn btn-sm btn-ghost" onclick="editStudent(\''+c.id+'\','+stIdx+')">✏️</button><button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="delStudent(\''+c.id+'\','+stIdx+')">✕</button></div>';h+='<div style="text-align:center;margin-bottom:20px" class="slide-up"><div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,'+getClsColor(c)+','+getClsColor(c)+'88);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#fff;margin:0 auto 12px">'+esc(st.name.charAt(0))+'</div><div style="font-size:22px;font-weight:800">'+esc(st.name)+'</div><div style="font-size:12px;color:var(--g400);margin-top:4px">'+esc(st.level||'未設定')+' · '+esc(c.name)+'</div>';h+='<div style="margin-top:12px">';for(var i=1;i<=5;i++){h+='<button class="star-btn" onclick="setStuStars(\''+c.id+'\',\''+st.id+'\','+i+')">'+(i<=stars?'⭐':'☆')+'</button>'}h+='</div>';h+='<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;justify-content:center">';tags.forEach(function(tag,ti){h+='<span class="tag-pill">'+esc(tag)+' <span style="cursor:pointer;opacity:.5" onclick="event.stopPropagation();removeStuTag(\''+c.id+'\',\''+st.id+'\','+ti+')">✕</span></span>'});h+='<button style="padding:3px 10px;border-radius:20px;border:1px dashed var(--g300);background:transparent;font-size:10px;color:var(--g400);cursor:pointer" onclick="addStuTag(\''+c.id+'\',\''+st.id+'\')">＋ 標籤</button></div></div>';h+='<div class="m-card"><div style="font-size:15px;font-weight:700;margin-bottom:12px">📊 出席統計</div>';if(attR.total>0){var pct=attR.rate;var ac=pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--rose)';h+='<div style="display:flex;align-items:baseline;gap:4px;margin-bottom:8px"><span style="font-size:36px;font-weight:900;color:'+ac+'">'+pct+'%</span><span style="font-size:13px;color:var(--g400)">('+attR.here+'/'+attR.total+'堂)</span></div><div class="prog-bar"><div class="prog-fill" style="width:'+pct+'%;background:'+ac+'"></div></div>'}else h+='<div style="font-size:12px;color:var(--g400)">暫無出席紀錄</div>';h+='</div>';h+='<div class="m-card"><div style="font-size:15px;font-weight:700;margin-bottom:12px">📈 表現紀錄</div>';if(perfs.length){perfs.slice().reverse().forEach(function(pr){var re={'超出預期':'🌟','完全做到':'⭐','部分做到':'△','需要更多練習':'▽','未能完成':'✗'}[pr.result]||'';h+='<div style="padding:10px 0;border-bottom:1px solid var(--g100)"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;font-weight:700">'+esc(pr.date)+'</span>';if(pr.result)h+='<span style="font-size:11px;font-weight:600;color:var(--accent)">'+re+' '+esc(pr.result)+'</span>';h+='</div>';if(pr.notes)h+='<div style="font-size:12px;color:var(--g600);margin-top:4px">'+esc(pr.notes)+'</div>';if(pr.next)h+='<div style="font-size:11px;color:var(--accent);margin-top:2px">📝 '+esc(pr.next)+'</div>';h+='</div>'})}else h+='<div style="font-size:12px;color:var(--g400)">暫無表現紀錄</div>';h+='</div>';h+='<div class="m-card"><button class="btn btn-green" onclick="newInvoice(\''+c.id+'\',\''+st.id+'\')">💰 開收據</button></div>';h+='<div style="background:var(--accent-l);border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:var(--accent);font-weight:600">🔗 學生Portal連結</span><button class="btn btn-xs btn-accent" onclick="copyTxt(getStuShareLink(\''+st.id+'\'))">複製</button></div>';if(FRAMEWORKS.length){h+='<div class="m-card"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:15px;font-weight:700">🌳 技能進度</span></div>';h+='<div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:8px">';SC.forEach(s=>{h+='<span style="padding:2px 6px;border-radius:10px;font-size:9px;background:'+s.bg+';color:'+s.color+'">'+s.emoji+' '+s.label+'</span>'});h+='</div>';h+='<div style="display:flex;gap:4px;margin-bottom:8px"><button class="btn btn-xs btn-outline" onclick="addFw()">＋ 新框架</button><button class="btn btn-xs btn-ghost" onclick="S.page=\'fwManage\';R()">⚙️ 管理框架</button></div>';FRAMEWORKS.forEach(fw=>{var fp=fwProgress(st.id,fw);h+='<div style="background:var(--g50);border-radius:14px;padding:10px;margin-bottom:6px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:18px">'+fw.emoji+'</span><div style="flex:1"><div style="font-size:13px;font-weight:700">'+esc(fw.sport)+' <button class="btn btn-xs btn-ghost" style="padding:2px 6px;font-size:9px" onclick="event.stopPropagation();S.selFw=\''+fw.id+'\';S.page=\'fwEdit\';R()">✏️ 編輯</button></div><div style="font-size:11px;color:var(--g400)">'+fp.pct+'% 完成</div></div></div>';h+=renderSkillTree(fw,st.id);(fw.levels||[]).forEach(lv=>{h+='<div style="margin-bottom:3px"><div style="font-size:10px;font-weight:700;color:var(--accent);margin-bottom:2px">'+esc(lv.name)+'</div>';(lv.skills||[]).forEach(sk=>{var sp=gStuSP(st.id,sk.id);var sc=gSC(sp?sp.status:'none');h+='<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--g0);border-radius:8px;margin-bottom:2px;cursor:pointer;border:1px solid var(--g100)" onclick="S.selSkill=\''+sk.id+'\';S.selFw=\''+fw.id+'\';S.page=\'skillDetail\';R()"><div style="width:12px;height:12px;border-radius:50%;background:'+sc.color+'"></div><span style="flex:1;font-size:11px;font-weight:600">'+esc(sk.name)+'</span><span style="color:var(--g300)">›</span></div>'});h+='</div>'});h+='</div>'});h+='</div>'}else{h+='<div class="m-card"><button class="btn btn-outline" onclick="addFw()">🌳 建立技能框架</button></div>'}h+='<div class="m-card"><div style="font-size:15px;font-weight:700;margin-bottom:8px">📝 備註</div><textarea class="m-textarea" id="spNotes" style="font-size:12px">'+esc(st.notes||'')+'</textarea><button class="btn btn-sm btn-dark" style="margin-top:8px" onclick="var s2=getClass(\''+c.id+'\').students.find(x=>x.id===\''+st.id+'\');if(s2){s2.notes=document.getElementById(\'spNotes\').value;cloudSave();toast(\'✅ 已儲存\')}">💾 儲存</button></div>';return h}
 function setStuStars(cid,sid,n){var c=getClass(cid);if(!c)return;var st=c.students.find(s=>s.id===sid);if(!st)return;st.stars=st.stars===n?n-1:n;cloudSave();R()}
 function addStuTag(cid,sid){var t=prompt('新增標籤：');if(!t||!t.trim())return;var c=getClass(cid);if(!c)return;var st=c.students.find(s=>s.id===sid);if(!st)return;if(!st.tags)st.tags=[];st.tags.push(t.trim());cloudSave();R()}
@@ -290,9 +321,110 @@ function removeStuTag(cid,sid,idx){var c=getClass(cid);if(!c)return;var st=c.stu
 
 function pgAddClass(){var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px" class="fade-in"><button class="pg-back" onclick="S.page=\'home\';R()">‹</button><div style="font-size:20px;font-weight:800">新增班別</div></div>';h+='<div class="m-card slide-up"><label class="label">班別名稱</label><input id="cn" class="m-input" placeholder="例如：星期六跳繩班" style="margin-bottom:14px">';h+='<label class="label">所屬堂會</label><select id="corg" class="m-select" style="margin-bottom:14px"><option value="">— 無 —</option>';ORGS.forEach(o=>{h+='<option value="'+o.id+'">'+esc(o.name)+'</option>'});h+='</select>';h+='<label class="label">類別</label><select id="cc" class="m-select" style="margin-bottom:14px"><option value="rope">🪢 跳繩</option><option value="gym">🤸 體操</option><option value="mixed" selected>🔀 混合</option></select>';h+='<label class="label">顏色</label><div class="color-grid" id="colorGrid">';CL_COLORS.forEach(cl=>{h+='<div class="color-sw'+(cl.id==='navy'?' on':'')+'" style="background:'+cl.c+'" data-cid="'+cl.id+'" onclick="pickColor(this,\''+cl.id+'\')"></div>'});h+='</div><input type="hidden" id="ccolor" value="navy">';h+='<label class="label" style="margin-top:10px">標籤（逗號分隔）</label><input id="ctags" class="m-input" placeholder="例如：週六,初班,教會A" style="margin-bottom:14px">';h+='<label class="label">預設課堂長度（分鐘）</label><input id="cd" type="number" class="m-input" value="60" style="margin-bottom:20px">';h+='<button class="btn btn-dark" onclick="doAddClass()">建立班別</button></div>';return h}
 function pickColor(el,cid){document.querySelectorAll('.color-sw').forEach(e=>e.classList.remove('on'));el.classList.add('on');document.getElementById('ccolor').value=cid}
-function doAddClass(){var n=document.getElementById('cn').value.trim();if(!n){toast('請輸入名稱');return}var tags=document.getElementById('ctags').value.split(',').map(t=>t.trim()).filter(t=>t);CLASSES.push({id:uid(),name:n,category:document.getElementById('cc').value,defaultDuration:parseInt(document.getElementById('cd').value)||60,orgId:document.getElementById('corg').value,color:document.getElementById('ccolor').value,tags:tags,students:[]});toast('✅ 已建立');cloudSave();S.page='home';R()}
-function pgEditClass(){var c=getClass(S.selClass);if(!c){S.page='home';return ''}var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'classDetail\';R()">‹</button><div style="font-size:20px;font-weight:800">編輯班別</div></div>';h+='<div class="m-card"><label class="label">班別名稱</label><input id="cn" class="m-input" value="'+esc(c.name)+'" style="margin-bottom:14px">';h+='<label class="label">所屬堂會</label><select id="corg" class="m-select" style="margin-bottom:14px"><option value="">— 無 —</option>';ORGS.forEach(o=>{h+='<option value="'+o.id+'"'+(c.orgId===o.id?' selected':'')+'>'+esc(o.name)+'</option>'});h+='</select>';if(ORGS.length){h+='<div style="margin-bottom:14px">';ORGS.forEach(o=>{h+='<div style="display:inline-flex;align-items:center;gap:4px;margin:2px"><span class="tag-pill" style="background:var(--g100);color:var(--g600)">🏛 '+esc(o.name)+' <span style="cursor:pointer;opacity:.6" onclick="editOrg(\''+o.id+'\')">✏️</span> <span style="cursor:pointer;opacity:.6" onclick="delOrg(\''+o.id+'\')">✕</span></span></div>'});h+='</div>'}h+='<label class="label">類別</label><select id="cc" class="m-select" style="margin-bottom:14px"><option value="rope" '+(c.category==='rope'?'selected':'')+'>🪢 跳繩</option><option value="gym" '+(c.category==='gym'?'selected':'')+'>🤸 體操</option><option value="mixed" '+(c.category==='mixed'?'selected':'')+'>🔀 混合</option></select>';h+='<label class="label">班別圖示</label><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">';if(c.iconUrl)h+='<img src="'+esc(c.iconUrl)+'" style="width:48px;height:48px;border-radius:16px;object-fit:cover;border:1px solid var(--g200)">';else h+='<div style="width:48px;height:48px;border-radius:16px;background:'+getClsColor(c)+';display:flex;align-items:center;justify-content:center;font-size:22px">'+(CATS[c.category]||CATS.mixed).emoji+'</div>';h+='<button class="btn btn-xs btn-outline" onclick="uploadClassIcon(\''+c.id+'\')">📷 上載圖片</button>';if(c.iconUrl)h+='<button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="getClass(\''+c.id+'\').iconUrl=\'\';cloudSave();R()">✕</button>';h+='</div>';h+='<label class="label">顏色</label><div class="color-grid">';CL_COLORS.forEach(cl=>{h+='<div class="color-sw'+(cl.id===(c.color||'navy')?' on':'')+'" style="background:'+cl.c+'" onclick="pickColor(this,\''+cl.id+'\')"></div>'});h+='</div><input type="hidden" id="ccolor" value="'+(c.color||'navy')+'">';h+='<label class="label" style="margin-top:10px">標籤（逗號分隔）</label><input id="ctags" class="m-input" value="'+esc((c.tags||[]).join(','))+'" style="margin-bottom:14px">';h+='<label class="label">預設課堂長度</label><input id="cd" type="number" class="m-input" value="'+(c.defaultDuration||60)+'" style="margin-bottom:20px">';h+='<button class="btn btn-dark" onclick="doEditClass()" style="margin-bottom:8px">儲存</button>';h+='<button class="btn btn-danger" onclick="showMo(\'刪除\',\'確定刪除此班別及所有教案？\',function(){CLASSES=CLASSES.filter(x=>x.id!==\''+c.id+'\');PLANS=PLANS.filter(x=>x.classId!==\''+c.id+'\');cloudSave();S.page=\'home\';S.tab=\'classes\';R()},\'刪除\')">刪除班別</button></div>';return h}
-function doEditClass(){var c=getClass(S.selClass);if(!c)return;c.name=document.getElementById('cn').value.trim()||c.name;c.category=document.getElementById('cc').value;c.defaultDuration=parseInt(document.getElementById('cd').value)||60;c.orgId=document.getElementById('corg').value;c.color=document.getElementById('ccolor').value;c.tags=document.getElementById('ctags').value.split(',').map(t=>t.trim()).filter(t=>t);toast('✅ 已儲存');cloudSave();S.page='classDetail';R()}
+function doAddClass(){
+  var n=document.getElementById('cn').value.trim();
+  if(!n){toast('請輸入名稱');return}
+  var tags=document.getElementById('ctags').value.split(',').map(t=>t.trim()).filter(t=>t);
+  CLASSES.push({
+    id:uid(),
+    name:n,
+    category:document.getElementById('cc').value,
+    defaultDuration:parseInt(document.getElementById('cd').value)||60,
+    orgId:document.getElementById('corg').value,
+    color:document.getElementById('ccolor').value,
+    tags:tags,
+    students:[],
+    coach:'',
+    coachTitle:'',
+    coachPhone:'',
+    description:'',
+    schedule:'',
+    location:'',
+    fee:0,
+    feeNote:'',
+    suitableLevel:'',
+    maxStudents:0,
+    coverUrl:'',
+    classType:'',
+    visible:true
+  });
+  toast('✅ 已建立');cloudSave();S.page='home';R()
+}
+function pgEditClass(){
+  var c=getClass(S.selClass);if(!c){S.page='home';return ''}
+  var h='<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="S.page=\'classDetail\';R()">‹</button><div style="font-size:20px;font-weight:800">編輯班別</div></div>';
+  h+='<div class="m-card"><label class="label">班別名稱</label><input id="cn" class="m-input" value="'+esc(c.name)+'" style="margin-bottom:14px">';
+  h+='<label class="label">所屬堂會</label><select id="corg" class="m-select" style="margin-bottom:14px"><option value="">— 無 —</option>';
+  ORGS.forEach(o=>{h+='<option value="'+o.id+'"'+(c.orgId===o.id?' selected':'')+'>'+esc(o.name)+'</option>'});
+  h+='</select>';
+  if(ORGS.length){h+='<div style="margin-bottom:14px">';ORGS.forEach(o=>{h+='<div style="display:inline-flex;align-items:center;gap:4px;margin:2px"><span class="tag-pill" style="background:var(--g100);color:var(--g600)">🏛 '+esc(o.name)+' <span style="cursor:pointer;opacity:.6" onclick="editOrg(\''+o.id+'\')">✏️</span> <span style="cursor:pointer;opacity:.6" onclick="delOrg(\''+o.id+'\')">✕</span></span></div>'});h+='</div>'}
+  h+='<label class="label">類別</label><select id="cc" class="m-select" style="margin-bottom:14px"><option value="rope" '+(c.category==='rope'?'selected':'')+'>🪢 跳繩</option><option value="gym" '+(c.category==='gym'?'selected':'')+'>🤸 體操</option><option value="mixed" '+(c.category==='mixed'?'selected':'')+'>🔀 混合</option></select>';
+  h+='<label class="label">班別圖示</label><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">';
+  if(c.iconUrl)h+='<img src="'+esc(c.iconUrl)+'" style="width:48px;height:48px;border-radius:16px;object-fit:cover;border:1px solid var(--g200)">';
+  else h+='<div style="width:48px;height:48px;border-radius:16px;background:'+getClsColor(c)+';display:flex;align-items:center;justify-content:center;font-size:22px">'+(CATS[c.category]||CATS.mixed).emoji+'</div>';
+  h+='<button class="btn btn-xs btn-outline" onclick="uploadClassIcon(\''+c.id+'\')">📷 上載圖片</button>';
+  if(c.iconUrl)h+='<button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="getClass(\''+c.id+'\').iconUrl=\'\';cloudSave();R()">✕</button>';
+  h+='</div>';
+  h+='<label class="label">顏色</label><div class="color-grid">';
+  CL_COLORS.forEach(cl=>{h+='<div class="color-sw'+(cl.id===(c.color||'navy')?' on':'')+'" style="background:'+cl.c+'" onclick="pickColor(this,\''+cl.id+'\')"></div>'});
+  h+='</div><input type="hidden" id="ccolor" value="'+(c.color||'navy')+'">';
+  h+='<label class="label" style="margin-top:10px">標籤（逗號分隔）</label><input id="ctags" class="m-input" value="'+esc((c.tags||[]).join(','))+'" style="margin-bottom:14px">';
+  h+='<label class="label">預設課堂長度</label><input id="cd" type="number" class="m-input" value="'+(c.defaultDuration||60)+'" style="margin-bottom:20px">';
+// ===== 教練資料 =====
+  h+='<div style="background:var(--accent-l);border-radius:16px;padding:16px;margin:14px 0">';
+  h+='<div style="font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px">👨‍🏫 教練資料</div>';
+  h+='<label class="label">教練姓名</label><input id="ccoach" class="m-input" value="'+esc(c.coach||'')+'" placeholder="例如：陳言" style="margin-bottom:8px">';
+  h+='<label class="label">教練稱呼（學生見到）</label><input id="ccoachTitle" class="m-input" value="'+esc(c.coachTitle||'')+'" placeholder="例如：言Sir" style="margin-bottom:8px">';
+  h+='<label class="label">教練電話</label><input id="ccoachPhone" class="m-input" value="'+esc(c.coachPhone||'')+'" placeholder="852XXXXXXXX" style="margin-bottom:8px">';
+  h+='</div>';
+
+  // ===== 班別描述（Marketing） =====
+  h+='<div style="background:linear-gradient(135deg,#f0fdfa,#ecfdf5);border-radius:16px;padding:16px;margin:14px 0;border:1px solid rgba(20,184,166,.2)">';
+  h+='<div style="font-size:14px;font-weight:700;color:#0d9488;margin-bottom:12px">📋 班別描述（可分享）</div>';
+  h+='<label class="label">班別類型</label><select id="cclassType" class="m-select" style="margin-bottom:8px"><option value="">— 選擇 —</option>';
+  ['恆常班','私人班','興趣班','體驗班','比賽隊'].forEach(function(t){
+    h+='<option value="'+t+'"'+(c.classType===t?' selected':'')+'>'+t+'</option>'});
+  h+='</select>';
+  h+='<label class="label">上課時間</label><input id="cschedule" class="m-input" value="'+esc(c.schedule||'')+'" placeholder="例如：逢星期六 10:00-11:30" style="margin-bottom:8px">';
+  h+='<label class="label">地點</label><input id="clocation" class="m-input" value="'+esc(c.location||'')+'" placeholder="例如：恆安邨 多用途場地" style="margin-bottom:8px">';
+  h+='<label class="label">適合程度</label><input id="csuitLevel" class="m-input" value="'+esc(c.suitableLevel||'')+'" placeholder="例如：基本掌握～穩定完成" style="margin-bottom:8px">';
+  h+='<label class="label">收費</label><div style="display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-bottom:8px"><input id="cfee" type="number" class="m-input" value="'+(c.fee||0)+'" placeholder="每堂$"><input id="cfeeNote" class="m-input" value="'+esc(c.feeNote||'')+'" placeholder="例如：4堂$600"></div>';
+  h+='<label class="label">名額</label><input id="cmaxStu" type="number" class="m-input" value="'+(c.maxStudents||0)+'" placeholder="0=不限" style="margin-bottom:8px">';
+  h+='<label class="label">班別描述（完整介紹）</label><textarea id="cdesc" class="m-textarea" style="min-height:100px;margin-bottom:8px" placeholder="可寫訓練內容、目標、特色等...">'+esc(c.description||'')+'</textarea>';
+  h+='<label class="label">封面圖</label><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">';
+  if(c.coverUrl)h+='<img src="'+esc(c.coverUrl)+'" style="width:120px;height:68px;border-radius:10px;object-fit:cover">';
+  h+='<button class="btn btn-xs btn-outline" onclick="uploadClassCover(\''+c.id+'\')">📷 上載封面</button>';
+  if(c.coverUrl)h+='<button class="btn btn-xs" style="background:var(--rose-l);color:var(--rose)" onclick="getClass(\''+c.id+'\').coverUrl=\'\';cloudSave();R()">✕</button>';
+  h+='</div>';
+  h+='<label style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600"><input type="checkbox" '+(c.visible!==false?'checked':'')+' id="cvisible"> 👁 學生Portal可見</label>';
+  h+='</div>';
+
+  h+='<button class="btn btn-dark" onclick="doEditClass()" style="margin-bottom:8px">儲存</button>';
+  h+='<button class="btn btn-danger" onclick="showMo(\'刪除\',\'確定刪除此班別及所有教案？\',function(){CLASSES=CLASSES.filter(x=>x.id!==\''+c.id+'\');PLANS=PLANS.filter(x=>x.classId!==\''+c.id+'\');cloudSave();S.page=\'home\';S.tab=\'classes\';R()},\'刪除\')">刪除班別</button></div>';
+  return h
+}
+function doEditClass(){
+  var c=getClass(S.selClass);if(!c)return;
+  c.name=document.getElementById('cn').value.trim()||c.name;
+  c.category=document.getElementById('cc').value;
+  c.defaultDuration=parseInt(document.getElementById('cd').value)||60;
+  c.orgId=document.getElementById('corg').value;
+  c.color=document.getElementById('ccolor').value;
+  c.tags=document.getElementById('ctags').value.split(',').map(t=>t.trim()).filter(t=>t);
+  c.coach=document.getElementById('ccoach').value.trim();
+  c.coachTitle=document.getElementById('ccoachTitle').value.trim();
+  c.coachPhone=document.getElementById('ccoachPhone').value.trim();
+  c.classType=document.getElementById('cclassType').value;
+  c.schedule=document.getElementById('cschedule').value.trim();
+  c.location=document.getElementById('clocation').value.trim();
+  c.suitableLevel=document.getElementById('csuitLevel').value.trim();
+  c.fee=parseInt(document.getElementById('cfee').value)||0;
+  c.feeNote=document.getElementById('cfeeNote').value.trim();
+  c.maxStudents=parseInt(document.getElementById('cmaxStu').value)||0;
+  c.description=document.getElementById('cdesc').value;
+  c.visible=document.getElementById('cvisible').checked;
+  toast('✅ 已儲存');cloudSave();S.page='classDetail';R();
+}
 function addStudent(){var c=getClass(S.selClass);if(!c)return;var n=prompt('學生姓名：');if(!n||!n.trim())return;if(!c.students)c.students=[];c.students.push({id:uid(),name:n.trim(),level:'未設定',notes:'',stars:0,tags:[],displayName:'',theme:'default',themeBgUrl:'',skillProgress:{}});toast('✅ 已新增');cloudSave();R()}
 function editStudent(cid,idx){var c=getClass(cid);if(!c||!c.students[idx])return;var st=c.students[idx];var app=document.getElementById('app');app.innerHTML='<div class="container" style="padding-top:16px"><div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button class="pg-back" onclick="R()">‹</button><div style="font-size:20px;font-weight:800">編輯學生</div></div><div class="m-card"><label class="label">姓名</label><input id="sn" class="m-input" value="'+esc(st.name)+'" style="margin-bottom:14px"><label class="label">程度</label><select id="sl" class="m-select" style="margin-bottom:14px">'+LEVELS.map(l=>'<option'+(st.level===l?' selected':'')+'>'+l+'</option>').join('')+'</select><label class="label">備註</label><textarea id="sno" class="m-textarea" style="margin-bottom:20px">'+esc(st.notes||'')+'</textarea><button class="btn btn-dark" onclick="doEditStu(\''+cid+'\','+idx+')">儲存</button></div></div>'+btmNav()}
 function doEditStu(cid,idx){var c=getClass(cid);if(!c)return;var st=c.students[idx];st.name=document.getElementById('sn').value.trim()||st.name;st.level=document.getElementById('sl').value;st.notes=document.getElementById('sno').value;toast('✅ 已儲存');cloudSave();R()}
@@ -433,6 +565,46 @@ h+='</select>';h+='<label class="label">日期</label><input type="date" class="
 function uploadProductImg(pid){var input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(){var file=input.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(){toast('上傳中...');fetch(CLOUD_URL,{method:'POST',body:JSON.stringify({token:CLOUD_TOKEN,action:'uploadImage',imageData:reader.result.split(',')[1],imageName:'prod_'+pid+'.png',mimeType:file.type,imgFolder:'CRE_Images'})}).then(r=>r.json()).then(res=>{if(res.ok){var p=PRODUCTS.find(x=>x.id===pid);if(p)p.image=res.thumb||res.url;cloudSave();R()}else toast('❌')}).catch(()=>toast('❌'))};reader.readAsDataURL(file)};input.click()}
 function uploadArticleCover(aid){var input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(){var file=input.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(){toast('上傳中...');fetch(CLOUD_URL,{method:'POST',body:JSON.stringify({token:CLOUD_TOKEN,action:'uploadImage',imageData:reader.result.split(',')[1],imageName:'art_'+aid+'.png',mimeType:file.type,imgFolder:'CRE_Images'})}).then(r=>r.json()).then(res=>{if(res.ok){var a=ARTICLES.find(x=>x.id===aid);if(a)a.cover=res.thumb||res.url;cloudSave();R()}else toast('❌')}).catch(()=>toast('❌'))};reader.readAsDataURL(file)};input.click()}
 
+function shareClassInfo(cid){
+  var c=getClass(cid);if(!c)return;
+  var t='';
+  t+='📋 *'+c.name+'*\n';
+  if(c.coachTitle)t+='👨‍🏫 教練：'+c.coachTitle+'\n';
+  if(c.classType)t+='📌 '+c.classType+'\n';
+  t+='\n';
+  if(c.schedule)t+='🕐 '+c.schedule+'\n';
+  if(c.location)t+='📍 '+c.location+'\n';
+  if(c.fee)t+='💰 $'+c.fee+'/堂'+(c.feeNote?' ('+c.feeNote+')':'')+'\n';
+  if(c.suitableLevel)t+='\n📊 適合程度：'+c.suitableLevel+'\n';
+  if(c.maxStudents)t+='👥 名額：'+c.maxStudents+'人\n';
+  if(c.description)t+='\n'+c.description+'\n';
+  t+='\n——————————————\n';
+  if(c.coachPhone)t+='📞 聯絡/報名：https://wa.me/'+c.coachPhone+'\n';
+  else if(BRAND.whatsapp)t+='📞 聯絡/報名：https://wa.me/'+BRAND.whatsapp+'\n';
+  copyTxt(t);
+}
+
+function uploadClassCover(cid){
+  var input=document.createElement('input');
+  input.type='file';input.accept='image/*';
+  input.onchange=function(){
+    var file=input.files[0];if(!file)return;
+    var reader=new FileReader();
+    reader.onload=function(){
+      toast('上傳中...');
+      fetch(CLOUD_URL,{method:'POST',body:JSON.stringify({
+        token:CLOUD_TOKEN,action:'uploadImage',
+        imageData:reader.result.split(',')[1],
+        imageName:'cover_'+cid+'.png',
+        mimeType:file.type,imgFolder:'CRE_Images'
+      })}).then(r=>r.json()).then(res=>{
+        if(res.ok){var cl=getClass(cid);if(cl)cl.coverUrl=res.thumb||res.url;cloudSave();R()}
+        else toast('❌')
+      }).catch(()=>toast('❌'));
+    };reader.readAsDataURL(file);
+  };input.click();
+}
+  
 cloudLoad(function(){R()});
 </script>
 </body>
