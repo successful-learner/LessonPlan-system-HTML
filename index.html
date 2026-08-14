@@ -4,8 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
 <title>Lesson Plan Builder v10</title>
+
+<!-- 原本嘅 Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<!-- 1. 滲入：載入 Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2. 滲入：初始化 Supabase Client -->
+<script>
+  // 已經幫你除去尾部嘅 /rest/v1/
+  const SUPABASE_URL = 'https://hgyjprbkjuiizxpinxgr.supabase.co';
+  
+  // 使用 JWT 格式嘅 anon key
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhneWpwcmJranVpaXp4cGlueGdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2NzQ1MDIsImV4cCI6MjEwMjI1MDUwMn0.WCTGU_8_ik6Zp5Y5Y7d1jEtOLsMYpe41dJ5YxBo3ODU';
+
+  // 避免變數名稱重複，命名為 supabaseClient
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
+
+<!-- 原本嘅 CSS 樣式 -->
 <style>
 :root{
 --pri:#2d2d2d;--accent:#6c5ce7;--accent-l:#f3effe;--accent-d:#5a4bd1;
